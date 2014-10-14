@@ -8,7 +8,20 @@
  * Controller of the anliantestApp
  */
 angular.module('anliantestApp')
-  .controller('EmployeeCtrl', function ($scope, dialogs) {
+  .controller('EmployeeCtrl', function ($scope, dialogs, Employee, DTOptionsBuilder, DTColumnDefBuilder) {
+    
+    $scope.employeeList = Employee.query();
+
+    $scope.dtOptions = DTOptionsBuilder.newOptions().withBootstrap();
+    
+    $scope.dtColumnDefs = [
+        DTColumnDefBuilder.newColumnDef(0),
+        DTColumnDefBuilder.newColumnDef(1),
+        DTColumnDefBuilder.newColumnDef(2),
+        DTColumnDefBuilder.newColumnDef(3),
+        DTColumnDefBuilder.newColumnDef(4).notSortable()
+    ];
+
     $scope.showAddEmployeeDialog = function () {
       var dialog = dialogs.create('template/at-employee-dialog.html', 'employeeDialogCtrl', 
       {
@@ -21,11 +34,54 @@ angular.module('anliantestApp')
         windowClass: 'model-overlay'
       });
       dialog.result.then(function (data) {
-        console.log(data);
+        var employee = new Employee();
+
+        employee.name = data.item.name;
+        employee.number = data.item.number;
+        employee.password = data.item.password;
+        employee.title = data.item.title;
+        employee.department = {
+          id: data.item.department.id
+        };
+        
+        employee.$save();
       }, function () {
 
       });
     };
+
+    $scope.editEmployee = function (employee) {
+      var dialog = dialogs.create('template/at-employee-dialog.html', 'employeeDialogCtrl', 
+      {
+        type: 'EDIT',
+        item: employee
+      }, 
+      {
+        size: 'md',
+        keyboard: true,
+        backdrop: 'static',
+        windowClass: 'model-overlay'
+      });
+      dialog.result.then(function (data) {
+        var employee = new Employee();
+
+        employee.name = data.item.name;
+        employee.number = data.item.number;
+        employee.password = data.item.password;
+        employee.title = data.item.title;
+        employee.department = {
+          id: data.item.department.id
+        };
+        
+        employee.$save();
+      }, function () {
+
+      });
+    };
+    
+    $scope.removeEmployee = function (employee) {
+
+    };  
   })
   .controller('employeeDialogCtrl', function ($scope, $modalInstance, data) {
     $scope.data = data;
@@ -77,6 +133,14 @@ angular.module('anliantestApp')
         name: '质量负责人'
       }
     ];
+    if ($scope.data.type == 'EDIT') {
+      for (var i = 0; i < $scope.departmentList.length; i++) {
+        if ($scope.data.item.department.id == $scope.departmentList[i].id) {
+          $scope.department = $scope.departmentList[i];
+          break;
+        }
+      }
+    }
 
     $scope.cancel = function() {
       $modalInstance.dismiss('Canceled');

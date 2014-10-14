@@ -43,6 +43,16 @@ public class EmployeeServiceImpl implements EmployeeService{
 	public DataWrapper<Void> logout() {
 		return null;
 	}
+	
+	@Override
+	public DataWrapper<Employee> getEmployeeById(Long employeeId) {
+		DataWrapper<Employee> ret = new DataWrapper<>();
+        
+		Employee employee = employeeDao.getEmployeeById(employeeId);
+        ret.setData(employee);
+        
+        return ret;
+	}
 
 	@Override
 	public DataWrapper<Employee> addEmployee(Employee employee) {
@@ -84,7 +94,7 @@ public class EmployeeServiceImpl implements EmployeeService{
 	@Override
 	public DataWrapper<List<Employee>> getEmployeeList(int currPageNum,
 			int numPerPage) {
-		return null;
+		return employeeDao.getEmployeeList(currPageNum, numPerPage);
 	}
 	
 }

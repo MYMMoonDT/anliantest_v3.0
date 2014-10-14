@@ -55,18 +55,26 @@ public abstract class AbstractHibernateDao<E, I extends Serializable> {
 		return criteria.list();
 	}
 	
-	public PageResult<E> findByPage() {		
-		return findByCriteriaByPage(PageResult.DEFAULT_CURR_PAGE_NUM, PageResult.DEFAULT_NUM_PER_PAGE);
+	public PageResult<E> findByDefaultPage() {		
+		return findByCriteriaByPage(null, PageResult.DEFAULT_CURR_PAGE_NUM, PageResult.DEFAULT_NUM_PER_PAGE);
+	}
+	
+	public PageResult<E> findByPage(int currPageNum, int numPerPage) {
+		return findByCriteriaByPage(null, currPageNum, numPerPage);
 	}
 	
 	@SuppressWarnings("unchecked")
-	public PageResult<E> findByCriteriaByPage(int currPageNum, int numPerPage) {
+	public PageResult<E> findByCriteriaByPage(Criterion criterion, int currPageNum, int numPerPage) {
 		PageResult<E> pageResult = new PageResult<E>(currPageNum, numPerPage);
 		
 		Criteria criteria = getCurrentSession().createCriteria(entityClass);
 		
+		if (criterion != null) {
+			criteria.add(criterion);
+		}
+		
 		criteria.setProjection(Projections.rowCount());
-		pageResult.setTotalItemNum(((Integer)criteria.uniqueResult()).intValue());
+		pageResult.setTotalItemNum(((Long)criteria.uniqueResult()).intValue());
 		
 		criteria.setProjection(null);
 		criteria.setResultTransformer(CriteriaSpecification.ROOT_ENTITY);

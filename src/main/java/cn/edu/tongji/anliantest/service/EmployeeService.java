@@ -11,6 +11,8 @@ public interface EmployeeService {
 	
 	public DataWrapper<Void> logout();
 	
+	public DataWrapper<Employee> getEmployeeById(Long employeeId);
+	
 	public DataWrapper<Employee> addEmployee(Employee employee);
 	
 	public DataWrapper<Employee> updateEmployee(Employee employee);

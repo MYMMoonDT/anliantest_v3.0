@@ -8,7 +8,7 @@ public class PageResult<T> implements Serializable{
 
 	private static final long serialVersionUID = 6192560777709033330L;
 
-	public static int DEFAULT_NUM_PER_PAGE = 20;
+	public static int DEFAULT_NUM_PER_PAGE = 10;
 	public static int DEFAULT_CURR_PAGE_NUM = 1;
 	
 	private int numPerPage = DEFAULT_NUM_PER_PAGE;

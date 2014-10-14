@@ -9,6 +9,8 @@ import org.springframework.stereotype.Repository;
 import cn.edu.tongji.anliantest.dao.AbstractHibernateDao;
 import cn.edu.tongji.anliantest.dao.EmployeeDao;
 import cn.edu.tongji.anliantest.model.Employee;
+import cn.edu.tongji.anliantest.util.DataWrapper;
+import cn.edu.tongji.anliantest.util.PageResult;
 
 @Repository
 public class EmployeeDaoImpl extends AbstractHibernateDao<Employee, Long> implements EmployeeDao{
@@ -46,6 +48,21 @@ public class EmployeeDaoImpl extends AbstractHibernateDao<Employee, Long> implem
 	@Override
 	public void deleteEmployee(Long employeeId) {
 		delete(findById(employeeId));
+	}
+
+	@Override
+	public DataWrapper<List<Employee>> getEmployeeList(int currPageNum, int numPerPage) {
+		DataWrapper<List<Employee>> ret = new DataWrapper<List<Employee>>();
+		
+		PageResult<Employee> pageResult = findByCriteriaByPage(null, currPageNum, numPerPage);
+		
+		ret.setData(pageResult.getData());
+		ret.setNumPerPage(pageResult.getNumPerPage());
+		ret.setCurrPageNum(pageResult.getCurrPageNum());
+		ret.setTotalItemNum(pageResult.getTotalItemNum());
+		ret.setTotalPageNum(pageResult.getTotalPageNum());
+		
+		return ret;
 	}
 	
 }

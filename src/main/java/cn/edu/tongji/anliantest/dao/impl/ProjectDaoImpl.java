@@ -42,7 +42,7 @@ public class ProjectDaoImpl extends AbstractHibernateDao<Project, Long> implemen
 	public DataWrapper<List<Project>> getProjectList(int currPageNum, int numPerPage) {
 		DataWrapper<List<Project>> ret = new DataWrapper<List<Project>>();
 		
-		PageResult<Project> pageResult = findByCriteriaByPage(currPageNum, numPerPage);
+		PageResult<Project> pageResult = findByCriteriaByPage(null, currPageNum, numPerPage);
 		
 		ret.setData(pageResult.getData());
 		ret.setNumPerPage(pageResult.getNumPerPage());
