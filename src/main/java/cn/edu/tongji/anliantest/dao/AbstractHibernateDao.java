@@ -1,0 +1,80 @@
+package cn.edu.tongji.anliantest.dao;
+
+import java.io.Serializable;
+import java.util.List;
+
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.criterion.CriteriaSpecification;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Projections;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import cn.edu.tongji.anliantest.util.PageResult;
+
+public abstract class AbstractHibernateDao<E, I extends Serializable> {
+
+	private final Class<E> entityClass;
+
+	protected AbstractHibernateDao(Class<E> entityClass) {
+		this.entityClass = entityClass;
+	}
+
+	@Autowired
+	private SessionFactory sessionFactory;
+
+	public Session getCurrentSession() {
+		return sessionFactory.getCurrentSession();
+	}
+
+	@SuppressWarnings("unchecked")
+	public I add(E e) {
+		return (I) getCurrentSession().save(e);
+	}
+
+	@SuppressWarnings("unchecked")
+	public E findById(I id) {
+		return (E) getCurrentSession().get(entityClass, id);
+	}
+
+	public void saveOrUpdate(E e) {
+        getCurrentSession().merge(e);
+	}
+
+	public void delete(E e) {
+		getCurrentSession().delete(e);
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<E> findByCriteria(Criterion criterion) {
+		Criteria criteria = getCurrentSession().createCriteria(entityClass);
+		if (criterion != null) {
+			criteria.add(criterion);
+		}
+		return criteria.list();
+	}
+	
+	public PageResult<E> findByPage() {		
+		return findByCriteriaByPage(PageResult.DEFAULT_CURR_PAGE_NUM, PageResult.DEFAULT_NUM_PER_PAGE);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public PageResult<E> findByCriteriaByPage(int currPageNum, int numPerPage) {
+		PageResult<E> pageResult = new PageResult<E>(currPageNum, numPerPage);
+		
+		Criteria criteria = getCurrentSession().createCriteria(entityClass);
+		
+		criteria.setProjection(Projections.rowCount());
+		pageResult.setTotalItemNum(((Integer)criteria.uniqueResult()).intValue());
+		
+		criteria.setProjection(null);
+		criteria.setResultTransformer(CriteriaSpecification.ROOT_ENTITY);
+		
+		criteria.setFirstResult(PageResult.getStartOfPage(pageResult.getCurrPageNum(), pageResult.getNumPerPage()));
+		criteria.setMaxResults(pageResult.getNumPerPage());
+		pageResult.setData(criteria.list());
+		
+		return pageResult;
+	}
+}

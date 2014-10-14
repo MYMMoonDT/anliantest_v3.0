@@ -1,0 +1,28 @@
+/*
+ *  Global Css Style
+ */
+body {
+  font-family: 'Microsoft Yahei', STHeiti, sans-serif;
+  font-size: 14px;
+}
+.modal-content {
+  padding: 10px;
+}
+.modal-content .content {
+  padding: 15px 5px 5px;
+  display: table;
+  width: 100%;
+}
+.modal-content .content .row {
+  display: table-row;
+}
+.modal-content .content .row .cell {
+  display: table-cell;
+  vertical-align: middle;
+  height: 45px;
+}
+.modal-content .content .row .cell label {
+  font-size: 16px;
+  margin: 0;
+  font-weight: normal;
+}
