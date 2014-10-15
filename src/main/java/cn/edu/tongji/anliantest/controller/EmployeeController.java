@@ -47,10 +47,17 @@ public class EmployeeController {
 		return employeeService.addEmployee(employee);
 	}
 	
-	@RequestMapping(value="employee/{employeeId}", method=RequestMethod.PUT)
+	@RequestMapping(value="employee", method=RequestMethod.PUT)
 	@ResponseBody
 	public DataWrapper<Employee> updateEmployee(
 		@RequestBody Employee employee) {
 		return employeeService.updateEmployee(employee);
+	}
+	
+	@RequestMapping(value="employee/{employeeId}", method=RequestMethod.DELETE)
+	@ResponseBody
+	public DataWrapper<Void> deleteEmployee(
+		@PathVariable("employeeId") Long employeeId) {
+		return employeeService.deleteEmployee(employeeId);
 	}
 }

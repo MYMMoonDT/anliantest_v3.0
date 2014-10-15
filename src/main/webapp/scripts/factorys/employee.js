@@ -14,14 +14,16 @@ angular.module('anliantestApp')
     var DEFAULT_NUM_PER_PAGE = 10;
 
     return $resource('api/employee/:employeeId', {}, {
+      update: {
+        method: 'PUT'
+      },
       query: {
         method: 'GET',
         params: {currPageNum: DEFAULT_CURR_PAGE_NUM, numPerPage: DEFAULT_NUM_PER_PAGE},
-        isArray: true,
         transformResponse: function(data) {
           data = eval('(' + data + ')');
           if(data.callStatus == 'SUCCEED') {
-            return data.data;
+            return data;
           }else{
             return null;
           }
