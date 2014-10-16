@@ -8,13 +8,16 @@
  * Controller of the anliantestApp
  */
 angular.module('anliantestApp')
-  .controller('LoginCtrl', function ($scope, employee) {
+  .controller('LoginCtrl', function ($scope, EmployeeService) {
     $scope.employee = {
       number: '',
       password: ''
     };
 
     $scope.login = function() {
-      employee.login($scope.employee.number, $scope.employee.password);
+      var promise = EmployeeService.login($scope.employee.number, $scope.employee.password);
+      promise.then(function (data){
+      }, function (){
+      });
     };
   });

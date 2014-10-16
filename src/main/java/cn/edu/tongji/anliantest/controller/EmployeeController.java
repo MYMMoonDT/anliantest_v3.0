@@ -25,6 +25,14 @@ public class EmployeeController {
 		this.employeeService = employeeService;
 	}
 	
+	@RequestMapping(value="employee/login")
+	@ResponseBody
+	public DataWrapper<Employee> login(
+		@RequestParam(value = "number") String number,
+		@RequestParam(value = "password") String password) {
+		return employeeService.login(number, password);
+	}
+	
 	@RequestMapping(value="employee", method=RequestMethod.GET)
 	@ResponseBody
 	public DataWrapper<List<Employee>> getEmployeeList(

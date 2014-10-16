@@ -13,23 +13,10 @@ angular.module('anliantestApp')
     $scope.currPageNum = 1;
     $scope.totalItemNum = 0;
     $scope.pageChanged = function() {
-      Employee.query({currPageNum:$scope.currPageNum}, function(data) {
-        console.log(data);
-        if(data != null) {
-          $scope.employeeList = data.data;
-          $scope.currPageNum = data.currPageNum;
-          $scope.totalItemNum = data.totalItemNum;
-        }
-      });
+      refreshData();
     };
 
-    Employee.query(function(data) {
-      if(data != null) {
-        $scope.employeeList = data.data;
-        $scope.currPageNum = data.currPageNum;
-        $scope.totalItemNum = data.totalItemNum;
-      }
-    });
+    refreshData();
 
     $scope.showAddEmployeeDialog = function () {
       var dialog = dialogs.create('template/at-employee-dialog.html', 'employeeDialogCtrl', 
@@ -48,7 +35,7 @@ angular.module('anliantestApp')
         angular.extend(employee, data.item);
         
         employee.$save(function(){
-          $scope.employeeList = Employee.query();
+          refreshData();
         });
       }, function () {
 
@@ -73,7 +60,7 @@ angular.module('anliantestApp')
         angular.extend(employee, data.item);
         
         employee.$update(function(){
-          $scope.employeeList = Employee.query();
+          refreshData();
         });
       }, function () {
 
@@ -96,12 +83,22 @@ angular.module('anliantestApp')
         var _employee = new Employee();
 
         _employee.$delete({employeeId:employee.id}, function(){
-          $scope.employeeList = Employee.query();
+          refreshData();
         });
 
       }, function () {
       });
     };  
+
+    function refreshData() {
+      Employee.query({currPageNum:$scope.currPageNum}, function(data) {
+        if(data != null) {
+          $scope.employeeList = data.data;
+          $scope.currPageNum = data.currPageNum;
+          $scope.totalItemNum = data.totalItemNum;
+        }
+      });
+    }
   })
   .controller('employeeDialogCtrl', function ($scope, $modalInstance, data) {
     $scope.data = data;

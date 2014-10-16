@@ -8,6 +8,5 @@
  * Controller of the anliantestApp
  */
 angular.module('anliantestApp')
-  .controller('MainCtrl', function ($scope) {
-    
+  .controller('MainCtrl', function ($scope, $location, EmployeeService) {
   });
