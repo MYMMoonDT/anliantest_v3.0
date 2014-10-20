@@ -3,6 +3,7 @@ package cn.edu.tongji.anliantest.controller;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -23,6 +24,16 @@ public class NavController {
         String host = request.getRequestURL().substring(0,request.getRequestURL().indexOf("/",10)+1);
         ModelAndView view = new ModelAndView();
         view.setViewName("redirect:"+host+"#/project");
+        return view;
+	}
+	
+	@RequestMapping(value = "/project/{projectId}")
+	public ModelAndView projectDetailPage(
+			@PathVariable("projectId") Long projectId,
+            HttpServletRequest request){
+        String host = request.getRequestURL().substring(0,request.getRequestURL().indexOf("/",10)+1);
+        ModelAndView view = new ModelAndView();
+        view.setViewName("redirect:"+host+"#/project/"+projectId);
         return view;
 	}
 	

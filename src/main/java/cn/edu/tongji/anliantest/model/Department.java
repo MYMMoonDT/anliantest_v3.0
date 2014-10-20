@@ -17,6 +17,8 @@ public class Department implements Serializable{
 	private String name;
 	private String description;
 	
+	private DepartmentTypeEnum type;
+	
 	@Id
 	@GeneratedValue
 	public Long getId() {
@@ -36,6 +38,12 @@ public class Department implements Serializable{
 	}
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	public DepartmentTypeEnum getType() {
+		return type;
+	}
+	public void setType(DepartmentTypeEnum type) {
+		this.type = type;
 	}
 
 }

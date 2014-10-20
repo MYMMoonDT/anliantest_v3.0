@@ -9,7 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import cn.edu.tongji.anliantest.dao.ProjectDao;
+import cn.edu.tongji.anliantest.dao.TaskDao;
 import cn.edu.tongji.anliantest.model.Project;
+import cn.edu.tongji.anliantest.model.ProjectStatusEnum;
+import cn.edu.tongji.anliantest.model.ProjectStepEnum;
+import cn.edu.tongji.anliantest.model.Task;
 import cn.edu.tongji.anliantest.service.ProjectService;
 import cn.edu.tongji.anliantest.util.DataWrapper;
 
@@ -20,6 +24,8 @@ public class ProjectServiceImpl implements ProjectService{
 	
 	@Autowired
     private ProjectDao projectDao;
+	@Autowired
+	private TaskDao taskDao;
 	
 	@Override
 	public DataWrapper<Project> getProjectById(Long projectId) {
@@ -36,7 +42,18 @@ public class ProjectServiceImpl implements ProjectService{
 		DataWrapper<Project> ret = new DataWrapper<>();
 		
 		project.setCreateTime(new Date());
+		project.setStep(ProjectStepEnum.STEP1);
+		project.setStatus(ProjectStatusEnum.CREATE_HTPSJL);
+		
 		projectDao.addProject(project);
+		
+		//为项目业务负责人创建新建合同评审记录的Task
+		Task task = new Task(project, 
+				ProjectStepEnum.STEP1,
+				ProjectStatusEnum.CREATE_HTPSJL, 
+				project.getBusinessEmployee());
+		taskDao.addTask(task);
+		
 		
 		ret.setData(projectDao.getProjectById(project.getId()));
 		

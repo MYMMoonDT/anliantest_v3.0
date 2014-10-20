@@ -5,6 +5,9 @@ body {
   font-family: 'Microsoft Yahei', STHeiti, sans-serif;
   font-size: 14px;
 }
+.form-control.date {
+  width: 110px;
+}
 .modal-dialog {
   margin: 10% auto;
 }

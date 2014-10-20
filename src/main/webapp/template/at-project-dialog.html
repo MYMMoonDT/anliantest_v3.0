@@ -1,0 +1,91 @@
+<div class="row">
+  <div class="col-md-6">
+    <button type="button" class="btn btn-default pull-left" ng-click="cancel()">&nbsp;取消&nbsp;</button>
+  </div>
+  <div class="col-md-6">
+    <button type="button" class="btn btn-success pull-right" ng-click="save()">&nbsp;确定&nbsp;</button>
+  </div>
+</div>
+
+<div class="content">
+  <div class="row">
+    <div class="cell">
+      <label>项目编号:</label>
+    </div>
+    <div class="cell">
+      <input ng-model="data.item.number" type="text" class="form-control">
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="cell">
+      <label>项目名称:</label>
+    </div>
+    <div class="cell">
+      <input ng-model="data.item.name" type="text" class="form-control">
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="cell">
+      <label>项目类型:</label>
+    </div>
+    <div class="cell">
+      <select ng-model="type" ng-change="changeType()" ng-options="type.name for type in typeList" class="form-control"></select>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="cell">
+      <label>企业名称:</label>
+    </div>
+    <div class="cell">
+      <input ng-model="data.item.companyName" type="text" class="form-control">
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="cell">
+      <label>企业地址:</label>
+    </div>
+    <div class="cell">
+      <input ng-model="data.item.companyAddress" type="text" class="form-control">
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="cell">
+      <label>联系人:</label>
+    </div>
+    <div class="cell">
+      <input ng-model="data.item.contactPreson" type="text" class="form-control">
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="cell">
+      <label>联系电话:</label>
+    </div>
+    <div class="cell">
+      <input ng-model="data.item.contactTel" type="text" class="form-control">
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="cell">
+      <label>合同额:</label>
+    </div>
+    <div class="cell">
+      <input ng-model="data.item.contractAmount" type="text" class="form-control">
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="cell">
+      <label>业务负责人:</label>
+    </div>
+    <div class="cell">
+      <label>{{data.item.businessEmployee.name}}</label>
+    </div>
+  </div>
+<div>

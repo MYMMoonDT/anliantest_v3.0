@@ -1,0 +1,118 @@
+<div id="wrapper">
+  <at-header></at-header>
+
+  <div id="page-wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">项目详情</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <i class="fa fa-bar-chart-o fa-fw"></i> 项目内容
+              </div>
+              <div class="panel-body">
+                <table class="table table-striped">
+                  <tbody>
+                      <tr>
+                          <td>
+                            项目编号:
+                          </td>
+                          <td>
+                            {{project.number}}
+                          </td>
+                      </tr>
+                      <tr>
+                          <td>
+                            项目名称:
+                          </td>
+                          <td>
+                            {{project.name}}
+                          </td>
+                      </tr>
+                      <tr>
+                          <td>
+                            项目类型:
+                          </td>
+                          <td>
+                            {{project.type | projectType}}
+                          </td>
+                      </tr>
+                      <tr>
+                          <td>
+                            企业名称:
+                          </td>
+                          <td>
+                            {{project.companyName}}
+                          </td>
+                      </tr>
+                      <tr>
+                          <td>
+                            企业地址:
+                          </td>
+                          <td>
+                            {{project.companyAddress}}
+                          </td>
+                      </tr>
+                      <tr>
+                          <td>
+                            联系人:
+                          </td>
+                          <td>
+                            {{project.contactPreson}}
+                          </td>
+                      </tr>
+                      <tr>
+                          <td>
+                            联系电话:
+                          </td>
+                          <td>
+                            {{project.contactTel}}
+                          </td>
+                      </tr>
+                      <tr>
+                          <td>
+                            合同额:
+                          </td>
+                          <td>
+                            {{project.contractAmount}}
+                          </td>
+                      </tr>
+                      <tr>
+                          <td>
+                            业务负责人:
+                          </td>
+                          <td>
+                            {{project.businessEmployee.name}}
+                          </td>
+                      </tr>
+                      <tr>
+                          <td>
+                            项目负责人:
+                          </td>
+                          <td>
+                            {{project.projectEmployee.name}}
+                          </td>
+                      </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <i class="fa fa-clock-o fa-fw"></i> 项目进度
+              </div>
+              <div class="panel-body">
+                
+              </div>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>

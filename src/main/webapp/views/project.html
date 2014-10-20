@@ -4,8 +4,47 @@
   <div id="page-wrapper">
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">项目管理</h1>
+            <h1 class="page-header">项目管理<button type="button" class="btn btn-primary pull-right" ng-click="showAddProjectDialog()">&nbsp;添加&nbsp;</button></h1>
         </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-12">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>项目编号</th>
+              <th>项目名称</th>
+              <th>项目类型</th>
+              <th>项目进度</th>
+              <th>项目状态</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="project in projectList">
+              <td>{{ project.id }}</td>
+              <td>{{ project.number }}</td>
+              <td>{{ project.name }}</td>
+              <td>{{ project.type | projectType}}</td>
+              <td>{{ project.step | projectStep}}</td>
+              <td>{{ project.status | projectStatus}}</td>
+              <td>
+                <button type="button" ng-click="viewProject(project)" class="btn btn-success btn-sm">详情</button>
+                <button type="button" ng-click="editProject(project)" class="btn btn-warning btn-sm">编辑</button>
+                <button type="button" ng-click="removeProject(project)" class="btn btn-danger btn-sm">删除</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-12">
+        <pagination direction-links="false" total-items="totalItemNum" ng-model="currPageNum" ng-change="pageChanged()" items-per-page="10"></pagination>
+      </div>
     </div>
   </div>
 </div>

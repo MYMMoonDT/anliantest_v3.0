@@ -47,10 +47,17 @@ public class ProjectController {
 		return projectService.addProject(project);
 	}
 	
-	@RequestMapping(value="project/{projectId}", method=RequestMethod.PUT)
+	@RequestMapping(value="project", method=RequestMethod.PUT)
 	@ResponseBody
 	public DataWrapper<Project> updateProject(
 		@RequestBody Project project) {
 		return projectService.updateProject(project);
+	}
+	
+	@RequestMapping(value="project/{projectId}", method=RequestMethod.DELETE)
+	@ResponseBody
+	public DataWrapper<Void> deleteProject(
+			@PathVariable("projectId") Long projectId) {
+		return projectService.deleteProject(projectId);
 	}
 }

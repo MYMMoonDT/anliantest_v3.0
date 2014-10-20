@@ -38,7 +38,7 @@ public class Project implements Serializable{
 	
 	private Employee businessEmployee;
 	private Employee projectEmployee;
-
+	
 	@Id
 	@GeneratedValue
 	public Long getId() {

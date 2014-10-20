@@ -47,10 +47,12 @@ public abstract class AbstractHibernateDao<E, I extends Serializable> {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<E> findByCriteria(Criterion criterion) {
+	public List<E> findByCriteria(List<Criterion> criterions) {
 		Criteria criteria = getCurrentSession().createCriteria(entityClass);
-		if (criterion != null) {
-			criteria.add(criterion);
+		if (criterions != null && criterions.size() > 0) {
+			for(int i = 0; i < criterions.size(); i++) {
+				criteria.add(criterions.get(i));
+			}
 		}
 		return criteria.list();
 	}
@@ -64,13 +66,15 @@ public abstract class AbstractHibernateDao<E, I extends Serializable> {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public PageResult<E> findByCriteriaByPage(Criterion criterion, int currPageNum, int numPerPage) {
+	public PageResult<E> findByCriteriaByPage(List<Criterion> criterions, int currPageNum, int numPerPage) {
 		PageResult<E> pageResult = new PageResult<E>(currPageNum, numPerPage);
 		
 		Criteria criteria = getCurrentSession().createCriteria(entityClass);
 		
-		if (criterion != null) {
-			criteria.add(criterion);
+		if (criterions != null && criterions.size() < 0) {
+			for(int i = 0; i < criterions.size(); i++) {
+				criteria.add(criterions.get(i));
+			}
 		}
 		
 		criteria.setProjection(Projections.rowCount());
