@@ -3,6 +3,7 @@ package cn.edu.tongji.anliantest.model;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -46,7 +47,7 @@ public class HTPSJLItem implements Serializable{
 		this.id = id;
 	}
 
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.REFRESH})
 	@JoinColumn(name="tableId")
 	@JsonIgnore
 	public HTPSJLTable getTable() {

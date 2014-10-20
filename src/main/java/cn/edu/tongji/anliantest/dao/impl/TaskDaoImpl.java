@@ -27,7 +27,7 @@ public class TaskDaoImpl extends AbstractHibernateDao<Task, Long> implements Tas
 	}
 	
 	@Override
-	public Task getTaskByProjectInfo(Project project, ProjectStepEnum step,
+	public List<Task> getTaskByProjectInfo(Project project, ProjectStepEnum step,
 			ProjectStatusEnum status) {
 		List<Criterion> criterions = new ArrayList<Criterion>();
 		
@@ -38,11 +38,7 @@ public class TaskDaoImpl extends AbstractHibernateDao<Task, Long> implements Tas
 		criterions.add(Restrictions.eq("status", true));
 		
 		List<Task> list = findByCriteria(criterions);
-		if(list != null && list.size() > 0) {
-			return list.get(0);
-		}else {
-			return null;
-		}
+		return list;
 	}
 
 	@Override
@@ -58,6 +54,28 @@ public class TaskDaoImpl extends AbstractHibernateDao<Task, Long> implements Tas
 	@Override
 	public void deleteTask(Long taskId) {
 		delete(findById(taskId));
+	}
+
+	@Override
+	public List<Task> getTasksByEmployeeId(Long employeeId) {
+		List<Criterion> criterions = new ArrayList<Criterion>();
+		
+		criterions.add(Restrictions.eq("employee.id", employeeId));
+		criterions.add(Restrictions.eq("status", true));
+		List<Task> list = findByCriteria(criterions);
+
+		return list;
+	}
+
+	@Override
+	public List<Task> getTasksByDepartmentId(Long departmentId) {
+		List<Criterion> criterions = new ArrayList<Criterion>();
+		
+		criterions.add(Restrictions.eq("department.id", departmentId));
+		criterions.add(Restrictions.eq("status", true));
+		List<Task> list = findByCriteria(criterions);
+
+		return list;
 	}
 	
 }

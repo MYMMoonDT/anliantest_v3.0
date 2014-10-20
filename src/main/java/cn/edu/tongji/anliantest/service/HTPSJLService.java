@@ -11,4 +11,6 @@ public interface HTPSJLService {
 	public DataWrapper<HTPSJLTable> updateHTPSJLTable(HTPSJLTable htpsjlTable);
 	
 	public DataWrapper<Void> deleteHTPSJLTable(Long htpsjlTableId);
+	
+	public DataWrapper<Void> signHTPSJLTable(Long taskId, Long employeeId);
 }

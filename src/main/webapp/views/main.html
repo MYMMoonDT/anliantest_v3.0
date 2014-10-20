@@ -7,5 +7,53 @@
             <h1 class="page-header">待办事宜</h1>
         </div>
     </div>
+
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <i class="fa fa-bell fa-fw"></i> 个人待办事宜
+                <div class="pull-right">
+                  个人: {{employee.name}}
+                </div>
+              </div>
+              <div class="panel-body">
+                <div class="list-group">
+                  <div class="list-group-item" ng-repeat="task in employeeTaskList">
+                    <i class="fa fa-tasks fa-fw"></i> {{task.projectStatus | projectStatus}}
+                    <div class="options">
+                      <button class="btn btn-default" popover="{{'项目名称: ' + task.project.name}}" popover-title="任务详情">详情</button>
+                      <button class="btn btn-success" ng-click="finishTask(task)">{{task.projectStatus | taskOption}}</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <i class="fa fa-bell fa-fw"></i> 部门待办事宜
+                <div class="pull-right">
+                  部门: {{employee.department.name}}
+                </div>
+              </div>
+              <div class="panel-body">
+                <div class="list-group">
+                  <div class="list-group-item" ng-repeat="task in departmentTaskList">
+                    <i class="fa fa-tasks fa-fw"></i> {{task.projectStatus | projectStatus}}
+                    <div class="options">
+                      <button class="btn btn-default" popover="{{'项目名称: ' + task.project.name}}" popover-title="任务详情">详情</button>
+                      <button class="btn btn-success" ng-click="finishTask(task)">{{task.projectStatus | taskOption}}</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+
+    </div>
+
   </div>
 </div>

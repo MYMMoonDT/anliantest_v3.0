@@ -83,8 +83,5 @@ public class HTPSJLTable implements Serializable{
 
 	public void setItems(Set<HTPSJLItem> items) {
 		this.items = items;
-		for(HTPSJLItem item : this.items) {
-			item.setTable(this);
-		}
 	}
 }

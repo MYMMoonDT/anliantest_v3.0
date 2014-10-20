@@ -165,7 +165,7 @@ angular.module('anliantestApp')
         businessEmployee: $rootScope.employee
       };
     } else if ($scope.data.type == 'EDIT') {
-      console.log($scope.data);
+      
     }
 
     $scope.type = null;

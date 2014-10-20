@@ -2,8 +2,10 @@ package cn.edu.tongji.anliantest.dao;
 
 import cn.edu.tongji.anliantest.model.HTPSJLTable;
 
-public interface HTPSJLDao {
+public interface HTPSJLTableDao {
 	public HTPSJLTable getHTPSJLById(Long htpsjlTableId);
+	
+	public HTPSJLTable getHTPSJLByProjectId(Long projectId);
 	
 	public Long addHTPSJL(HTPSJLTable htpsjlTable);
 	

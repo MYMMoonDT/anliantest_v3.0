@@ -38,6 +38,15 @@ public class HTPSJLController {
 		return htpsjlService.addHTPSJLTable(htpsjlTable, employeeId);
 	}
 	
+	//合同评审记录签字
+	@RequestMapping(value="htpsjl/sign", method=RequestMethod.POST)
+	@ResponseBody
+	public DataWrapper<Void> signHTPSJL(
+		@RequestParam("taskId") Long taskId,
+		@RequestParam("employeeId") Long employeeId) {
+		return htpsjlService.signHTPSJLTable(taskId, employeeId);
+	}
+	
 	@RequestMapping(value="htpsjl", method=RequestMethod.PUT)
 	@ResponseBody
 	public DataWrapper<HTPSJLTable> updateHTPSJL(

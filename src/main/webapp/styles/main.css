@@ -32,3 +32,6 @@ body {
   margin: 0;
   font-weight: normal;
 }
+.list-group .list-group-item .options {
+  display: inline-block;
+}
