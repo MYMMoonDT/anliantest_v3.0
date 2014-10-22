@@ -8,7 +8,7 @@
  * Controller of the anliantestApp
  */
 angular.module('anliantestApp')
-  .controller('MainCtrl', function ($scope, $rootScope, $location, dialogs, EmployeeService, Task, HTPSJL) {
+  .controller('MainCtrl', function ($scope, $rootScope, $location, dialogs, EmployeeService, Task, Project, HTPSJL, GZRWD) {
     $scope.employee = EmployeeService.getCurrEmployee();
 
     refreshData();
@@ -22,10 +22,13 @@ angular.module('anliantestApp')
           SIGN_HTPSJL(task);
           break;
         case 'CREATE_GZRWD':
+          CREATE_GZRWD(task);
           break;
         case 'APPOINT_XMFZR':
+          APPOINT_XMFZR(task);
           break;
         case 'CREATE_KHZLDJD':
+          CREATE_KHZLDJD(task);
           break;
         case 'CREATE_XCDCJL':
           break;
@@ -59,7 +62,6 @@ angular.module('anliantestApp')
     }
 
     function SIGN_HTPSJL(task) {
-      console.log(task);
       var dialog = dialogs.create('template/at-confirm-dialog.html', 'ConfirmCtrl', 
       {
         text: '确定要在合同评审记录上签字?',
@@ -77,6 +79,71 @@ angular.module('anliantestApp')
         htpsjl.$sign({taskId : task.id, employeeId : $rootScope.employee.id}, function (){
           refreshData();
         });
+      }, function () {
+        
+      });
+    }
+
+    function CREATE_GZRWD(task) {
+      var dialog = dialogs.create('template/at-gzrwd-dialog.html', 'GzrwdDialogCtrl', {}, 
+      {
+        size: 'lg',
+        keyboard: true,
+        backdrop: 'static',
+        windowClass: 'model-overlay'
+      });
+
+      dialog.result.then(function (data) {
+        var gzrwd = new GZRWD();
+
+        angular.extend(gzrwd, data.item);
+
+        gzrwd.issueEmployee = {
+          id: $rootScope.employee.id
+        };
+
+        gzrwd.$save({taskId: task.id, employeeId: $rootScope.employee.id}, function() {
+          refreshData();
+        });
+
+      }, function () {
+        
+      });
+    }
+
+    function APPOINT_XMFZR(task) {
+      var dialog = dialogs.create('template/at-xmfzr-dialog.html', 'XmfzrDialogCtrl', {}, 
+      {
+        size: 'md',
+        keyboard: true,
+        backdrop: 'static',
+        windowClass: 'model-overlay'
+      });
+
+      dialog.result.then(function (data) {
+        var project = new Project();
+
+        project.$appoint({taskId: task.id, employeeId: $rootScope.employee.id, appointEmployeeId: data.id}, function() {
+          refreshData();
+        });
+
+      }, function () {
+        
+      });
+    }
+
+    function CREATE_KHZLDJD(task) {
+      var dialog = dialogs.create('template/at-khzldjd-dialog.html', 'KhzldjdDialogCtrl', {}, 
+      {
+        size: 'lg',
+        keyboard: true,
+        backdrop: 'static',
+        windowClass: 'model-overlay'
+      });
+
+      dialog.result.then(function (data) {
+        
+
       }, function () {
         
       });

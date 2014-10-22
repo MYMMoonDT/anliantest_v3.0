@@ -14,6 +14,10 @@ angular.module('anliantestApp')
     var DEFAULT_NUM_PER_PAGE = 10;
 
     return $resource('api/project/:projectId', {}, {
+      appoint: {
+        method: 'POST',
+        url: 'api/project/appoint'
+      },
       get: {
         method: 'GET',
         transformResponse: function (data) {

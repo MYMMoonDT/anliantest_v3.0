@@ -2,9 +2,9 @@
 
 /**
  * @ngdoc factory
- * @name anliantestApp.Htpsjl
+ * @name anliantestApp.HTPSJL
  * @description
- * # Htpsjl
+ * # HTPSJL
  * Factory in the anliantestApp.
  */
 angular.module('anliantestApp')

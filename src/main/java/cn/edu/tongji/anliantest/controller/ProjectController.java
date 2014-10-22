@@ -60,4 +60,14 @@ public class ProjectController {
 			@PathVariable("projectId") Long projectId) {
 		return projectService.deleteProject(projectId);
 	}
+	
+	//指定项目负责人
+	@RequestMapping(value="project/appoint", method=RequestMethod.POST)
+	@ResponseBody
+	public DataWrapper<Void> appointProjectEmployee(
+			@RequestParam("taskId") Long taskId,
+			@RequestParam("employeeId") Long employeeId,
+			@RequestParam("appointEmployeeId") Long appointEmployeeId) {
+		return projectService.appointProjectEmployee(taskId, employeeId, appointEmployeeId);
+	}
 }

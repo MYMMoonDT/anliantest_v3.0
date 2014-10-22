@@ -1,7 +1,9 @@
 package cn.edu.tongji.anliantest.util;
 
 public enum TableNumEnum {
-	HTPSJL("HTPSJL", "ALJC/JL07-03");
+	HTPSJL("HTPSJL", "ALJC/JL07-03"),
+	GZRWD("GZRWD", "ALJC/JL32-01"),
+	KHZLDJD("KHZLDJD", "ALJC/JL32-02");
 	
 	public String tableName;
 	public String tableNum;

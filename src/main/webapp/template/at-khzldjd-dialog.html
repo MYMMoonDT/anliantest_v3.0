@@ -1,0 +1,41 @@
+<div class="row">
+  <div class="col-md-6">
+    <button type="button" class="btn btn-default pull-left" ng-click="cancel()">&nbsp;取消&nbsp;</button>
+  </div>
+  <div class="col-md-6">
+    <button type="button" class="btn btn-success pull-right" ng-click="save()">&nbsp;确定&nbsp;</button>
+  </div>
+</div>
+
+<div class="content">
+  <div class="row">
+    <div class="cell">
+      <button type="button" class="btn btn-primary pull-right"  ng-click="addItem()">&nbsp;添加&nbsp;</button>
+    </div>
+  </div>
+</div>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><label>提交评价资料名称</label></th>
+      <th><label>提交日期</label></th>
+      <th><label>数量</label></th>
+      <th><label>接收人</label></th>
+      <th><label>返还日期</label></th>
+      <th><label>返还人</label></th>
+      <th><label>操作</label></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="item in data.item.items">
+      <td><input ng-model="item.resourceName" class="form-control"></td>
+      <td style="width: 120px;"><input at-datepicker date="item.submitDate" type="text" class="form-control date"></td>
+      <td style="width: 60px;"><input ng-model="item.resourceNum" class="form-control"></td>
+      <td style="line-height: 34px;">{{item.receiveEmployee.name}}&nbsp;<button type="button" class="btn btn-primary"  ng-click="selectReceiveEmployee(item)">&nbsp;指定&nbsp;</button></td>
+      <td style="width: 120px;"><input at-datepicker date="item.returnDate" type="text" class="form-control date"></td>
+      <td style="line-height: 34px;">{{item.returnEmployee.name}}&nbsp;<button type="button" class="btn btn-primary"  ng-click="selectReturnEmployee(item)">&nbsp;指定&nbsp;</button></td>
+      <td><button type="button" class="btn btn-danger"  ng-click="deleteItem(item)">&nbsp;删除&nbsp;</button></td>
+    </tr>
+  </tbody>
+</table>

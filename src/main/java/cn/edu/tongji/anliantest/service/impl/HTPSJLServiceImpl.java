@@ -85,7 +85,11 @@ public class HTPSJLServiceImpl implements HTPSJLService{
 		Log createLog = new Log(employeeDao.getEmployeeById(employeeId), createTask);
 		logDao.addLog(createLog);
 		
-		//为评价部、检测部、行政部、质控部、总经理、技术负责人创建合同评审记录签字的Task
+		//为评价部、检测部、行政部、质控部、总经理、技术负责人创建合同评审记录签字的Task,同时更新项目状态
+		project.setStep(ProjectStepEnum.STEP1);
+		project.setStatus(ProjectStatusEnum.SIGN_HTPSJL);
+		projectDao.updateProject(project);
+		
 		taskDao.addTask(new Task(project, ProjectStepEnum.STEP1, 
 				ProjectStatusEnum.SIGN_HTPSJL, 
 				departmentDao.getDepartmentByType(DepartmentTypeEnum.EVALUATION)));
@@ -174,6 +178,8 @@ public class HTPSJLServiceImpl implements HTPSJLService{
 					ProjectStatusEnum.CREATE_GZRWD, 
 					departmentDao.getDepartmentByType(DepartmentTypeEnum.TEACHNICAL_DIRECTOR)));
 		}
+		
+		logger.info("合同评审记录签字信息:" + htpsjlTable.getId());
 		
 		return ret;
 	}

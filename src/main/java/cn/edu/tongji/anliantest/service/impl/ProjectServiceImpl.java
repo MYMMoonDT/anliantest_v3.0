@@ -8,8 +8,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import cn.edu.tongji.anliantest.dao.EmployeeDao;
+import cn.edu.tongji.anliantest.dao.LogDao;
 import cn.edu.tongji.anliantest.dao.ProjectDao;
 import cn.edu.tongji.anliantest.dao.TaskDao;
+import cn.edu.tongji.anliantest.model.Employee;
+import cn.edu.tongji.anliantest.model.Log;
 import cn.edu.tongji.anliantest.model.Project;
 import cn.edu.tongji.anliantest.model.ProjectStatusEnum;
 import cn.edu.tongji.anliantest.model.ProjectStepEnum;
@@ -24,8 +28,14 @@ public class ProjectServiceImpl implements ProjectService{
 	
 	@Autowired
     private ProjectDao projectDao;
+	
 	@Autowired
 	private TaskDao taskDao;
+	@Autowired
+	private LogDao logDao;
+	
+	@Autowired
+	private EmployeeDao employeeDao;
 	
 	@Override
 	public DataWrapper<Project> getProjectById(Long projectId) {
@@ -89,6 +99,40 @@ public class ProjectServiceImpl implements ProjectService{
 	@Override
 	public DataWrapper<List<Project>> getProjectList(int currPageNum, int numPerPage) {
 		return projectDao.getProjectList(currPageNum, numPerPage);
+	}
+
+	@Override
+	public DataWrapper<Void> appointProjectEmployee(Long taskId, Long employeeId, Long appointEmployeeId) {
+		DataWrapper<Void> ret = new DataWrapper<>();
+		
+		Task appointTask = taskDao.getTaskById(taskId);
+		Project project = appointTask.getProject();
+		Employee employee = employeeDao.getEmployeeById(employeeId);
+		Employee appointEmployee = employeeDao.getEmployeeById(appointEmployeeId);
+		
+		//完成指定项目负责人的Task
+		project.setProjectEmployee(appointEmployee);
+		projectDao.updateProject(project);
+		
+		appointTask.setStatus(false);
+		taskDao.updateTask(appointTask);
+		
+		//记录完成Task的employee
+		Log appointLog = new Log(employee, appointTask);
+		logDao.addLog(appointLog);
+		
+		//为项目负责人创建新建客户资料登记单的Task,同时更新项目状态
+		project.setStep(ProjectStepEnum.STEP3);
+		project.setStatus(ProjectStatusEnum.CREATE_KHZLDJD);
+		projectDao.updateProject(project);
+		
+		taskDao.addTask(new Task(project, ProjectStepEnum.STEP3, 
+				ProjectStatusEnum.CREATE_KHZLDJD, 
+				appointEmployee));
+		
+		logger.info("指定项目负责人信息:" + project.getName() + "(" + appointEmployee.getName() + ")");
+		
+		return ret;
 	}
 	
 }

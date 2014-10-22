@@ -15,4 +15,6 @@ public interface ProjectService {
 	public DataWrapper<Void> deleteProject(Long projectId);
 	
 	public DataWrapper<List<Project>> getProjectList(int currPageNum, int numPerPage);
+
+	public DataWrapper<Void> appointProjectEmployee(Long taskId, Long employeeId, Long appointEmployeeId);
 }
