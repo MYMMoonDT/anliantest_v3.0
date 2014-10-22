@@ -52,18 +52,19 @@ C:\Users\XXXX\git\anliantest_v3.0\src\main\webapp
 QQ:396696133
 
 项目开发技术
-前端
-1. Bootstrap
-官网：
 
-http://www.bootcss.com/
+前端
+
+1. Bootstrap
+
+官网：http://www.bootcss.com/
 
 2. Angular
-快速入门：
 
-http://angularjs.cn/tag/AngularJS
+快速入门：http://angularjs.cn/tag/AngularJS
 
 后端
+
 1. SpringMVC
 
 2. Spring
