@@ -1,0 +1,130 @@
+<div class="row">
+  <div class="col-md-6">
+    <button type="button" class="btn btn-default pull-left" ng-click="cancel()">&nbsp;取消&nbsp;</button>
+  </div>
+  <div class="col-md-6">
+    <button type="button" class="btn btn-success pull-right" ng-click="save()">&nbsp;确定&nbsp;</button>
+  </div>
+</div>
+
+<div class="content">
+  <div class="row">
+    <div class="cell">
+      <label>客户名称:</label>
+    </div>
+    <div class="cell">
+      <input ng-model="data.item.companyName" type="text" class="form-control">
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="cell">
+      <label>客户单位地址:</label>
+    </div>
+    <div class="cell">
+      <input ng-model="data.item.companyAddress" type="text" class="form-control">
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="cell">
+      <label>客户单位类型:</label>
+    </div>
+    <div class="cell">
+      <input ng-model="data.item.companyType" type="text" class="form-control">
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="cell">
+      <label>客户所属行业:</label>
+    </div>
+    <div class="cell">
+      <input ng-model="data.item.companyIndustry" type="text" class="form-control">
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="cell">
+      <label>客户员工数量:</label>
+    </div>
+    <div class="cell">
+      管理人员:&nbsp;&nbsp;<input ng-model="data.item.manageEmployeeNum" type="text" class="form-control" style="display:inline-block;width: 50px;">
+      &nbsp;&nbsp;&nbsp;&nbsp;
+      生产人员:&nbsp;&nbsp;<input ng-model="data.item.manufactureEmployeeNum" type="text" class="form-control" style="display:inline-block;width: 50px;">
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="cell" style="width:40%;">
+      <label>客户内部职业卫生管理部门:</label>
+    </div>
+    <div class="cell" style="width:60%;">
+      <label class="checkbox-inline">
+        <input type="checkbox" ng-model="data.item.customerHealthDep.exist"> 有
+      </label>
+      &nbsp;&nbsp;&nbsp;&nbsp;
+      <div style="display: inline-block;" ng-if="data.item.customerHealthDep.exist">
+        部门名称:&nbsp;&nbsp;<input ng-model="data.item.customerHealthDep.healthDepName" type="text" class="form-control" style="display:inline-block;width: 100px;">
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        部门人数:&nbsp;&nbsp;<input ng-model="data.item.customerHealthDep.healthEmpNum" type="text" class="form-control" style="display:inline-block;width: 50px;">
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="cell">
+      <label>客户联系人:</label>
+    </div>
+    <div class="cell">
+      <button type="button" class="btn btn-primary pull-right"  ng-click="addContactPerson()">&nbsp;添加&nbsp;</button>
+    </div>
+  </div>
+</div>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><label>姓名</label></th>
+      <th><label>工作部门</label></th>
+      <th><label>联系电话</label></th>
+      <th><label>操作</label></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="item in data.item.contactPersonItems">
+      <td><input ng-model="item.name" class="form-control"></td>
+      <td><input ng-model="item.department" class="form-control"></td>
+      <td><input ng-model="item.tel" class="form-control"></td>
+      <td><button type="button" class="btn btn-danger"  ng-click="deleteContactPerson(item)">&nbsp;删除&nbsp;</button></td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="content">
+  <div class="row">
+    <div class="cell">
+      <label>客户产品:</label>
+    </div>
+    <div class="cell">
+      <button type="button" class="btn btn-primary pull-right"  ng-click="addProduct()">&nbsp;添加&nbsp;</button>
+    </div>
+  </div>
+</div>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><label>产品名称</label></th>
+      <th><label>年产量</label></th>
+      <th><label>操作</label></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="item in data.item.productItems">
+      <td><input ng-model="item.name" class="form-control"></td>
+      <td><input ng-model="item.annualOutput" class="form-control"></td>
+      <td><button type="button" class="btn btn-danger"  ng-click="deleteProduct(item)">&nbsp;删除&nbsp;</button></td>
+    </tr>
+  </tbody>
+</table>

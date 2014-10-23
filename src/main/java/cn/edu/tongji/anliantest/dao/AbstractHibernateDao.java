@@ -71,7 +71,7 @@ public abstract class AbstractHibernateDao<E, I extends Serializable> {
 		
 		Criteria criteria = getCurrentSession().createCriteria(entityClass);
 		
-		if (criterions != null && criterions.size() < 0) {
+		if (criterions != null && criterions.size() > 0) {
 			for(int i = 0; i < criterions.size(); i++) {
 				criteria.add(criterions.get(i));
 			}
@@ -81,7 +81,7 @@ public abstract class AbstractHibernateDao<E, I extends Serializable> {
 		pageResult.setTotalItemNum(((Long)criteria.uniqueResult()).intValue());
 		
 		criteria.setProjection(null);
-		criteria.setResultTransformer(CriteriaSpecification.ROOT_ENTITY);
+		criteria.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
 		
 		criteria.setFirstResult(PageResult.getStartOfPage(pageResult.getCurrPageNum(), pageResult.getNumPerPage()));
 		criteria.setMaxResults(pageResult.getNumPerPage());

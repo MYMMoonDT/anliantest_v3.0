@@ -31,6 +31,7 @@ angular.module('anliantestApp')
           CREATE_KHZLDJD(task);
           break;
         case 'CREATE_XCDCJL':
+          CREATE_XCDCJL(task);
           break;
       }
     };
@@ -149,6 +150,23 @@ angular.module('anliantestApp')
         khzldjd.$save({taskId: task.id, employeeId: $rootScope.employee.id}, function() {
           refreshData();
         });
+
+      }, function () {
+        
+      });
+    }
+
+    function CREATE_XCDCJL(task) {
+      var dialog = dialogs.create('template/at-xcdcjl-dialog.html', 'XcdcjlDialogCtrl', {}, 
+      {
+        size: 'lg',
+        keyboard: true,
+        backdrop: 'static',
+        windowClass: 'model-overlay'
+      });
+
+      dialog.result.then(function (data) {
+        
 
       }, function () {
         
