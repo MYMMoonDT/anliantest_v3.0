@@ -32,7 +32,7 @@ public class KHZLDJDTable implements Serializable{
 	
 	private TableNumEnum tableNum;
 	
-	private Set<HTPSJLItem> items = new HashSet<HTPSJLItem>(0);
+	private Set<KHZLDJDItem> items = new HashSet<KHZLDJDItem>(0);
 
 	@Id
 	@GeneratedValue
@@ -63,11 +63,11 @@ public class KHZLDJDTable implements Serializable{
 	}
 
 	@OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "table")
-	public Set<HTPSJLItem> getItems() {
+	public Set<KHZLDJDItem> getItems() {
 		return items;
 	}
 
-	public void setItems(Set<HTPSJLItem> items) {
+	public void setItems(Set<KHZLDJDItem> items) {
 		this.items = items;
 	}
 }

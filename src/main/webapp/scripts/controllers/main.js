@@ -8,7 +8,7 @@
  * Controller of the anliantestApp
  */
 angular.module('anliantestApp')
-  .controller('MainCtrl', function ($scope, $rootScope, $location, dialogs, EmployeeService, Task, Project, HTPSJL, GZRWD) {
+  .controller('MainCtrl', function ($scope, $rootScope, $location, dialogs, EmployeeService, Task, Project, HTPSJL, GZRWD, KHZLDJD) {
     $scope.employee = EmployeeService.getCurrEmployee();
 
     refreshData();
@@ -142,7 +142,13 @@ angular.module('anliantestApp')
       });
 
       dialog.result.then(function (data) {
-        
+        var khzldjd = new KHZLDJD();
+
+        angular.extend(khzldjd, data.item);
+
+        khzldjd.$save({taskId: task.id, employeeId: $rootScope.employee.id}, function() {
+          refreshData();
+        });
 
       }, function () {
         
