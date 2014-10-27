@@ -14,7 +14,9 @@ angular.module('anliantestApp')
     refreshData();
 
     function refreshData() {
-      $scope.project = Project.get({projectId: $scope.projectId});
+      $scope.project = Project.get({projectId: $scope.projectId}, function(data){
+        $scope.step = data.step;
+      });
     }
     
   });

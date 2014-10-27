@@ -37,37 +37,10 @@
 
   <div class="row">
     <div class="cell">
-      <label>企业名称:</label>
+      <label>项目客户:</label>
     </div>
-    <div class="cell">
-      <input ng-model="data.item.companyName" type="text" class="form-control">
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="cell">
-      <label>企业地址:</label>
-    </div>
-    <div class="cell">
-      <input ng-model="data.item.companyAddress" type="text" class="form-control">
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="cell">
-      <label>联系人:</label>
-    </div>
-    <div class="cell">
-      <input ng-model="data.item.contactPreson" type="text" class="form-control">
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="cell">
-      <label>联系电话:</label>
-    </div>
-    <div class="cell">
-      <input ng-model="data.item.contactTel" type="text" class="form-control">
+    <div class="cell" style="line-height: 34px;">
+      {{data.item.customer.companyName}}<button type="button" class="btn btn-primary pull-right" ng-click="selectCustomer()">&nbsp;选择&nbsp;</button>
     </div>
   </div>
 

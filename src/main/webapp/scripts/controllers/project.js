@@ -147,7 +147,7 @@ angular.module('anliantestApp')
       });
     };
   })
-  .controller('projectDialogCtrl', function ($scope, $rootScope, $modalInstance, data) {
+  .controller('projectDialogCtrl', function ($scope, $rootScope, $modalInstance, dialogs, data) {
     $scope.data = data;
 
     if ($scope.data.type == 'CREATE') {
@@ -156,10 +156,8 @@ angular.module('anliantestApp')
         number: '',
         type: null,
 
-        companyName: '',
-        companyAddress: '',
-        contactPreson: '',
-        contactTel: '',
+        customer: null,
+
         contractAmount: '',
 
         businessEmployee: $rootScope.employee
@@ -183,6 +181,22 @@ angular.module('anliantestApp')
         }
       }
     }
+
+    $scope.selectCustomer = function (){
+      var dialog = dialogs.create('template/at-select-customer-dialog.html', 'SelectCustomerDialogCtrl', {}, 
+      {
+        size: 'md',
+        keyboard: true,
+        backdrop: 'static',
+        windowClass: 'model-overlay'
+      });
+
+      dialog.result.then(function (data) {
+        $scope.data.item.customer = data;
+      }, function () {
+        
+      });
+    };
 
     $scope.cancel = function() {
       $modalInstance.dismiss('Canceled');

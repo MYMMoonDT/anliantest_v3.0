@@ -25,11 +25,7 @@ public class Project implements Serializable{
 	
 	private Date createTime;
 	
-	private String companyName;
-	private String companyAddress;
-	
-	private String contactPreson;
-	private String contactTel;
+	private Customer customer;
 	
 	private String contractAmount;
 	
@@ -82,38 +78,6 @@ public class Project implements Serializable{
 		this.createTime = createTime;
 	}
 
-	public String getCompanyName() {
-		return companyName;
-	}
-
-	public void setCompanyName(String companyName) {
-		this.companyName = companyName;
-	}
-
-	public String getCompanyAddress() {
-		return companyAddress;
-	}
-
-	public void setCompanyAddress(String companyAddress) {
-		this.companyAddress = companyAddress;
-	}
-
-	public String getContactPreson() {
-		return contactPreson;
-	}
-
-	public void setContactPreson(String contactPreson) {
-		this.contactPreson = contactPreson;
-	}
-
-	public String getContactTel() {
-		return contactTel;
-	}
-
-	public void setContactTel(String contactTel) {
-		this.contactTel = contactTel;
-	}
-
 	public String getContractAmount() {
 		return contractAmount;
 	}
@@ -156,5 +120,15 @@ public class Project implements Serializable{
 
 	public void setProjectEmployee(Employee projectEmployee) {
 		this.projectEmployee = projectEmployee;
+	}
+
+	@ManyToOne
+	@JoinColumn(name="customerId")
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
 	}
 }

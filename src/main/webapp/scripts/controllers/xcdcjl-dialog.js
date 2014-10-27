@@ -11,6 +11,10 @@ angular.module('anliantestApp')
   .controller('XcdcjlDialogCtrl', function ($scope, $modalInstance, dialogs, data) {
     $scope.data = data;
 
+    $scope.data.item = {
+      createDate: new Date()
+    };
+
     $scope.cancel = function() {
       $modalInstance.dismiss('Canceled');
     };

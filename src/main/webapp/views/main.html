@@ -22,7 +22,7 @@
                   <div class="list-group-item" ng-repeat="task in employeeTaskList">
                     <i class="fa fa-tasks fa-fw"></i> {{task.projectStatus | projectStatus}}
                     <div class="options">
-                      <button class="btn btn-default" popover="{{'项目名称: ' + task.project.name}}" popover-title="任务详情">详情</button>
+                      <button class="btn btn-default" popover="{{'项目名称: ' + task.project.name + ' 项目编号: ' + task.project.number}}" popover-title="任务详情">详情</button>
                       <button class="btn btn-success" ng-click="finishTask(task)">{{task.projectStatus | taskOption}}</button>
                     </div>
                   </div>
