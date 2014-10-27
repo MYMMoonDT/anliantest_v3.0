@@ -70,4 +70,12 @@ public class ProjectController {
 			@RequestParam("appointEmployeeId") Long appointEmployeeId) {
 		return projectService.appointProjectEmployee(taskId, employeeId, appointEmployeeId);
 	}
+	
+	//获取新建项目编号
+	@RequestMapping(value="project/number", method=RequestMethod.POST)
+	@ResponseBody
+	public DataWrapper<Project> generateProjectNum(
+			@RequestBody Project project) {
+		return projectService.generateProjectNumber(project.getCreateDate(), project.getType());
+	}
 }

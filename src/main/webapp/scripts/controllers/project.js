@@ -147,11 +147,12 @@ angular.module('anliantestApp')
       });
     };
   })
-  .controller('projectDialogCtrl', function ($scope, $rootScope, $modalInstance, dialogs, data) {
+  .controller('projectDialogCtrl', function ($scope, $rootScope, $modalInstance, dialogs, data, Project) {
     $scope.data = data;
 
     if ($scope.data.type == 'CREATE') {
       $scope.data.item = {
+        createDate: new Date(),
         name: '',
         number: '',
         type: null,
@@ -160,7 +161,7 @@ angular.module('anliantestApp')
 
         contractAmount: '',
 
-        businessEmployee: $rootScope.employee
+        businessEmployee: null
       };
     } else if ($scope.data.type == 'EDIT') {
       
@@ -182,6 +183,15 @@ angular.module('anliantestApp')
       }
     }
 
+    $scope.changeType = function () {
+      var project = new Project();
+      project.createDate = $scope.data.item.createDate;
+      project.type = $scope.type.value;
+      project.$generate(function(data) {
+        $scope.data.item.number = data.data.number;
+      });
+    };
+
     $scope.selectCustomer = function (){
       var dialog = dialogs.create('template/at-select-customer-dialog.html', 'SelectCustomerDialogCtrl', {}, 
       {
@@ -193,6 +203,27 @@ angular.module('anliantestApp')
 
       dialog.result.then(function (data) {
         $scope.data.item.customer = data;
+        if($scope.type != null) {
+          $scope.data.item.name = $scope.data.item.customer.companyName + $scope.type.name; 
+        }else{
+          $scope.data.item.name = $scope.data.item.customer.companyName;
+        }
+      }, function () {
+        
+      });
+    };
+
+    $scope.selectBusinessEmployee = function (){
+      var dialog = dialogs.create('template/at-select-employee-dialog.html', 'SelectEmployeeDialogCtrl', {}, 
+      {
+        size: 'md',
+        keyboard: true,
+        backdrop: 'static',
+        windowClass: 'model-overlay'
+      });
+
+      dialog.result.then(function (data) {
+        $scope.data.item.businessEmployee = data;
       }, function () {
         
       });

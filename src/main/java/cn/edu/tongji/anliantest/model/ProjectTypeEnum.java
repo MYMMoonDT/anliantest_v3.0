@@ -11,4 +11,16 @@ public enum ProjectTypeEnum {
 		}
 		return ret;
 	}
+	
+	public static String getShort(ProjectTypeEnum projectType) {
+		String ret = "";
+		
+		switch(projectType) {
+		case JSXMZYBWHKZXGPJ:
+			ret = "KP";
+			break;
+		}
+		
+		return ret;
+	}
 }

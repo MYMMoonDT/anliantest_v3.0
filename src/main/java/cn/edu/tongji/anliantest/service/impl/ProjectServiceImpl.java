@@ -1,5 +1,6 @@
 package cn.edu.tongji.anliantest.service.impl;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -17,6 +18,7 @@ import cn.edu.tongji.anliantest.model.Log;
 import cn.edu.tongji.anliantest.model.Project;
 import cn.edu.tongji.anliantest.model.ProjectStatusEnum;
 import cn.edu.tongji.anliantest.model.ProjectStepEnum;
+import cn.edu.tongji.anliantest.model.ProjectTypeEnum;
 import cn.edu.tongji.anliantest.model.Task;
 import cn.edu.tongji.anliantest.service.ProjectService;
 import cn.edu.tongji.anliantest.util.DataWrapper;
@@ -51,7 +53,6 @@ public class ProjectServiceImpl implements ProjectService{
 	public DataWrapper<Project> addProject(Project project) {
 		DataWrapper<Project> ret = new DataWrapper<>();
 		
-		project.setCreateTime(new Date());
 		project.setStep(ProjectStepEnum.STEP1);
 		project.setStatus(ProjectStatusEnum.CREATE_HTPSJL);
 		
@@ -131,6 +132,35 @@ public class ProjectServiceImpl implements ProjectService{
 				appointEmployee));
 		
 		logger.info("指定项目负责人信息:" + project.getName() + "(" + appointEmployee.getName() + ")");
+		
+		return ret;
+	}
+
+	@Override
+	public DataWrapper<Project> generateProjectNumber(Date createDate,
+			ProjectTypeEnum projectType) {
+		DataWrapper<Project> ret = new DataWrapper<>();
+		
+		int size = projectDao.getProjectNumber(projectType) + 1;
+		
+		String sizeStr = "";
+		if(size < 10) {
+			sizeStr = "00" + String.valueOf(size);
+		}else if(size < 100) {
+			sizeStr = "0" + String.valueOf(size);
+		}else {
+			sizeStr = String.valueOf(size);
+		}
+		
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(createDate);
+		String numberString = String.valueOf(calendar.get(Calendar.YEAR))
+				+ "-" + ProjectTypeEnum.getShort(projectType)
+				+ "-" + sizeStr;
+		Project project = new Project();
+		project.setNumber(numberString);
+		
+		ret.setData(project);
 		
 		return ret;
 	}

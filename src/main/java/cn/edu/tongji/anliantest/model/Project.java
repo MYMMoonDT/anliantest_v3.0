@@ -23,7 +23,7 @@ public class Project implements Serializable{
 	private String number;
 	private ProjectTypeEnum type;
 	
-	private Date createTime;
+	private Date createDate;
 	
 	private Customer customer;
 	
@@ -69,13 +69,13 @@ public class Project implements Serializable{
 		this.type = type;
 	}
 
-	@Temporal(TemporalType.TIMESTAMP)
-	public Date getCreateTime() {
-		return createTime;
+	@Temporal(TemporalType.DATE)
+	public Date getCreateDate() {
+		return createDate;
 	}
 
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
 	}
 
 	public String getContractAmount() {

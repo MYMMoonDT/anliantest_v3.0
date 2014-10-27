@@ -18,6 +18,10 @@ angular.module('anliantestApp')
         method: 'POST',
         url: 'api/project/appoint'
       },
+      generate: {
+        method: 'POST',
+        url: 'api/project/number'
+      },
       get: {
         method: 'GET',
         transformResponse: function (data) {

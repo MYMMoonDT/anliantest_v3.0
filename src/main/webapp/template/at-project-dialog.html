@@ -10,19 +10,10 @@
 <div class="content">
   <div class="row">
     <div class="cell">
-      <label>项目编号:</label>
+      <label>创建时间:</label>
     </div>
     <div class="cell">
-      <input ng-model="data.item.number" type="text" class="form-control">
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="cell">
-      <label>项目名称:</label>
-    </div>
-    <div class="cell">
-      <input ng-model="data.item.name" type="text" class="form-control">
+      <input at-datepicker date="data.item.createDate" type="text" class="form-control date">
     </div>
   </div>
 
@@ -37,10 +28,28 @@
 
   <div class="row">
     <div class="cell">
+      <label>项目编号:</label>
+    </div>
+    <div class="cell">
+      <input ng-model="data.item.number" type="text" class="form-control">
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="cell">
       <label>项目客户:</label>
     </div>
     <div class="cell" style="line-height: 34px;">
       {{data.item.customer.companyName}}<button type="button" class="btn btn-primary pull-right" ng-click="selectCustomer()">&nbsp;选择&nbsp;</button>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="cell">
+      <label>项目名称:</label>
+    </div>
+    <div class="cell">
+      <input ng-model="data.item.name" type="text" class="form-control">
     </div>
   </div>
 
@@ -57,8 +66,8 @@
     <div class="cell">
       <label>业务负责人:</label>
     </div>
-    <div class="cell">
-      <label>{{data.item.businessEmployee.name}}</label>
+    <div class="cell" style="line-height: 34px;">
+      {{data.item.businessEmployee.name}}<button type="button" class="btn btn-primary pull-right" ng-click="selectBusinessEmployee()">&nbsp;选择&nbsp;</button>
     </div>
   </div>
 <div>

@@ -2,11 +2,15 @@ package cn.edu.tongji.anliantest.dao.impl;
 
 import java.util.List;
 
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 import cn.edu.tongji.anliantest.dao.AbstractHibernateDao;
 import cn.edu.tongji.anliantest.dao.ProjectDao;
 import cn.edu.tongji.anliantest.model.Project;
+import cn.edu.tongji.anliantest.model.ProjectTypeEnum;
 import cn.edu.tongji.anliantest.util.DataWrapper;
 import cn.edu.tongji.anliantest.util.PageResult;
 
@@ -51,6 +55,17 @@ public class ProjectDaoImpl extends AbstractHibernateDao<Project, Long> implemen
 		ret.setTotalPageNum(pageResult.getTotalPageNum());
 		
 		return ret;
+	}
+
+	@Override
+	public int getProjectNumber(ProjectTypeEnum projectType) {
+		if(projectType != null) {
+			Criteria criteria = getCurrentSession().createCriteria(Project.class);
+			criteria.add(Restrictions.eq("type", projectType));
+			criteria.setProjection(Projections.rowCount());
+			return ((Long)criteria.uniqueResult()).intValue();
+		}
+		return 0;
 	}
 	
 }
