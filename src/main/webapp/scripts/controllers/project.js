@@ -24,7 +24,7 @@ angular.module('anliantestApp')
         type: 'CREATE'
       }, 
       {
-        size: 'md',
+        size: 'lg',
         keyboard: true,
         backdrop: 'static',
         windowClass: 'model-overlay'
@@ -92,7 +92,7 @@ angular.module('anliantestApp')
         item: project
       }, 
       {
-        size: 'md',
+        size: 'lg',
         keyboard: true,
         backdrop: 'static',
         windowClass: 'model-overlay'
@@ -158,6 +158,8 @@ angular.module('anliantestApp')
         type: null,
 
         customer: null,
+        companyAddress: '',
+        contactPersonItems: null,
 
         contractAmount: '',
 
@@ -189,6 +191,7 @@ angular.module('anliantestApp')
       project.type = $scope.type.value;
       project.$generate(function(data) {
         $scope.data.item.number = data.data.number;
+        updateProjectName();
       });
     };
 
@@ -203,15 +206,21 @@ angular.module('anliantestApp')
 
       dialog.result.then(function (data) {
         $scope.data.item.customer = data;
-        if($scope.type != null) {
-          $scope.data.item.name = $scope.data.item.customer.companyName + $scope.type.name; 
-        }else{
-          $scope.data.item.name = $scope.data.item.customer.companyName;
-        }
+        
+        $scope.data.item.companyAddress = $scope.data.item.customer.companyAddress;
+        $scope.data.item.contactPersonItems = $scope.data.item.customer.contactPersonItems;
+
+        updateProjectName();
       }, function () {
         
       });
     };
+
+    function updateProjectName() {
+      if($scope.type != null && $scope.data.item.customer != null) {
+        $scope.data.item.name = $scope.data.item.customer.companyName + $scope.type.name; 
+      }
+    }
 
     $scope.selectBusinessEmployee = function (){
       var dialog = dialogs.create('template/at-select-employee-dialog.html', 'SelectEmployeeDialogCtrl', {}, 
@@ -227,6 +236,11 @@ angular.module('anliantestApp')
       }, function () {
         
       });
+    };
+
+    $scope.deleteContactPerson = function(item) {
+      var index = $scope.data.item.contactPersonItems.indexOf(item);
+      $scope.data.item.contactPersonItems.splice(index, 1);
     };
 
     $scope.cancel = function() {

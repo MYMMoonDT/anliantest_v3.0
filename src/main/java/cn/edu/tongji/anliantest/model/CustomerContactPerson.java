@@ -1,12 +1,14 @@
 package cn.edu.tongji.anliantest.model;
 
 import java.io.Serializable;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -25,6 +27,8 @@ public class CustomerContactPerson implements Serializable{
 	private String tel;
 	
 	private Customer customer;
+	
+	private Set<Project> projects;
 	
 	@Id
 	@GeneratedValue
@@ -69,5 +73,15 @@ public class CustomerContactPerson implements Serializable{
 
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
+	}
+
+	@ManyToMany(cascade=CascadeType.REFRESH, mappedBy="contactPersonItems")
+	@JsonIgnore
+	public Set<Project> getProjects() {
+		return projects;
+	}
+
+	public void setProjects(Set<Project> projects) {
+		this.projects = projects;
 	}
 }

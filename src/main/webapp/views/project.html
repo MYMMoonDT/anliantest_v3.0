@@ -13,7 +13,6 @@
         <table class="table table-striped">
           <thead>
             <tr>
-              <th>ID</th>
               <th>项目编号</th>
               <th>项目名称</th>
               <th>项目进度</th>
@@ -23,15 +22,16 @@
           </thead>
           <tbody>
             <tr ng-repeat="project in projectList">
-              <td>{{ project.id }}</td>
               <td>{{ project.number }}</td>
               <td>{{ project.name }}</td>
               <td>{{ project.step | projectStep}}</td>
               <td>{{ project.status | projectStatus}}</td>
               <td>
                 <button type="button" ng-click="viewProject(project)" class="btn btn-success btn-sm">详情</button>
+                <!--
                 <button type="button" ng-click="editProject(project)" class="btn btn-warning btn-sm">编辑</button>
                 <button type="button" ng-click="removeProject(project)" class="btn btn-danger btn-sm">删除</button>
+                -->
               </td>
             </tr>
           </tbody>

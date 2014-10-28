@@ -36,11 +36,69 @@
   </div>
 
   <div class="row">
+    <div class="cell" style="height: 20px;">
+      <div class="slider"></div>
+    </div>
+    <div class="cell" style="height: 20px;">
+      <div class="slider"></div>
+    </div>
+  </div>
+
+  <div class="row">
     <div class="cell">
       <label>项目客户:</label>
     </div>
     <div class="cell" style="line-height: 34px;">
       {{data.item.customer.companyName}}<button type="button" class="btn btn-primary pull-right" ng-click="selectCustomer()">&nbsp;选择&nbsp;</button>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="cell">
+      <label>项目客户地址:</label>
+    </div>
+    <div class="cell" style="line-height: 34px;">
+      <input ng-model="data.item.companyAddress" type="text" class="form-control">
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="cell">
+      <label>项目客户联系人:</label>
+    </div>
+    <div class="cell" style="line-height: 34px;"></div>
+  </div>
+
+  <div class="row">
+    <div class="cell"></div>
+    <div class="cell">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th><label>姓名</label></th>
+            <th><label>工作部门</label></th>
+            <th><label>联系电话</label></th>
+            <th><label>操作</label></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="item in data.item.contactPersonItems">
+            <td><input ng-model="item.name" class="form-control"></td>
+            <td><input ng-model="item.department" class="form-control"></td>
+            <td><input ng-model="item.tel" class="form-control"></td>
+            <td><button type="button" class="btn btn-danger"  ng-click="deleteContactPerson(item)">&nbsp;删除&nbsp;</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="cell" style="height: 20px;">
+      <div class="slider"></div>
+    </div>
+    <div class="cell" style="height: 20px;">
+      <div class="slider"></div>
     </div>
   </div>
 
