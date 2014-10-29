@@ -17,8 +17,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import cn.edu.tongji.anliantest.util.TableNumEnum;
-
 /*
  *	《合同评审记录》表-实体类 
  */
@@ -33,7 +31,8 @@ public class HTPSJLTable implements Serializable{
 	
 	private Project project;
 	
-	private TableNumEnum tableNum;
+	private String tableNum;
+	private String revisionStatus;
 	
 	private Date createDate;
 	
@@ -59,12 +58,20 @@ public class HTPSJLTable implements Serializable{
 		this.project = project;
 	}
 
-	public TableNumEnum getTableNum() {
+	public String getTableNum() {
 		return tableNum;
 	}
 
-	public void setTableNum(TableNumEnum tableNum) {
+	public void setTableNum(String tableNum) {
 		this.tableNum = tableNum;
+	}
+
+	public String getRevisionStatus() {
+		return revisionStatus;
+	}
+
+	public void setRevisionStatus(String revisionStatus) {
+		this.revisionStatus = revisionStatus;
 	}
 
 	@Temporal(TemporalType.DATE)

@@ -149,7 +149,7 @@ public class Project implements Serializable{
 		this.companyAddress = companyAddress;
 	}
 	
-	@ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToMany(cascade=CascadeType.PERSIST, fetch = FetchType.EAGER)
 	@JoinTable(name="project_contact_person",
 		joinColumns={@JoinColumn(name="projectId")},
 		inverseJoinColumns={@JoinColumn(name="contactPersonId")}

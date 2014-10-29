@@ -25,7 +25,6 @@ import cn.edu.tongji.anliantest.model.ProjectStepEnum;
 import cn.edu.tongji.anliantest.model.Task;
 import cn.edu.tongji.anliantest.service.HTPSJLService;
 import cn.edu.tongji.anliantest.util.DataWrapper;
-import cn.edu.tongji.anliantest.util.TableNumEnum;
 
 @Service("htpsjlService")
 public class HTPSJLServiceImpl implements HTPSJLService{
@@ -60,8 +59,6 @@ public class HTPSJLServiceImpl implements HTPSJLService{
 	@Override
 	public DataWrapper<HTPSJLTable> addHTPSJLTable(HTPSJLTable htpsjlTable, Long employeeId) {
 		DataWrapper<HTPSJLTable> ret = new DataWrapper<>();
-		
-		htpsjlTable.setTableNum(TableNumEnum.HTPSJL);
 		
 		for(HTPSJLItem item : htpsjlTable.getItems()) {
 			item.setTable(htpsjlTable);
