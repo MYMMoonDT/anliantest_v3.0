@@ -37,7 +37,9 @@ angular.module('anliantestApp')
     };
 
     function CREATE_HTPSJL(task) {
-      var dialog = dialogs.create('template/at-htpsjl-dialog.html', 'HtpsjlDialogCtrl', {}, 
+      var dialog = dialogs.create('template/at-htpsjl-dialog.html', 'HtpsjlDialogCtrl', {
+        project: task.project
+      }, 
       {
         size: 'lg',
         keyboard: true,

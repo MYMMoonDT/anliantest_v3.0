@@ -10,10 +10,35 @@
 <div class="content">
   <div class="row">
     <div class="cell" style="width: 90px;">
-      <label>创建时间:</label>
+      <label>项目名称:</label>
     </div>
     <div class="cell">
-      <input at-datepicker date="data.item.createDate" type="text" class="form-control date">
+      {{data.project.name}}
+    </div>
+  </div>
+  <div class="row">
+    <div class="cell" style="width: 90px;">
+      <label>项目编号:</label>
+    </div>
+    <div class="cell">
+      {{data.project.number}}
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="cell" style="width: 90px;">
+      <label>表码:</label>
+    </div>
+    <div class="cell">
+      <input ng-model="data.item.tableNum" type="text" class="form-control" style="width: 150px;">
+    </div>
+  </div>
+  <div class="row">
+    <div class="cell" style="width: 90px;">
+      <label>修订状态:</label>
+    </div>
+    <div class="cell">
+      <input ng-model="data.item.revisionStatus" type="text" class="form-control" style="width: 150px;">
     </div>
   </div>
 </div>
@@ -36,3 +61,14 @@
     </tr>
   </tbody>
 </table>
+
+<div class="content">
+  <div class="row">
+    <div class="cell" style="width: 90px;">
+      <label>创建时间:</label>
+    </div>
+    <div class="cell">
+      <input at-datepicker date="data.item.createDate" type="text" class="form-control date">
+    </div>
+  </div>
+</div>

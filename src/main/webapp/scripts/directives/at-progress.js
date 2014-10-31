@@ -10,13 +10,9 @@ angular.module('anliantestApp')
   .directive('atProgress', function () {
     return {
       restrict: 'A',
-      scope: {
-        step: '='
-      },
-      controller: function($scope, $attrs) {
-      },
-      link: function postLink(scope, element, attrs) {
-        
+      require: 'ngModel',
+      scope: {},
+      link: function postLink(scope, element, attrs, ngModel) {
         var stepMap = {
           'STEP1': {
             id: 1,
@@ -29,21 +25,36 @@ angular.module('anliantestApp')
           'STEP3': {
             id: 3,
             name: '3.项目前期准备'
+          },
+          'STEP4': {
+            id: 4,
+            name: '4.项目检测环节'
+          },
+          'STEP5': {
+            id: 5,
+            name: '5.项目实验环节'
+          },
+          'STEP6': {
+            id: 6,
+            name: '6.项目数据处理'
           }
         };
 
-        scope.$watch(attrs.step, function(data){
-          if(data != undefined) {
-            var step = stepMap[scope.step].id;
-            element.progressStep();
-            for(var i = 1; i <= step; i++) {
-              var stepEnum = 'STEP' + i;
-              element.addStep(stepMap[stepEnum].name); 
-            }
-            element.refreshLayout();  
-            element.setCurrentStep(step-1);
+        ngModel.$render = function () {
+          var val = ngModel.$viewValue || null;
+          if(val != null) {
+            var promise = val.$promise;
+            promise.then(function(){
+              var stepId = stepMap[val.step].id;
+              element.progressStep();
+              for(var step in stepMap) {
+                element.addStep(stepMap[step].name); 
+              }
+              element.refreshLayout();  
+              element.setCurrentStep(stepId-1);
+            });
           }
-        });
+        };
       }
     };
   });
