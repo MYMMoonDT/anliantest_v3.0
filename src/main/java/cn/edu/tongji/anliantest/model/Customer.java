@@ -4,7 +4,9 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -92,7 +94,8 @@ public class Customer implements Serializable{
 		this.manufactureEmployeeNum = manufactureEmployeeNum;
 	}
 
-	@OneToOne(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "customer")
+	@OneToOne(fetch = FetchType.EAGER, mappedBy = "customer")
+	@Cascade({CascadeType.SAVE_UPDATE, CascadeType.MERGE, CascadeType.DELETE})
 	public CustomerHealthDepartment getCustomerHealthDep() {
 		return customerHealthDep;
 	}
@@ -101,7 +104,8 @@ public class Customer implements Serializable{
 		this.customerHealthDep = customerHealthDep;
 	}
 
-	@OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "customer")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "customer")
+	@Cascade({CascadeType.SAVE_UPDATE, CascadeType.MERGE, CascadeType.DELETE})
 	public Set<CustomerContactPerson> getContactPersonItems() {
 		return contactPersonItems;
 	}
@@ -110,7 +114,8 @@ public class Customer implements Serializable{
 		this.contactPersonItems = contactPersonItems;
 	}
 
-	@OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "customer")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "customer")
+	@Cascade({CascadeType.SAVE_UPDATE, CascadeType.MERGE, CascadeType.DELETE})
 	public Set<CustomerProduct> getProductItems() {
 		return productItems;
 	}

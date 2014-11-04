@@ -2,7 +2,6 @@ package cn.edu.tongji.anliantest.model;
 
 import java.io.Serializable;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -51,7 +50,7 @@ public class CustomerProduct implements Serializable{
 		this.annualOutput = annualOutput;
 	}
 
-	@ManyToOne(cascade = {CascadeType.REFRESH})
+	@ManyToOne
 	@JoinColumn(name="customerId")
 	@JsonIgnore
 	public Customer getCustomer() {

@@ -60,4 +60,13 @@ angular
         redirectTo: '/'
       });
       $locationProvider.html5Mode(true); 
+  })
+
+  .run(function(){
+    angular.extend($.fn.progressStep.defaults, {
+      radius: 30,
+      labelOffset: 50,
+      "font-family": "'Microsoft Yahei', 'Helvetica Neue', 'Helvetica', Arial, sans-serif",
+      "font-size": 14
+    });
   });
