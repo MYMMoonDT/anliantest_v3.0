@@ -16,6 +16,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.hibernate.annotations.Cascade;
 
 @Entity
 @Table(name = "employee_authority_group")
@@ -58,7 +59,7 @@ public class EmployeeAuthorityGroup implements Serializable {
 		this.isActive = isActive;
 	}
 
-	@ManyToOne(cascade = CascadeType.REFRESH)
+	@ManyToOne(cascade = {CascadeType.REFRESH})
 	@JoinColumn(name = "employeeId")
 	@JsonIgnore
 	public Employee getEmployee() {
@@ -66,7 +67,8 @@ public class EmployeeAuthorityGroup implements Serializable {
 	}
 
 	public void setEmployee(Employee employee) {
-		this.employee = employee;
+//		if (employee != null)
+			this.employee = employee;
 	}
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "employeeAuthorityGroup")

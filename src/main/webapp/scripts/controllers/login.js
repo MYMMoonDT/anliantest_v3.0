@@ -17,7 +17,9 @@ angular.module('anliantestApp')
     $scope.login = function() {
       var promise = EmployeeService.login($scope.employee.number, $scope.employee.password);
       promise.then(function (data){
+    	  
       }, function (){
+    	  
       });
     };
   });

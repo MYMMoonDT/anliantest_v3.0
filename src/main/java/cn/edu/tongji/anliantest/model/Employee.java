@@ -71,7 +71,7 @@ public class Employee implements Serializable {
 		this.title = title;
 	}
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
 	@JoinColumn(name = "departmentId")
 	public Department getDepartment() {
 		return department;
@@ -81,7 +81,7 @@ public class Employee implements Serializable {
 		this.department = department;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "employee")
+	@OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "employee")
 	public Set<EmployeeAuthorityGroup> getEmployeeAuthorityGroups() {
 		return employeeAuthorityGroups;
 	}

@@ -58,6 +58,7 @@ public class AuthorityItem implements Serializable{
 	}
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "authorityItem")
+	@JsonIgnore
 	public Set<EmployeeAuthorityGroupItem> getEmployeeAuthorityGroupItems() {
 		return employeeAuthorityGroupItems;
 	}

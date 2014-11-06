@@ -96,5 +96,10 @@ public class EmployeeServiceImpl implements EmployeeService{
 			int numPerPage) {
 		return employeeDao.getEmployeeList(currPageNum, numPerPage);
 	}
+
+	@Override
+	public DataWrapper<List<Employee>> getAllEmployeeList() {
+		return employeeDao.getAllEmployeeList();
+	}
 	
 }

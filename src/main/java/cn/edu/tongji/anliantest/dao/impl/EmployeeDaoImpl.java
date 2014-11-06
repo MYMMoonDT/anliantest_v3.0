@@ -1,14 +1,18 @@
 package cn.edu.tongji.anliantest.dao.impl;
 
+import java.util.Iterator;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.criterion.CriteriaSpecification;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 import cn.edu.tongji.anliantest.dao.AbstractHibernateDao;
 import cn.edu.tongji.anliantest.dao.EmployeeDao;
 import cn.edu.tongji.anliantest.model.Employee;
+import cn.edu.tongji.anliantest.model.EmployeeAuthorityGroup;
 import cn.edu.tongji.anliantest.util.DataWrapper;
 import cn.edu.tongji.anliantest.util.PageResult;
 
@@ -42,6 +46,11 @@ public class EmployeeDaoImpl extends AbstractHibernateDao<Employee, Long> implem
 
 	@Override
 	public void updateEmployee(Employee employee) {
+//		Employee e = findById((long) 11);
+//		Iterator<EmployeeAuthorityGroup> i = e.getEmployeeAuthorityGroups().iterator();
+//		while (i.hasNext())
+//			i.next().setIsActive(false);
+		//saveOrUpdate(e);
 		saveOrUpdate(employee);
 	}
 
@@ -64,5 +73,29 @@ public class EmployeeDaoImpl extends AbstractHibernateDao<Employee, Long> implem
 		
 		return ret;
 	}
+
+	@Override
+	public DataWrapper<List<Employee>> getAllEmployeeList() {
+		List<Employee> result = getCurrentSession().createCriteria(Employee.class)
+				.addOrder(Order.asc("department"))
+				.addOrder(Order.asc("number"))
+				.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY)
+				.list();
+		DataWrapper<List<Employee>> ret = new DataWrapper<List<Employee>>();
+		ret.setData(result);
+		return ret;
+	}
 	
+//	public void up() {
+//		Item i0 = new Item();
+//		Item i1 = new Item();
+//		Group g = new Group();
+//		g.getItems().add(i0);
+//		g.getItems().add(i1);
+//		this.getCurrentSession().merge(g);
+//	}
+//	
+//	public static void main(String[] args) {
+//		new EmployeeDaoImpl().up();
+//	}
 }

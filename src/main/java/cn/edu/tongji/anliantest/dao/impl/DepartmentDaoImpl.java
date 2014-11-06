@@ -5,12 +5,14 @@ import java.util.List;
 
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Example;
+import org.hibernate.criterion.Order;
 import org.springframework.stereotype.Repository;
 
 import cn.edu.tongji.anliantest.dao.AbstractHibernateDao;
 import cn.edu.tongji.anliantest.dao.DepartmentDao;
 import cn.edu.tongji.anliantest.model.Department;
 import cn.edu.tongji.anliantest.model.DepartmentTypeEnum;
+import cn.edu.tongji.anliantest.util.DataWrapper;
 
 @Repository
 public class DepartmentDaoImpl extends AbstractHibernateDao<Department, Long> implements DepartmentDao{
@@ -54,5 +56,14 @@ public class DepartmentDaoImpl extends AbstractHibernateDao<Department, Long> im
 	@Override
 	public void deleteDepartment(Long departmentId) {
 		delete(findById(departmentId));
+	}
+
+	@Override
+	public DataWrapper<List<Department>> getAllDepartments() {
+		DataWrapper<List<Department>> ret =  new DataWrapper<List<Department>>();
+		ret.setData(this.getCurrentSession().createCriteria(Department.class)
+					.addOrder(Order.asc("id"))
+					.list());
+		return ret;
 	}
 }

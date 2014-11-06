@@ -20,5 +20,7 @@ public interface EmployeeService {
 	public DataWrapper<Void> deleteEmployee(Long employeeId);
 	
 	public DataWrapper<List<Employee>> getEmployeeList(int currPageNum, int numPerPage);
+
+	public DataWrapper<List<Employee>> getAllEmployeeList();
 	
 }

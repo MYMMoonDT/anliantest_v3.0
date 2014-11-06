@@ -53,12 +53,12 @@ public class EmployeeAuthorityGroupItem implements Serializable{
 
 	public void setEmployeeAuthorityGroup(
 			EmployeeAuthorityGroup employeeAuthorityGroup) {
-		this.employeeAuthorityGroup = employeeAuthorityGroup;
+		if (employeeAuthorityGroup != null)
+			this.employeeAuthorityGroup = employeeAuthorityGroup;
 	}
 
 	@ManyToOne(cascade = CascadeType.REFRESH)
 	@JoinColumn(name = "authorityItemId")
-	@JsonIgnore
 	public AuthorityItem getAuthorityItem() {
 		return authorityItem;
 	}

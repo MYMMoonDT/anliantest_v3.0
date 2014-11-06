@@ -20,7 +20,9 @@ angular
     'dialogs.main',
     'angularFileUpload',
     'ui.bootstrap',
-    'datatables'
+    'datatables',
+    'ui.tree',
+    'toggle-switch'
   ])
   .config(function ($routeProvider, $locationProvider) {
     $routeProvider
@@ -49,12 +51,20 @@ angular
         controller: 'ProjectDetailCtrl'
       })
       .when('/customer', {
-        templateUrl: 'views/customer.html',
-        controller: 'CustomerCtrl'
+          templateUrl: 'views/customer.html',
+          controller: 'CustomerCtrl'
+        })
+      .when('/authority', {
+        templateUrl: 'views/authority.html',
+        controller: 'AuthorityCtrl'
       })
       .when('/test', {
         templateUrl: 'views/test.html',
         controller: 'TestCtrl'
+      })
+      .when('/authority', {
+        templateUrl: 'views/authority.html',
+        controller: 'AuthorityCtrl'
       })
       .otherwise({
         redirectTo: '/'
