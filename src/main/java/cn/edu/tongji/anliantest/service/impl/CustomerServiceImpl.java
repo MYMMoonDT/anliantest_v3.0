@@ -7,7 +7,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import cn.edu.tongji.anliantest.dao.CustomerContactPersonDao;
 import cn.edu.tongji.anliantest.dao.CustomerDao;
+import cn.edu.tongji.anliantest.dao.CustomerProductDao;
 import cn.edu.tongji.anliantest.model.Customer;
 import cn.edu.tongji.anliantest.model.CustomerContactPerson;
 import cn.edu.tongji.anliantest.model.CustomerProduct;
@@ -21,6 +23,11 @@ public class CustomerServiceImpl implements CustomerService{
 	
 	@Autowired
 	private CustomerDao customerDao;
+	@Autowired
+	private CustomerContactPersonDao customerContactPersonDao;
+	@Autowired
+	private CustomerProductDao customerProductDao;
+	
 	
 	@Override
 	public DataWrapper<Customer> getCustomerById(Long customerId) {
@@ -37,11 +44,9 @@ public class CustomerServiceImpl implements CustomerService{
 		DataWrapper<Customer> ret = new DataWrapper<>();
 		
 		customer.getCustomerHealthDep().setCustomer(customer);
-		
 		for(CustomerContactPerson item : customer.getContactPersonItems()) {
 			item.setCustomer(customer);
 		}
-		
 		for(CustomerProduct item : customer.getProductItems()) {
 			item.setCustomer(customer);
 		}
@@ -59,26 +64,24 @@ public class CustomerServiceImpl implements CustomerService{
 	public DataWrapper<Customer> updateCustomer(Customer customer) {
 		DataWrapper<Customer> ret = new DataWrapper<>();
 		
-		//删除原有Customer对象的一对一和一对多关系
-		//TODO: 从数据库中删除
+		//删除已有的一对多关系
 		Customer oldCustomer = customerDao.getCustomerById(customer.getId());
-		oldCustomer.getCustomerHealthDep().setCustomer(null);
-		
 		for(CustomerContactPerson item : oldCustomer.getContactPersonItems()) {
 			item.setCustomer(null);
+			customerContactPersonDao.deleteCustomerContactPerson(item.getId());
 		}
-		
 		for(CustomerProduct item : oldCustomer.getProductItems()) {
 			item.setCustomer(null);
+			customerProductDao.deleteCustomerProduct(item.getId());
 		}
+		oldCustomer.setContactPersonItems(null);
+		oldCustomer.setProductItems(null);
 		customerDao.updateCustomer(oldCustomer);
 		
 		customer.getCustomerHealthDep().setCustomer(customer);
-		
 		for(CustomerContactPerson item : customer.getContactPersonItems()) {
 			item.setCustomer(customer);
 		}
-		
 		for(CustomerProduct item : customer.getProductItems()) {
 			item.setCustomer(customer);
 		}
@@ -95,6 +98,17 @@ public class CustomerServiceImpl implements CustomerService{
 	@Override
 	public DataWrapper<Void> deleteCustomer(Long customerId) {
 		DataWrapper<Void> ret = new DataWrapper<>();
+		
+		Customer customer = customerDao.getCustomerById(customerId);
+		customer.getCustomerHealthDep().setCustomer(null);
+		
+		for(CustomerContactPerson item : customer.getContactPersonItems()) {
+			item.setCustomer(null);
+		}
+		
+		for(CustomerProduct item : customer.getProductItems()) {
+			item.setCustomer(null);
+		}
 		
 		customerDao.deleteCustomer(customerId);
 		

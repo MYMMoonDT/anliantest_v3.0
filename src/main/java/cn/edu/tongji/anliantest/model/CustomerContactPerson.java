@@ -1,9 +1,9 @@
 package cn.edu.tongji.anliantest.model;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -28,7 +28,7 @@ public class CustomerContactPerson implements Serializable{
 	
 	private Customer customer;
 	
-	private Set<Project> projects;
+	private Set<Project> projects = new HashSet<Project>(0);
 	
 	@Id
 	@GeneratedValue
@@ -64,7 +64,7 @@ public class CustomerContactPerson implements Serializable{
 		this.tel = tel;
 	}
 
-	@ManyToOne(cascade = {CascadeType.REFRESH})
+	@ManyToOne
 	@JoinColumn(name="customerId")
 	@JsonIgnore
 	public Customer getCustomer() {
@@ -75,7 +75,7 @@ public class CustomerContactPerson implements Serializable{
 		this.customer = customer;
 	}
 
-	@ManyToMany(cascade=CascadeType.REFRESH, mappedBy="contactPersonItems")
+	@ManyToMany(mappedBy="contactPersonItems")
 	@JsonIgnore
 	public Set<Project> getProjects() {
 		return projects;

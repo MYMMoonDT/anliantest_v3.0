@@ -31,10 +31,10 @@ public class ZYBWHYSItem implements Serializable{
 	
 	private String comment;			//备注
 
-	private int MAC_Scale;
-	private int PC_TWA_Scale;
-	private int PC_STEL_Scale;
-	private int OM_Scale;
+	private Integer MAC_Scale;
+	private Integer PC_TWA_Scale;
+	private Integer PC_STEL_Scale;
+	private Integer OM_Scale;
 	
 	
 	@Id
@@ -111,35 +111,35 @@ public class ZYBWHYSItem implements Serializable{
 		this.comment = comment;
 	}
 
-	public int getMAC_Scale() {
+	public Integer getMAC_Scale() {
 		return MAC_Scale;
 	}
 
-	public void setMAC_Scale(int mAC_Scale) {
+	public void setMAC_Scale(Integer mAC_Scale) {
 		MAC_Scale = mAC_Scale;
 	}
 
-	public int getPC_TWA_Scale() {
+	public Integer getPC_TWA_Scale() {
 		return PC_TWA_Scale;
 	}
 
-	public void setPC_TWA_Scale(int pC_TWA_Scale) {
+	public void setPC_TWA_Scale(Integer pC_TWA_Scale) {
 		PC_TWA_Scale = pC_TWA_Scale;
 	}
 
-	public int getPC_STEL_Scale() {
+	public Integer getPC_STEL_Scale() {
 		return PC_STEL_Scale;
 	}
 
-	public void setPC_STEL_Scale(int pC_STEL_Scale) {
+	public void setPC_STEL_Scale(Integer pC_STEL_Scale) {
 		PC_STEL_Scale = pC_STEL_Scale;
 	}
 
-	public int getOM_Scale() {
+	public Integer getOM_Scale() {
 		return OM_Scale;
 	}
 
-	public void setOM_Scale(int oM_Scale) {
+	public void setOM_Scale(Integer oM_Scale) {
 		OM_Scale = oM_Scale;
 	}
 	
