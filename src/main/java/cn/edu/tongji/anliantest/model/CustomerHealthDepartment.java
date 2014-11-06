@@ -5,11 +5,7 @@ import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
-import org.codehaus.jackson.annotate.JsonIgnore;
 
 @Entity
 @Table(name="customer_health_department")
@@ -21,8 +17,6 @@ public class CustomerHealthDepartment implements Serializable{
 	private boolean exist;
 	private String healthDepName;
 	private int healthEmpNum;
-	
-	private Customer customer;
 	
 	@Id
 	@GeneratedValue
@@ -54,13 +48,4 @@ public class CustomerHealthDepartment implements Serializable{
 		this.healthEmpNum = healthEmpNum;
 	}
 	
-	@OneToOne
-	@JoinColumn(name="customerId")
-	@JsonIgnore
-	public Customer getCustomer() {
-		return customer;
-	}
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
-	}
 }

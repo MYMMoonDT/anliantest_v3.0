@@ -5,11 +5,7 @@ import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
-import org.codehaus.jackson.annotate.JsonIgnore;
 
 @Entity
 @Table(name="customer_product")
@@ -21,8 +17,6 @@ public class CustomerProduct implements Serializable{
 
 	private String name;
 	private String annualOutput;
-	
-	private Customer customer;
 	
 	@Id
 	@GeneratedValue
@@ -48,16 +42,5 @@ public class CustomerProduct implements Serializable{
 
 	public void setAnnualOutput(String annualOutput) {
 		this.annualOutput = annualOutput;
-	}
-
-	@ManyToOne
-	@JoinColumn(name="customerId")
-	@JsonIgnore
-	public Customer getCustomer() {
-		return customer;
-	}
-
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
 	}
 }
