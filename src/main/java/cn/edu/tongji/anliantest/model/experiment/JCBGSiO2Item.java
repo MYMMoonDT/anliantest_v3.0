@@ -40,6 +40,6 @@ public class JCBGSiO2Item {
 	@Override
 	public boolean equals(Object obj) {
 		JCBGSiO2Item item = (JCBGSiO2Item) obj;
-		return this.equals(item.getWorkshopPosition());
+		return workshopPosition.equals(item.getWorkshopPosition());
 	}
 }
