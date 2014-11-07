@@ -2,10 +2,13 @@ package cn.edu.tongji.anliantest.dao.impl;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import cn.edu.tongji.anliantest.dao.AbstractHibernateDao;
+import cn.edu.tongji.anliantest.dao.CustomerContactPersonDao;
 import cn.edu.tongji.anliantest.dao.CustomerDao;
+import cn.edu.tongji.anliantest.dao.CustomerProductDao;
 import cn.edu.tongji.anliantest.model.Customer;
 import cn.edu.tongji.anliantest.util.DataWrapper;
 import cn.edu.tongji.anliantest.util.PageResult;
@@ -13,6 +16,11 @@ import cn.edu.tongji.anliantest.util.PageResult;
 @Repository
 public class CustomerDaoImpl extends AbstractHibernateDao<Customer, Long> implements CustomerDao{
 
+	@Autowired
+	private CustomerContactPersonDao customerContactPersonDao;
+	@Autowired
+	private CustomerProductDao customerProductDao;
+	
 	protected CustomerDaoImpl() {
 		super(Customer.class);
 	}

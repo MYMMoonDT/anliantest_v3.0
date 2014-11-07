@@ -46,9 +46,12 @@ angular.module('anliantestApp')
             var promise = val.$promise;
             promise.then(function(){
               var stepId = stepMap[val.step].id;
-              element.progressStep();
+              var $progressBar = element.progressStep();
               for(var step in stepMap) {
-                element.addStep(stepMap[step].name); 
+                $progressBar.addStep(stepMap[step].name);
+                $progressBar.getStep(stepMap[step].id - 1).onClick = function() {
+                  
+                };
               }
               element.refreshLayout();  
               element.setCurrentStep(stepId-1);

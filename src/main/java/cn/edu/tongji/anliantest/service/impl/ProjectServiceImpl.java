@@ -13,7 +13,6 @@ import cn.edu.tongji.anliantest.dao.EmployeeDao;
 import cn.edu.tongji.anliantest.dao.LogDao;
 import cn.edu.tongji.anliantest.dao.ProjectDao;
 import cn.edu.tongji.anliantest.dao.TaskDao;
-import cn.edu.tongji.anliantest.model.CustomerContactPerson;
 import cn.edu.tongji.anliantest.model.Employee;
 import cn.edu.tongji.anliantest.model.Log;
 import cn.edu.tongji.anliantest.model.Project;
@@ -56,11 +55,7 @@ public class ProjectServiceImpl implements ProjectService{
 		
 		project.setStep(ProjectStepEnum.STEP1);
 		project.setStatus(ProjectStatusEnum.CREATE_HTPSJL);
-		
-		for(CustomerContactPerson item : project.getContactPersonItems()) {
-			item.setCustomer(project.getCustomer());
-		}
-		
+				
 		projectDao.addProject(project);
 		
 		//为项目业务负责人创建新建合同评审记录的Task

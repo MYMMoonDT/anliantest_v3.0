@@ -1,0 +1,27 @@
+<div class="row">
+  <div class="col-md-6">
+    <button type="button" class="btn btn-default pull-left" ng-click="cancel()">&nbsp;取消&nbsp;</button>
+  </div>
+  <div class="col-md-6">
+    <button type="button" class="btn btn-success pull-right" ng-click="save()">&nbsp;上传&nbsp;</button>
+  </div>
+</div>
+
+<div class="content">
+  <div class="row">
+    <div class="cell">
+      <label>检测报告文件:</label>
+    </div>
+    <div class="cell">
+      <input type="file" ng-file-select="onFileSelect($files)">
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <button type="button" class="btn btn-primary" ng-disabled="!canDownloadJSGCB">下载计算过程表</button>
+    <button type="button" class="btn btn-primary" ng-disabled="!canDownloadJGYPDB">下载结果与判定表</button>
+  </div>
+</div>
+

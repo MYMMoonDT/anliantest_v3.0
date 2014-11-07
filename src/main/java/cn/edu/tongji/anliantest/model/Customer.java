@@ -4,16 +4,17 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
-
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 @Entity
 @Table(name="customer")
@@ -94,8 +95,9 @@ public class Customer implements Serializable{
 		this.manufactureEmployeeNum = manufactureEmployeeNum;
 	}
 
-	@OneToOne(fetch = FetchType.EAGER, mappedBy = "customer")
+	@OneToOne(fetch = FetchType.EAGER)
 	@Cascade({CascadeType.SAVE_UPDATE, CascadeType.MERGE, CascadeType.DELETE})
+	@JoinColumn(name = "customerHealthDepId")
 	public CustomerHealthDepartment getCustomerHealthDep() {
 		return customerHealthDep;
 	}
@@ -104,8 +106,9 @@ public class Customer implements Serializable{
 		this.customerHealthDep = customerHealthDep;
 	}
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "customer")
+	@OneToMany(fetch = FetchType.EAGER, orphanRemoval = true)
 	@Cascade({CascadeType.SAVE_UPDATE, CascadeType.MERGE, CascadeType.DELETE})
+	@JoinColumn(name = "customerId")
 	public Set<CustomerContactPerson> getContactPersonItems() {
 		return contactPersonItems;
 	}
@@ -114,8 +117,9 @@ public class Customer implements Serializable{
 		this.contactPersonItems = contactPersonItems;
 	}
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "customer")
+	@OneToMany(fetch = FetchType.EAGER, orphanRemoval = true)
 	@Cascade({CascadeType.SAVE_UPDATE, CascadeType.MERGE, CascadeType.DELETE})
+	@JoinColumn(name = "customerId")
 	public Set<CustomerProduct> getProductItems() {
 		return productItems;
 	}
