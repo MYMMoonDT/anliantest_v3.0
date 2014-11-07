@@ -31,7 +31,15 @@ public class JCBGTable implements java.io.Serializable{
 	
 	private Project project;
 	
-	private Date reportTime;
+	private String tableNum;
+	
+	private Date sampleStartDate;
+	private Date sampleEndDate;
+	
+	private Date testStartDate;
+	private Date testEndDate;
+	
+	private Date reportDate;
 	
 	private Employee prepareEmployee;   //编制人
 	private Employee reviewEmployee;    //审核人
@@ -60,12 +68,12 @@ public class JCBGTable implements java.io.Serializable{
 	}
 
 	@Temporal(TemporalType.DATE)
-	public Date getReportTime() {
-		return reportTime;
+	public Date getReportDate() {
+		return reportDate;
 	}
 
-	public void setReportTime(Date reportTime) {
-		this.reportTime = reportTime;
+	public void setReportDate(Date reportDate) {
+		this.reportDate = reportDate;
 	}
 
 	@OneToOne
@@ -98,8 +106,9 @@ public class JCBGTable implements java.io.Serializable{
 		this.signEmployee = signEmployee;
 	}
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "table")
+	@OneToMany(fetch = FetchType.EAGER)
 	@Cascade({CascadeType.SAVE_UPDATE, CascadeType.MERGE, CascadeType.DELETE})
+	@JoinColumn(name="tableId")
 	public Set<JCBGItem> getItems() {
 		return items;
 	}
@@ -107,4 +116,49 @@ public class JCBGTable implements java.io.Serializable{
 	public void setItems(Set<JCBGItem> items) {
 		this.items = items;
 	}
+
+	public String getTableNum() {
+		return tableNum;
+	}
+
+	public void setTableNum(String tableNum) {
+		this.tableNum = tableNum;
+	}
+	
+	@Temporal(TemporalType.DATE)
+	public Date getTestStartDate() {
+		return testStartDate;
+	}
+
+	public void setTestStartDate(Date testStartDate) {
+		this.testStartDate = testStartDate;
+	}
+
+	@Temporal(TemporalType.DATE)
+	public Date getTestEndDate() {
+		return testEndDate;
+	}
+
+	public void setTestEndDate(Date testEndDate) {
+		this.testEndDate = testEndDate;
+	}
+
+	@Temporal(TemporalType.DATE)
+	public Date getSampleStartDate() {
+		return sampleStartDate;
+	}
+
+	public void setSampleStartDate(Date sampleStartDate) {
+		this.sampleStartDate = sampleStartDate;
+	}
+
+	@Temporal(TemporalType.DATE)
+	public Date getSampleEndDate() {
+		return sampleEndDate;
+	}
+
+	public void setSampleEndDate(Date sampleEndDate) {
+		this.sampleEndDate = sampleEndDate;
+	}
+
 }

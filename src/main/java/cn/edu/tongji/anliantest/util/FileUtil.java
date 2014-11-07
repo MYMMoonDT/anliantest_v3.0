@@ -9,14 +9,12 @@ public class FileUtil {
 		File targetFile = new File(path, file.getOriginalFilename());
 		if(!targetFile.exists()){
 			targetFile.mkdirs();
+			try {
+				file.transferTo(targetFile);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
-		
-		try {
-			file.transferTo(targetFile);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
 		return targetFile;
 	}
 }

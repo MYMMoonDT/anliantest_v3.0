@@ -1,16 +1,16 @@
 package cn.edu.tongji.anliantest.model.experiment;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
-import org.codehaus.jackson.annotate.JsonIgnore;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "jcbg_item")
@@ -20,9 +20,7 @@ public class JCBGItem implements java.io.Serializable{
 	
 	private Long id;
 	
-	private JCBGTable table;
-	
-	private ZYBWHYSItem zybwhysItem;
+	private ZYBWHYSItem zybwhysItem;    //检测项目
 	
 	private String workshopPosition;   	//车间岗位
 	
@@ -32,8 +30,9 @@ public class JCBGItem implements java.io.Serializable{
 	private Integer resultScale;
 	private String resultType;
 	
+	private Date testDate;
 	private BigDecimal touchTime;       //接触时间
-	private Integer touchTimeScale;     //
+	private Integer touchTimeScale;     
 	private Integer collectTime;		//采集时间
 	
 	@Id
@@ -43,16 +42,6 @@ public class JCBGItem implements java.io.Serializable{
 	}
 	public void setId(Long id) {
 		this.id = id;
-	}
-	
-	@ManyToOne
-	@JoinColumn(name="tableId")
-	@JsonIgnore
-	public JCBGTable getTable() {
-		return table;
-	}
-	public void setTable(JCBGTable table) {
-		this.table = table;
 	}
 	
 	@OneToOne
@@ -110,5 +99,13 @@ public class JCBGItem implements java.io.Serializable{
 	}
 	public void setCollectTime(Integer collectTime) {
 		this.collectTime = collectTime;
+	}
+	
+	@Temporal(TemporalType.DATE)
+	public Date gettestDate() {
+		return testDate;
+	}
+	public void settestDate(Date testDate) {
+		this.testDate = testDate;
 	}
 }
