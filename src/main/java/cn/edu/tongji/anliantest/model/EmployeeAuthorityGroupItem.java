@@ -23,7 +23,6 @@ public class EmployeeAuthorityGroupItem implements Serializable{
 	private Long id;
 	private Boolean isActive;
 	
-//	private EmployeeAuthorityGroup employeeAuthorityGroup;
 	private AuthorityItem authorityItem;
 	
 	@Id
@@ -44,20 +43,6 @@ public class EmployeeAuthorityGroupItem implements Serializable{
 	public void setIsActive(Boolean isActive) {
 		this.isActive = isActive;
 	}
-
-//	@ManyToOne
-//	@Cascade(value = {CascadeType.REFRESH})
-////	@JoinColumn(name = "employeeAuthorityGroupId")
-////	@JsonIgnore
-//	public EmployeeAuthorityGroup getEmployeeAuthorityGroup() {
-//		return employeeAuthorityGroup;
-//	}
-//
-//	public void setEmployeeAuthorityGroup(
-//			EmployeeAuthorityGroup employeeAuthorityGroup) {
-////		if (employeeAuthorityGroup != null)
-//			this.employeeAuthorityGroup = employeeAuthorityGroup;
-//	}
 
 	@ManyToOne
 	@Cascade(value = {CascadeType.REFRESH})

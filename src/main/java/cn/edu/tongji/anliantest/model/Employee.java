@@ -17,14 +17,11 @@ import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import com.fasterxml.jackson.annotation.SimpleObjectIdResolver;
 
 @Entity
 @Table(name = "employee")
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property="id")
-//@JsonIdentityReference(alwaysAsId = true)
 public class Employee implements Serializable {
 
 	private static final long serialVersionUID = -7265330153237797718L;
@@ -92,8 +89,7 @@ public class Employee implements Serializable {
 	}
 
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "employee", orphanRemoval = true)	
-	@Cascade(value = {CascadeType.ALL})
-//	@JoinColumn(name = "employeeId")
+	@Cascade({CascadeType.SAVE_UPDATE, CascadeType.MERGE, CascadeType.DELETE})
 	public Set<EmployeeAuthorityGroup> getEmployeeAuthorityGroups() {
 		return employeeAuthorityGroups;
 	}
@@ -101,8 +97,6 @@ public class Employee implements Serializable {
 	public void setEmployeeAuthorityGroups(
 			Set<EmployeeAuthorityGroup> employeeAuthorityGroups) {
 		this.employeeAuthorityGroups = employeeAuthorityGroups;
-		//this.employeeAuthorityGroups.clear();
-		//this.employeeAuthorityGroups.addAll(employeeAuthorityGroups);
 	}
 
 }

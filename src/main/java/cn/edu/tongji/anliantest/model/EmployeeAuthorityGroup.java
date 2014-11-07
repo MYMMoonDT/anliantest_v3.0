@@ -22,7 +22,6 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 @Entity
 @Table(name = "employee_authority_group")
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property="id")
-//@JsonIdentityReference(alwaysAsId = true)
 public class EmployeeAuthorityGroup implements Serializable {
 
 	private static final long serialVersionUID = -2366248862481602675L;
@@ -32,7 +31,6 @@ public class EmployeeAuthorityGroup implements Serializable {
 	private Boolean isActive;
 
 	private Employee employee;
-//	private Long employeeId;
 	
 	private Set<EmployeeAuthorityGroupItem> employeeAuthorityGroupItems = new HashSet<EmployeeAuthorityGroupItem>(0);
 
@@ -67,27 +65,17 @@ public class EmployeeAuthorityGroup implements Serializable {
 	@ManyToOne
 	@Cascade(value = {CascadeType.REFRESH})
 	@JoinColumn(name = "employeeId")
-//	@JsonIgnore
 	public Employee getEmployee() {
 		return employee;
 	}
 
 	public void setEmployee(Employee employee) {
-//		if (employee != null)
 			this.employee = employee;
 	}
 
-//	@Transient
-//	public Long getEmployeeId() {
-//		return employee.getId();
-//	}
-//
-//	public void setEmployeeId(Long employeeId) {
-//		this.employee.setId(employeeId);
-//	}
 	
 	@OneToMany(fetch = FetchType.EAGER, orphanRemoval = true)
-	@Cascade(value = {CascadeType.ALL})
+	@Cascade({CascadeType.SAVE_UPDATE, CascadeType.MERGE, CascadeType.DELETE})
 	@JoinColumn(name = "employeeAuthorityGroupId")
 	public Set<EmployeeAuthorityGroupItem> getEmployeeAuthorityGroupItems() {
 		return employeeAuthorityGroupItems;
@@ -95,11 +83,6 @@ public class EmployeeAuthorityGroup implements Serializable {
 
 	public void setEmployeeAuthorityGroupItems(
 			Set<EmployeeAuthorityGroupItem> employeeAuthorityGroupItems) {
-//		if (this.employeeAuthorityGroupItems != null && employeeAuthorityGroupItems != null) {
-//		Set<EmployeeAuthorityGroupItem> t = employeeAuthorityGroupItems;
-//		this.employeeAuthorityGroupItems.retainAll(t);
-//			this.employeeAuthorityGroupItems.addAll(t);
-//		} else
-			this.employeeAuthorityGroupItems = employeeAuthorityGroupItems;
+		this.employeeAuthorityGroupItems = employeeAuthorityGroupItems;
 	}
 }
