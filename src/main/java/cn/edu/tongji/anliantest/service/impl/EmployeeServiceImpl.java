@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 
 import cn.edu.tongji.anliantest.dao.EmployeeDao;
 import cn.edu.tongji.anliantest.model.Employee;
+import cn.edu.tongji.anliantest.model.EmployeeAuthorityGroup;
+import cn.edu.tongji.anliantest.model.EmployeeAuthorityGroupItem;
 import cn.edu.tongji.anliantest.service.EmployeeService;
 import cn.edu.tongji.anliantest.util.DataWrapper;
 import cn.edu.tongji.anliantest.util.ErrorCodeEnum;
@@ -71,7 +73,29 @@ public class EmployeeServiceImpl implements EmployeeService{
 	public DataWrapper<Employee> updateEmployee(Employee employee) {
 		DataWrapper<Employee> ret = new DataWrapper<>();
 		
+//		for (EmployeeAuthorityGroup authGrp : employee.getEmployeeAuthorityGroups()) {
+//			authGrp.setEmployee(employee);
+//			for (EmployeeAuthorityGroupItem authGrpItem : authGrp.getEmployeeAuthorityGroupItems()) {
+//				authGrpItem.setEmployeeAuthorityGroup(authGrp);
+//			}
+//		}
+
+		//e.getEmployeeAuthorityGroups().retainAll(employee.getEmployeeAuthorityGroups());
+
+//		Employee e = employeeDao.getEmployeeById(employee.getId());
+//		for (EmployeeAuthorityGroup authGrp : e.getEmployeeAuthorityGroups()) {
+//			if (!employee.getEmployeeAuthorityGroups().contains(authGrp)) {
+//				authGrp.setEmployee(null);
+//				for (EmployeeAuthorityGroupItem authGrpItem : authGrp.getEmployeeAuthorityGroupItems()) {
+//					authGrpItem.setEmployeeAuthorityGroup(null);
+//				}
+//			}
+//		}
+	
 		employeeDao.updateEmployee(employee);
+//		employee.setName("hack");
+		
+//		e.setName("hack2");
 		
 		ret.setData(employeeDao.getEmployeeById(employee.getId()));
 		

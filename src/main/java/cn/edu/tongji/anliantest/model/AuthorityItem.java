@@ -14,7 +14,10 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+
+
 
 @Entity
 @Table(name="authority_item")
@@ -26,7 +29,7 @@ public class AuthorityItem implements Serializable{
 	private String name;
 	
 	private Set<AuthorityGroup> authorityGroups = new HashSet<AuthorityGroup>(0);
-	private Set<EmployeeAuthorityGroupItem> employeeAuthorityGroupItems = new HashSet<EmployeeAuthorityGroupItem>(0);
+//	private Set<EmployeeAuthorityGroupItem> employeeAuthorityGroupItems = new HashSet<EmployeeAuthorityGroupItem>(0);
 	
 	@Id
 	@GeneratedValue
@@ -57,16 +60,16 @@ public class AuthorityItem implements Serializable{
 		this.authorityGroups = authorityGroups;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "authorityItem")
-	@JsonIgnore
-	public Set<EmployeeAuthorityGroupItem> getEmployeeAuthorityGroupItems() {
-		return employeeAuthorityGroupItems;
-	}
-
-	public void setEmployeeAuthorityGroupItems(
-			Set<EmployeeAuthorityGroupItem> employeeAuthorityGroupItems) {
-		this.employeeAuthorityGroupItems = employeeAuthorityGroupItems;
-	}
+//	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "authorityItem")
+//	@JsonIgnore
+//	public Set<EmployeeAuthorityGroupItem> getEmployeeAuthorityGroupItems() {
+//		return employeeAuthorityGroupItems;
+//	}
+//
+//	public void setEmployeeAuthorityGroupItems(
+//			Set<EmployeeAuthorityGroupItem> employeeAuthorityGroupItems) {
+//		this.employeeAuthorityGroupItems = employeeAuthorityGroupItems;
+//	}
 
 
 }
