@@ -70,7 +70,7 @@ public class EmployeeServiceImpl implements EmployeeService{
 	@Override
 	public DataWrapper<Employee> updateEmployee(Employee employee) {
 		DataWrapper<Employee> ret = new DataWrapper<>();
-		
+	
 		employeeDao.updateEmployee(employee);
 		
 		ret.setData(employeeDao.getEmployeeById(employee.getId()));
@@ -95,6 +95,11 @@ public class EmployeeServiceImpl implements EmployeeService{
 	public DataWrapper<List<Employee>> getEmployeeList(int currPageNum,
 			int numPerPage) {
 		return employeeDao.getEmployeeList(currPageNum, numPerPage);
+	}
+
+	@Override
+	public DataWrapper<List<Employee>> getAllEmployeeList() {
+		return employeeDao.getAllEmployeeList();
 	}
 	
 }

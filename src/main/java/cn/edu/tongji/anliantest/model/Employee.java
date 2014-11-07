@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -14,8 +13,15 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 @Entity
 @Table(name = "employee")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property="id")
 public class Employee implements Serializable {
 
 	private static final long serialVersionUID = -7265330153237797718L;
@@ -71,7 +77,8 @@ public class Employee implements Serializable {
 		this.title = title;
 	}
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
+	@Cascade(value = {CascadeType.REFRESH})
 	@JoinColumn(name = "departmentId")
 	public Department getDepartment() {
 		return department;
@@ -81,7 +88,8 @@ public class Employee implements Serializable {
 		this.department = department;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "employee")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "employee", orphanRemoval = true)	
+	@Cascade({CascadeType.SAVE_UPDATE, CascadeType.MERGE, CascadeType.DELETE})
 	public Set<EmployeeAuthorityGroup> getEmployeeAuthorityGroups() {
 		return employeeAuthorityGroups;
 	}

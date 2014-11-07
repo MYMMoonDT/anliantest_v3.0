@@ -3,6 +3,8 @@ package cn.edu.tongji.anliantest.dao.impl;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.criterion.CriteriaSpecification;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
@@ -64,5 +66,16 @@ public class EmployeeDaoImpl extends AbstractHibernateDao<Employee, Long> implem
 		
 		return ret;
 	}
-	
+
+	@Override
+	public DataWrapper<List<Employee>> getAllEmployeeList() {
+		List<Employee> result = getCurrentSession().createCriteria(Employee.class)
+				.addOrder(Order.asc("department"))
+				.addOrder(Order.asc("number"))
+				.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY)
+				.list();
+		DataWrapper<List<Employee>> ret = new DataWrapper<List<Employee>>();
+		ret.setData(result);
+		return ret;
+	}
 }

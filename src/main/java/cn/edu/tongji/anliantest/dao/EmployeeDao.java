@@ -17,4 +17,6 @@ public interface EmployeeDao {
 	public void deleteEmployee(Long employeeId);
 	
 	public DataWrapper<List<Employee>> getEmployeeList(int currPageNum, int numPerPage);
+
+	public DataWrapper<List<Employee>> getAllEmployeeList();
 }

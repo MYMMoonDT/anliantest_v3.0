@@ -51,4 +51,34 @@ angular.module('anliantestApp')
       that.clearCurrEmployee();
       $location.path('/login');
     };
+    
+    this.getAllEmployees = function () {
+    	var deferred = $q.defer();
+        $http.get('api/employee/all')
+        .success(function (data, status, headers, config){
+          if(data.callStatus == 'SUCCEED') {
+            
+          }
+          deferred.resolve(data);
+        })
+        .error(function (data, status, headers, config){
+          deferred.reject(data);
+        });
+        return deferred.promise;
+    };
+    
+    this.updateEmployee = function (employee) {
+    	var deferred = $q.defer();
+        $http.put('api/employee', employee)
+        .success(function (data, status, headers, config){
+          if(data.callStatus == 'SUCCEED') {
+            
+          }
+          deferred.resolve(data);
+        })
+        .error(function (data, status, headers, config){
+          deferred.reject(data);
+        });
+        return deferred.promise;
+    };
   });

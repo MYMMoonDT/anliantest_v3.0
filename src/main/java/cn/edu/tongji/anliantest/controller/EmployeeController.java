@@ -41,6 +41,12 @@ public class EmployeeController {
 		return employeeService.getEmployeeList(currPageNum, numPerPage);
 	}
 	
+	@RequestMapping(value="employee/all", method=RequestMethod.GET)
+	@ResponseBody
+	public DataWrapper<List<Employee>> getAllEmployeeList() {
+		return employeeService.getAllEmployeeList();
+	}
+	
 	@RequestMapping(value="employee/{employeeId}", method=RequestMethod.GET)
     @ResponseBody
     public DataWrapper<Employee> getEmployeeById(
