@@ -72,6 +72,10 @@ angular
       $locationProvider.html5Mode(true); 
   })
 
+  .config(function ($httpProvider){
+      $httpProvider.interceptors.push('loadingInterceptor');
+  })
+
   .run(function(){
     angular.extend($.fn.progressStep.defaults, {
       radius: 30,

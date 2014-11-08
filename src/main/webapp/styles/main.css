@@ -40,3 +40,17 @@ body {
 .list-group .list-group-item .options {
   display: inline-block;
 }
+/*
+ * Loading CSS Style
+ */
+.isloading-overlay {
+  background-color: transparent !important;
+}
+.isloading-overlay .isloading-wrapper {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+}
+.isloading-overlay .isloading-wrapper .fa-refresh {
+  font-size: 36px;
+}
