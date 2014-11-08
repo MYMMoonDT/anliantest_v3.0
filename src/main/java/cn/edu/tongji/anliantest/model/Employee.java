@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Cascade;
@@ -90,6 +91,7 @@ public class Employee implements Serializable {
 
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "employee", orphanRemoval = true)	
 	@Cascade({CascadeType.SAVE_UPDATE, CascadeType.MERGE, CascadeType.DELETE})
+	@OrderBy("id")
 	public Set<EmployeeAuthorityGroup> getEmployeeAuthorityGroups() {
 		return employeeAuthorityGroups;
 	}

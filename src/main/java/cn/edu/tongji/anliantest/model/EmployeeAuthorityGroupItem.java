@@ -21,7 +21,7 @@ public class EmployeeAuthorityGroupItem implements Serializable{
 	private static final long serialVersionUID = 3943943775225283897L;
 	
 	private Long id;
-	private Boolean isActive;
+	private Boolean isActive = false;
 	
 	private AuthorityItem authorityItem;
 	

@@ -23,7 +23,6 @@
     "angular-file-upload": "~1.1.5",
     "bootstrap-treeview": "~1.0.1",
     "bootstrap-switch": "~3.1.0",
-    "angular-ui-tree": "~2.1.5",
     "angular-toggle-switch": "~1.0.0"
   },
   "devDependencies": {
@@ -32,6 +31,7 @@
   },
   "appPath": "webapp",
   "resolutions": {
-    "es5-shim": "~3.1.0"
+    "es5-shim": "~3.1.0",
+    "angular": "~1.2"
   }
 }
