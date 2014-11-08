@@ -21,7 +21,6 @@ angular
     'angularFileUpload',
     'ui.bootstrap',
     'datatables',
-    'ui.tree',
     'toggle-switch'
   ])
   .config(function ($routeProvider, $locationProvider) {

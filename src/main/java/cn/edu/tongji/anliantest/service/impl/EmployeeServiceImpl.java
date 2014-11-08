@@ -7,8 +7,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import cn.edu.tongji.anliantest.dao.AuthorityGroupDao;
 import cn.edu.tongji.anliantest.dao.EmployeeDao;
 import cn.edu.tongji.anliantest.model.Employee;
+import cn.edu.tongji.anliantest.model.EmployeeAuthorityGroup;
 import cn.edu.tongji.anliantest.service.EmployeeService;
 import cn.edu.tongji.anliantest.util.DataWrapper;
 import cn.edu.tongji.anliantest.util.ErrorCodeEnum;
@@ -20,7 +22,9 @@ public class EmployeeServiceImpl implements EmployeeService{
 	
 	@Autowired
     private EmployeeDao employeeDao;
-
+	@Autowired
+	private AuthorityGroupDao authorityGroupDao;
+	
 	@Override
 	public DataWrapper<Employee> login(String number, String password) {
 		DataWrapper<Employee> ret = new DataWrapper<>();
@@ -57,6 +61,11 @@ public class EmployeeServiceImpl implements EmployeeService{
 	@Override
 	public DataWrapper<Employee> addEmployee(Employee employee) {
 		DataWrapper<Employee> ret = new DataWrapper<>();
+		
+		EmployeeAuthorityGroup authGrp = new EmployeeAuthorityGroup();
+		authGrp.initEmployeeAuthorityGroup(employee, authorityGroupDao
+				.getAuthorityGroupByDepartment(employee.getDepartment()));
+		employee.getEmployeeAuthorityGroups().add(authGrp);
 		
 		employeeDao.addEmployee(employee);
 		

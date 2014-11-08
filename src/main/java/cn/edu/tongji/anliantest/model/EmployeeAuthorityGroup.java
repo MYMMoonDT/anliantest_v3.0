@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Cascade;
@@ -28,7 +29,7 @@ public class EmployeeAuthorityGroup implements Serializable {
 
 	private Long id;
 	private String name;
-	private Boolean isActive;
+	private Boolean isActive = false;
 
 	private Employee employee;
 	
@@ -77,6 +78,7 @@ public class EmployeeAuthorityGroup implements Serializable {
 	@OneToMany(fetch = FetchType.EAGER, orphanRemoval = true)
 	@Cascade({CascadeType.SAVE_UPDATE, CascadeType.MERGE, CascadeType.DELETE})
 	@JoinColumn(name = "employeeAuthorityGroupId")
+	@OrderBy("id")
 	public Set<EmployeeAuthorityGroupItem> getEmployeeAuthorityGroupItems() {
 		return employeeAuthorityGroupItems;
 	}
@@ -84,5 +86,19 @@ public class EmployeeAuthorityGroup implements Serializable {
 	public void setEmployeeAuthorityGroupItems(
 			Set<EmployeeAuthorityGroupItem> employeeAuthorityGroupItems) {
 		this.employeeAuthorityGroupItems = employeeAuthorityGroupItems;
+	}
+	
+	public void initEmployeeAuthorityGroup(Employee e, AuthorityGroup group) {
+		this.employee = e;
+		if (e.getEmployeeAuthorityGroups().isEmpty()) {
+			this.isActive = true;
+		}
+		this.name = group.getName();
+		for (AuthorityItem authItem : group.getAuthorityItems()) {
+			EmployeeAuthorityGroupItem empAuthItem = new EmployeeAuthorityGroupItem();
+			empAuthItem.setIsActive(false);
+			empAuthItem.setAuthorityItem(authItem);
+			this.employeeAuthorityGroupItems.add(empAuthItem);
+		}
 	}
 }

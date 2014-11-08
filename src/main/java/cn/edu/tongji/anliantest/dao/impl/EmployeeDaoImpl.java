@@ -67,6 +67,7 @@ public class EmployeeDaoImpl extends AbstractHibernateDao<Employee, Long> implem
 		return ret;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public DataWrapper<List<Employee>> getAllEmployeeList() {
 		List<Employee> result = getCurrentSession().createCriteria(Employee.class)

@@ -58,6 +58,7 @@ public class DepartmentDaoImpl extends AbstractHibernateDao<Department, Long> im
 		delete(findById(departmentId));
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public DataWrapper<List<Department>> getAllDepartments() {
 		DataWrapper<List<Department>> ret =  new DataWrapper<List<Department>>();

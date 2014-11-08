@@ -4,57 +4,46 @@
   <div id="page-wrapper">
     <div class="row">
       <div class="col-lg-12">
-          <h1 class="page-header" ng-click="updateAuth2()">权限管理</h1>
+        <h1 class="page-header">权限管理</h1>
       </div>
     </div>
     <div class="row">
       <div class="col-lg-3">
-<!--       	<div ui-tree data-drag-enabled=false>
-		  <ol ui-tree-nodes="" ng-model="list">
-		    <li ng-repeat="item in list" ui-tree-node>
-		      <div ui-tree-handle>
-		        {{item.title}}
-		      </div>
-		      <ol ui-tree-nodes="" ng-model="item.items">
-		        <li ng-repeat="subItem in item.items" ui-tree-node>
-		          <div ui-tree-handle>
-		            {{subItem.title}}
-		          </div>
-		        </li>
-		      </ol>
-		    </li>
-		  </ol>
-		</div> -->
-		<div id="tree"></div>
+        <div id="tree"></div>
       </div>
       <div class="col-lg-9">
-      
-      
-      
-       <!-- <p>{{authorityItems}}</p> -->
-<!--      <button ng-click="updateAuth2()">
-		  Increment
-		</button> -->
-<!-- <p><code>$event</code>: <pre> {{$event | json}}</pre></p>-->
-		<ul class="list-group">
-			<li class="list-group-item" ng-repeat="auth in authorityItems | orderBy:'id'">
-				<div class="row">
-      <div class="col-lg-10">
-				{{auth.authorityItem.name}}
-				</div>
-				<div class="col-lg-2">
-				<toggle-switch
-		            ng-model="auth.isActive"
-		            class="switch-success"
-		            on-label="开启"
-		            off-label="关闭">
-		        <toggle-switch>
-		        </toggle-switch>
-			</li>
-		</ul>
-		<button type="button" class="btn btn-primary" ng-click="updateAuthority();">保存更改</button>
+        <div class="row">
+          <select id="authGrpSelect" class="form-control" ng-change="changeAuthrityGroup()"
+            ng-model="selectedAuthGrp"
+            ng-options="authGrp.name for authGrp in authorityGroups">
+
+          </select>
+<!--           <ui-select ng-model="selectedAuthGrp.name" theme="bootstrap">
+            <ui-select-match placeholder="Enter an address...">{{$item}}</ui-select-match>
+            <ui-select-choices repeat="authGrp in authorityGroups">
+              <div ng-bind-html="authGrp.name"></div>
+            </ui-select-choices> 
+          </ui-select> -->
+          <hr>
+        </div>
+        <div class="row">
+          <ul id="authList" class="list-group">
+            <li class="list-group-item"
+              ng-repeat="auth in authorityItems">
+              <div class="row">
+                <div class="col-lg-10">{{auth.authorityItem.name}}</div>
+                <div class="col-lg-2">
+                  <toggle-switch ng-model="auth.isActive"
+                    class="switch-success" on-label="开启" off-label="关闭">
+                  </toggle-switch>
+                </div>
+              </div>
+            </li>
+          </ul>
+          <button id="updateBtn" type="button" class="btn btn-primary"
+            ng-click="updateAuthority();">保存更改</button>
+        </div>
       </div>
     </div>
-
   </div>
 </div>

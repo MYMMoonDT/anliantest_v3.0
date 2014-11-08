@@ -11,3 +11,7 @@ customer.sql --> customer_contact_person.sql --> customer_health_department.sql
 -->
 
 zybwhys_item.sql
+
+-->
+
+authority_group_item.sql
