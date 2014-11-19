@@ -13,6 +13,7 @@ angular.module('anliantestApp')
 	  $scope.selectedAuthGrp = {};
 	  $("#authGrpSelect").hide();
 	  $("#updateBtn").hide();
+	  $("#configBtn").hide();
 	  $("#authList").hide();
 	  
       var promise = EmployeeService.getAllEmployees($scope.employee.number, $scope.employee.password);
@@ -35,7 +36,7 @@ angular.module('anliantestApp')
     	  var options = {
     			  collapseIcon: "fa fa-chevron-down",
     			  expandIcon: "fa fa-chevron-right",
-    			  levels: 1,
+//    			  levels: 1,
     			  onNodeSelected: function(event, node) {
     				  var hasAuth = false;
     				  for (var i in $scope.employees) {
@@ -58,10 +59,12 @@ angular.module('anliantestApp')
     				  if (hasAuth) {
     					  $("#authGrpSelect").show();
     					  $("#updateBtn").show();
+    					  $("#configBtn").show();
     					  $("#authList").show();
     				  } else {
     					  $("#authGrpSelect").hide();
     					  $("#updateBtn").hide();
+    					  $("#configBtn").hide();
     					  $("#authList").hide();
     				  }
 //    					  $scope.authorityItems = [];
@@ -72,7 +75,7 @@ angular.module('anliantestApp')
     	  $('#tree').treeview({data: treeData});
     	  $('#tree').treeview(options);
 //    	  $('treeWrap').scrollspy();
-    	  $("#tree").css("overflow", "auto");
+//    	  $("#tree").css("overflow", "auto");
       }, function (){
     	  
       });
