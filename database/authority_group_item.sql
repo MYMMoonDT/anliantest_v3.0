@@ -45,6 +45,26 @@ INSERT INTO `authority_item` VALUES (1,'auth_1'),(2,'auth_2'),(3,'auth_3'),(4,'a
 /*!40000 ALTER TABLE `authority_item` ENABLE KEYS */;
 UNLOCK TABLES;
 
+--
+-- Dumping data for table `employee_authority_group`
+--
+
+LOCK TABLES `employee_authority_group` WRITE;
+/*!40000 ALTER TABLE `employee_authority_group` DISABLE KEYS */;
+INSERT INTO `employee_authority_group` VALUES (1,'','市场部',9),(2,'','市场部',11),(3,'','评价部',6),(4,'','评价部',7),(5,'','评价部',8),(6,'','评价部',10),(7,'','评价部',16),(8,'','检测部',4),(9,'','检测部',5),(10,'','检测部',17),(11,'','行政部',18),(12,'','质控部',19),(13,'','总经理',15),(14,'','技术负责人',3),(15,'','质量负责人',20);
+/*!40000 ALTER TABLE `employee_authority_group` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `employee_authority_group_item`
+--
+
+LOCK TABLES `employee_authority_group_item` WRITE;
+/*!40000 ALTER TABLE `employee_authority_group_item` DISABLE KEYS */;
+INSERT INTO `employee_authority_group_item` VALUES (1,'',1,1),(2,'',1,2),(3,'',2,3),(4,'',2,4),(5,'',2,5),(6,'',2,6),(7,'',2,7),(8,'',3,8),(9,'',3,9),(10,'',3,10),(11,'',4,11),(12,'',5,12),(13,'',6,13),(14,'',7,14),(15,'\0',8,15);
+/*!40000 ALTER TABLE `employee_authority_group_item` ENABLE KEYS */;
+UNLOCK TABLES;
+
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
