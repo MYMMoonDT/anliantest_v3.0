@@ -4,7 +4,8 @@ public enum TableNumEnum {
 	HTPSJL("HTPSJL", "ALJC/JL07-03"),
 	GZRWD("GZRWD", "ALJC/JL32-01"),
 	KHZLDJD("KHZLDJD", "ALJC/JL32-02"),
-	XCDCJL("XCDCJL", "ALJC/JL32-13");
+	XCDCJL("XCDCJL", "ALJC/JL32-13"),
+	JSJG("JSJG", "ALJC/JL30-29");
 	
 	public String tableName;
 	public String tableNum;

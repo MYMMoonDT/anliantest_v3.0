@@ -43,7 +43,7 @@ angular.module('anliantestApp')
     
   })
 
-  .controller('uploadJCBGDialogCtrl', function ($scope, $modalInstance, $upload, data) {
+  .controller('uploadJCBGDialogCtrl', function ($scope, $modalInstance, $upload, dialogs, data) {
     $scope.data = data;
 
     $scope.canDownloadJSGCB = false;
@@ -58,17 +58,38 @@ angular.module('anliantestApp')
     $scope.cancel = function() {
       $modalInstance.dismiss('Canceled');
     };
-    $scope.save = function() {
-      console.log($scope.data.project);
+    $scope.upload = function() {
       if($scope.uploadFile != undefined && $scope.uploadFile != null) {
         $scope.upload = $upload.upload({
           url: 'api/jcbg/upload',
           data: {projectId: $scope.data.project.id},
           file: $scope.uploadFile
         }).success(function(data, status, headers, config) {
-          
+          if(data.callStatus == 'FAILED') {
+            var dialog = dialogs.create('template/at-alert-dialog.html', 'AlertCtrl', 
+            {
+              text: data.errorMsg
+            }, 
+            {
+              size: 'sm',
+              keyboard: true,
+              backdrop: 'static',
+              windowClass: 'model-overlay'
+            });
+          }else if(data.callStatus == 'SUCCEED') {
+            $scope.canDownloadJSGCB = true;
+            $scope.canDownloadJGYPDB = true;
+          }
         });
       }
+    };
+
+    $scope.downloadJSGCB = function() {
+      
+    };
+
+    $scope.downloadJGYPDB = function() {
+      
     };
   })
 

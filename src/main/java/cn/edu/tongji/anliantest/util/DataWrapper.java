@@ -8,6 +8,7 @@ public class DataWrapper<T> implements Serializable{
 
 	private CallStatusEnum callStatus;
 	private ErrorCodeEnum errorCode;
+	private String errorMsg;
 	
 	private T data;
 	
@@ -66,11 +67,17 @@ public class DataWrapper<T> implements Serializable{
 	public void setTotalPageNum(int totalPageNum) {
 		this.totalPageNum = totalPageNum;
 	}
-	
+	public String getErrorMsg() {
+		return errorMsg;
+	}
+	public void setErrorMsg(String errorMsg) {
+		this.errorMsg = errorMsg;
+	}
 	@Override
 	public String toString() {
 		return	"Call Status:" 		+ this.callStatus + "\n" +
 				"Error Code:"  		+ this.errorCode+ "\n" +
+				"Error Message:"  		+ this.errorMsg+ "\n" +
 				"Current Page Number:"    	+ this.currPageNum + "\n" +
 				"Total Page Number:"    	+ this.totalPageNum + "\n" +
 				"Item Number PerPage:" 		+ this.numPerPage + "\n" +

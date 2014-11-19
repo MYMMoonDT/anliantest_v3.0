@@ -2,7 +2,6 @@ package cn.edu.tongji.anliantest.service;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import cn.edu.tongji.anliantest.model.Project;
 import cn.edu.tongji.anliantest.model.experiment.JCBGTable;
 import cn.edu.tongji.anliantest.util.DataWrapper;
 

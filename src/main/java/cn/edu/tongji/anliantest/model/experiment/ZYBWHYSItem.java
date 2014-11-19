@@ -21,7 +21,7 @@ public class ZYBWHYSItem implements Serializable{
 	private Long id;
 	
 	private String englishName;		//英文名
-	private String ChineseName;     //中文名
+	private String chineseName;     //中文名
 	private String CASNum;			//化学文摘号
 	
 	private BigDecimal MAC;
@@ -56,11 +56,11 @@ public class ZYBWHYSItem implements Serializable{
 	}
 
 	public String getChineseName() {
-		return ChineseName;
+		return chineseName;
 	}
 
 	public void setChineseName(String chineseName) {
-		ChineseName = chineseName;
+		this.chineseName = chineseName;
 	}
 
 	public String getCASNum() {

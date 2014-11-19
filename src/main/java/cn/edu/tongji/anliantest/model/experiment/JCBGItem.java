@@ -21,6 +21,7 @@ public class JCBGItem implements java.io.Serializable{
 	private Long id;
 	
 	private ZYBWHYSItem zybwhysItem;    //检测项目
+	private String zybwhysItemDetailName;
 	
 	private String workshopPosition;   	//车间岗位
 	
@@ -51,6 +52,12 @@ public class JCBGItem implements java.io.Serializable{
 	}
 	public void setZybwhysItem(ZYBWHYSItem zybwhysItem) {
 		this.zybwhysItem = zybwhysItem;
+	}
+	public String getZybwhysItemDetailName() {
+		return zybwhysItemDetailName;
+	}
+	public void setZybwhysItemDetailName(String zybwhysItemDetailName) {
+		this.zybwhysItemDetailName = zybwhysItemDetailName;
 	}
 	public String getWorkshopPosition() {
 		return workshopPosition;
@@ -102,10 +109,10 @@ public class JCBGItem implements java.io.Serializable{
 	}
 	
 	@Temporal(TemporalType.DATE)
-	public Date gettestDate() {
+	public Date getTestDate() {
 		return testDate;
 	}
-	public void settestDate(Date testDate) {
+	public void setTestDate(Date testDate) {
 		this.testDate = testDate;
 	}
 }
