@@ -12,8 +12,8 @@ git clone https://github.com/MYMMoonDT/anliantest_v3.0.git
 将代码拉取到本地，提前告诉我你们的github的用户名，让我把你们加入到项目后，才可以提交代码，否则只能获取代码。
 
 !!!!!!设置git!!!!! 
-git config --global core.autocrlf input
-git config --global core.safecrlf true
+git config --global core.autocrlf true
+git config --global core.safecrlf false
 
 2.安装eclipse，可以直接从百度网盘上下载，
 
@@ -27,7 +27,7 @@ http://pan.baidu.com/s/1qW2piLA
 !!!!!!设置eclipse!!!!!!
 导入项目后设置
 Properties -> Resource -> Text file encoding -> UTF-8
-Properties -> Resource -> New text file line delimiter -> Unix
+Properties -> Resource -> New text file line delimiter -> Windows
 
 3.安装Gradle，下载Gradle2.1，地址
 
