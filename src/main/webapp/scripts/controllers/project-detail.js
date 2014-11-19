@@ -17,8 +17,15 @@ angular.module('anliantestApp')
       $scope.project = Project.get({projectId: $scope.projectId}, function(data){
         $scope.step = data.step;
       });
+
     }
 
+    function addData() {
+       FileItem.query( function(data) {
+        if(data != null) {
+        }
+        });
+    }
     $scope.showInputJCBGDialog = function() {
 
     };
@@ -35,6 +42,13 @@ angular.module('anliantestApp')
         windowClass: 'model-overlay'
       });
       dialog.result.then(function(data) {
+    	 var fileitem = new FileItem();
+    	  
+    	  angular.extend(fileitem, data.item);
+    	  
+          fileitem.$save(function(){
+              addData();
+            });
 
       }, function() {
 
@@ -46,6 +60,12 @@ angular.module('anliantestApp')
   .controller('uploadJCBGDialogCtrl', function ($scope, $modalInstance, $upload, data) {
     $scope.data = data;
 
+   $scope.data.item = {
+            fileName: 'juhghgf',
+            folderName: '检测报告',
+            filePath: '/ssss',
+            project: $scope.data.project
+     };
     $scope.canDownloadJSGCB = false;
     $scope.canDownloadJGYPDB = false;
 

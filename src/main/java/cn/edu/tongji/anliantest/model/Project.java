@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -37,6 +38,7 @@ public class Project implements Serializable{
 	
 	private String companyAddress;
 	private Set<CustomerContactPerson> contactPersonItems = new HashSet<CustomerContactPerson>(0);
+	private Set<FileItem> fileItems = new HashSet<FileItem>(0);
 	
 	private String contractAmount;
 	
@@ -163,5 +165,16 @@ public class Project implements Serializable{
 
 	public void setContactPersonItems(Set<CustomerContactPerson> contactPersonItems) {
 		this.contactPersonItems = contactPersonItems;
+	}
+	
+    @OneToMany(fetch = FetchType.EAGER, orphanRemoval = true)
+	@Cascade({CascadeType.SAVE_UPDATE, CascadeType.MERGE, CascadeType.DELETE})
+	@JoinColumn(name = "projectId")
+	public Set<FileItem> getFileItems() {
+		return fileItems;
+	}
+
+	public void setFileItems(Set<FileItem> fileItems) {
+		this.fileItems = fileItems;
 	}
 }
