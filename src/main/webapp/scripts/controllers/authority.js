@@ -43,7 +43,7 @@ angular.module('anliantestApp')
     					  if (node.employeeId === $scope.employees[i].id) {
     						  $scope.curAuthEmployee = $scope.employees[i];
     						  $scope.authorityGroups = $scope.employees[i].employeeAuthorityGroups;
-    						  $scope.$digest();
+//    						  $scope.$digest();
     						  for (var j in $scope.authorityGroups) {
     							  if ($scope.authorityGroups[j].isActive) {
     								  $scope.authorityItems = $scope.authorityGroups[j].employeeAuthorityGroupItems;

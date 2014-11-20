@@ -21,7 +21,7 @@ angular
     'angularFileUpload',
     'ui.bootstrap',
     'datatables',
-    'toggle-switch'
+    "angularToggleDirectives"
   ])
   .config(function ($routeProvider, $locationProvider) {
     $routeProvider
@@ -60,10 +60,6 @@ angular
       .when('/test', {
         templateUrl: 'views/test.html',
         controller: 'TestCtrl'
-      })
-      .when('/authority', {
-        templateUrl: 'views/authority.html',
-        controller: 'AuthorityCtrl'
       })
       .otherwise({
         redirectTo: '/'
