@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
-import java.util.Set;
+import java.util.List;
 
 import cn.edu.tongji.anliantest.model.experiment.JCBGGroup;
 import cn.edu.tongji.anliantest.model.experiment.JCBGSiO2Item;
@@ -397,7 +397,7 @@ public class JCBGDocument {
 		int prevTestTime = 1, prevSubstance = 1, prevWorkshopJob = 1, newPrevRow = 1;
 		int[] prevRows = {prevTestTime, prevSubstance, prevWorkshopJob};
 		SimpleDateFormat dateFormat =  new SimpleDateFormat("MM月dd号");
-		Set<JSJGGroup> groupSet = jsjgTable.getGroups();
+		List<JSJGGroup> groupSet = jsjgTable.getGroups();
 		Iterator<JSJGGroup> groupIt = groupSet.iterator();
 		while (groupIt.hasNext()) {
 			JSJGGroup group = groupIt.next();
@@ -425,7 +425,7 @@ public class JCBGDocument {
 				jacob.putTxtToCell(cellRowIdx, 15, group.getResult());
 			}
 			int mergeResultsRowBegin = cellRowIdx;
-			Set<JSJGItem> itemSet = group.getItems();
+			List<JSJGItem> itemSet = group.getItems();
 			Iterator<JSJGItem> itemIt = itemSet.iterator();
 			while (itemIt.hasNext()) {
 				JSJGItem item = itemIt.next();

@@ -1,5 +1,7 @@
 package cn.edu.tongji.anliantest.service;
 
+import java.io.File;
+
 import cn.edu.tongji.anliantest.model.experiment.JGPJTable;
 import cn.edu.tongji.anliantest.util.DataWrapper;
 
@@ -11,4 +13,6 @@ public interface JGPJService {
 	public DataWrapper<JGPJTable> updateJGPJTable(JGPJTable jgpjTable);
 	
 	public DataWrapper<Void> deleteJGPJTable(Long jgpjTableId);
+	
+	public File getJGPJFile(Long projectId);
 }

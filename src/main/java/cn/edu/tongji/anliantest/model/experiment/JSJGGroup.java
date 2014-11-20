@@ -1,17 +1,17 @@
 package cn.edu.tongji.anliantest.model.experiment;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -48,7 +48,7 @@ public class JSJGGroup implements java.io.Serializable{
 	private Integer PC_STEL_Scale;
 	private Integer OM_Scale;
 	
-	private Set<JSJGItem> items = new HashSet<JSJGItem>(0);
+	private List<JSJGItem> items = new ArrayList<JSJGItem>(0);
 	
 	@Id
 	@GeneratedValue
@@ -175,14 +175,15 @@ public class JSJGGroup implements java.io.Serializable{
 		OM_Scale = oM_Scale;
 	}
 
-	@OneToMany(fetch = FetchType.EAGER)
+	@OrderBy
+	@OneToMany
 	@Cascade({CascadeType.SAVE_UPDATE, CascadeType.MERGE, CascadeType.DELETE})
 	@JoinColumn(name="groupId")
-	public Set<JSJGItem> getItems() {
+	public List<JSJGItem> getItems() {
 		return items;
 	}
 
-	public void setItems(Set<JSJGItem> items) {
+	public void setItems(List<JSJGItem> items) {
 		this.items = items;
 	}
 	

@@ -1,15 +1,15 @@
 package cn.edu.tongji.anliantest.model.experiment;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Cascade;
@@ -29,7 +29,7 @@ public class JGPJTable implements java.io.Serializable{
 	
 	private String tableNum;
 	
-	private Set<JGPJItem> items = new HashSet<JGPJItem>(0);
+	private List<JGPJItem> items = new ArrayList<JGPJItem>(0);
 
 	@Id
 	@GeneratedValue
@@ -59,14 +59,15 @@ public class JGPJTable implements java.io.Serializable{
 		this.tableNum = tableNum;
 	}
 
-	@OneToMany(fetch = FetchType.EAGER)
+	@OrderBy
+	@OneToMany
 	@Cascade({CascadeType.SAVE_UPDATE, CascadeType.MERGE, CascadeType.DELETE})
 	@JoinColumn(name="tableId")
-	public Set<JGPJItem> getItems() {
+	public List<JGPJItem> getItems() {
 		return items;
 	}
 
-	public void setItems(Set<JGPJItem> items) {
+	public void setItems(List<JGPJItem> items) {
 		this.items = items;
 	}
 }

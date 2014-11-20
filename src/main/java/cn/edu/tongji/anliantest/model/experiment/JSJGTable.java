@@ -1,16 +1,16 @@
 package cn.edu.tongji.anliantest.model.experiment;
 
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -39,7 +39,7 @@ public class JSJGTable implements java.io.Serializable{
 	private Date calculateTime;
 	private Date reviewTime;
 
-	private Set<JSJGGroup> groups = new HashSet<JSJGGroup>(0);
+	private List<JSJGGroup> groups = new ArrayList<JSJGGroup>(0);
 	
 	@Id
 	@GeneratedValue
@@ -107,14 +107,15 @@ public class JSJGTable implements java.io.Serializable{
 		this.reviewTime = reviewTime;
 	}
 
-	@OneToMany(fetch = FetchType.EAGER)
+	@OrderBy
+	@OneToMany
 	@Cascade({CascadeType.SAVE_UPDATE, CascadeType.MERGE, CascadeType.DELETE})
 	@JoinColumn(name="tableId")
-	public Set<JSJGGroup> getGroups() {
+	public List<JSJGGroup> getGroups() {
 		return groups;
 	}
 
-	public void setGroups(Set<JSJGGroup> groups) {
+	public void setGroups(List<JSJGGroup> groups) {
 		this.groups = groups;
 	}
 	

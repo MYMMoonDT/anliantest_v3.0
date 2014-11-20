@@ -1,16 +1,16 @@
 package cn.edu.tongji.anliantest.model.experiment;
 
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -45,7 +45,7 @@ public class JCBGTable implements java.io.Serializable{
 	private Employee reviewEmployee;    //审核人
 	private Employee signEmployee;      //签发人
 	
-	private Set<JCBGItem> items = new HashSet<JCBGItem>(0);
+	private List<JCBGItem> items = new ArrayList<JCBGItem>(0);
 
 	@Id
 	@GeneratedValue
@@ -106,14 +106,15 @@ public class JCBGTable implements java.io.Serializable{
 		this.signEmployee = signEmployee;
 	}
 
-	@OneToMany(fetch = FetchType.EAGER)
+	@OrderBy
+	@OneToMany
 	@Cascade({CascadeType.SAVE_UPDATE, CascadeType.MERGE, CascadeType.DELETE})
 	@JoinColumn(name="tableId")
-	public Set<JCBGItem> getItems() {
+	public List<JCBGItem> getItems() {
 		return items;
 	}
 
-	public void setItems(Set<JCBGItem> items) {
+	public void setItems(List<JCBGItem> items) {
 		this.items = items;
 	}
 

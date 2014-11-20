@@ -43,7 +43,7 @@ angular.module('anliantestApp')
     
   })
 
-  .controller('uploadJCBGDialogCtrl', function ($scope, $modalInstance, $upload, dialogs, data) {
+  .controller('uploadJCBGDialogCtrl', function ($scope, $modalInstance, $upload, dialogs, data, JSJG, JGPJ) {
     $scope.data = data;
 
     $scope.canDownloadJSGCB = false;
@@ -85,11 +85,11 @@ angular.module('anliantestApp')
     };
 
     $scope.downloadJSGCB = function() {
-      
+      window.location.href = "api/jsjg/download?projectId="+$scope.data.project.id;
     };
 
     $scope.downloadJGYPDB = function() {
-      
+      window.location.href = "api/jgpj/download?projectId="+$scope.data.project.id;
     };
   })
 
