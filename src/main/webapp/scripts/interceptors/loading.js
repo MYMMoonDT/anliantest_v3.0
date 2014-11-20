@@ -4,7 +4,10 @@ angular.module('anliantestApp')
   .factory('loadingInterceptor', function loadingInterceptor($q, $timeout) {
     return {
       'request': function(config) {
-        $.isLoading();
+        $.isLoading({
+          'class': "fa-refresh", 
+          'tpl': '<span class="isloading-wrapper %wrapper%">%text%<i class="fa %class% fa-spin"></i></span>'
+        });
         return config || $q.when(config);
       },
       'requestError': function(config) {
