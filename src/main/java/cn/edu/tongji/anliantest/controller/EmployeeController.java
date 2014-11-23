@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.edu.tongji.anliantest.model.Employee;
 import cn.edu.tongji.anliantest.service.EmployeeService;
+import cn.edu.tongji.anliantest.util.AuthorityGroupUpdate;
 import cn.edu.tongji.anliantest.util.DataWrapper;
 
 @Controller
@@ -73,5 +74,12 @@ public class EmployeeController {
 	public DataWrapper<Void> deleteEmployee(
 		@PathVariable("employeeId") Long employeeId) {
 		return employeeService.deleteEmployee(employeeId);
+	}
+	
+	@RequestMapping(value="employee/updateAuthorityGroups/{employeeId}", method=RequestMethod.PUT)
+	@ResponseBody
+	public DataWrapper<Void> deleteEmployee(
+		@PathVariable("employeeId") Long employeeId, @RequestBody List<AuthorityGroupUpdate> updateList) {
+		return employeeService.updateEmployeeAuthorityGroups(employeeId, updateList);
 	}
 }

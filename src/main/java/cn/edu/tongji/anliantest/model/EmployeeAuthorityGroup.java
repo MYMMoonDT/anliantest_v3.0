@@ -34,7 +34,8 @@ public class EmployeeAuthorityGroup implements Serializable {
 	private Employee employee;
 	
 	private Set<EmployeeAuthorityGroupItem> employeeAuthorityGroupItems = new HashSet<EmployeeAuthorityGroupItem>(0);
-
+	private AuthorityGroup authorityGroup;
+	
 	@Id
 	@GeneratedValue
 	public Long getId() {
@@ -93,6 +94,7 @@ public class EmployeeAuthorityGroup implements Serializable {
 		if (e.getEmployeeAuthorityGroups().isEmpty()) {
 			this.isActive = true;
 		}
+		this.authorityGroup = group;
 		this.name = group.getName();
 		for (AuthorityItem authItem : group.getAuthorityItems()) {
 			EmployeeAuthorityGroupItem empAuthItem = new EmployeeAuthorityGroupItem();
@@ -100,5 +102,16 @@ public class EmployeeAuthorityGroup implements Serializable {
 			empAuthItem.setAuthorityItem(authItem);
 			this.employeeAuthorityGroupItems.add(empAuthItem);
 		}
+	}
+
+	@ManyToOne
+	@Cascade(value = {CascadeType.REFRESH})
+	@JoinColumn(name = "authorityGroupId")
+	public AuthorityGroup getAuthorityGroup() {
+		return authorityGroup;
+	}
+
+	public void setAuthorityGroup(AuthorityGroup authorityGroup) {
+		this.authorityGroup = authorityGroup;
 	}
 }

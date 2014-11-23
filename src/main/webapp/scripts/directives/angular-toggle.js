@@ -12,16 +12,16 @@ angular.module('angularToggleDirectives', [])
             },
             template: '<input type="checkbox">',
             link: function(scope, element) {
-                $(element)['bootstrapSwitch'](); // call bootstrapSwitch once the directive is compiled
+                element.bootstrapSwitch(); // call bootstrapSwitch once the directive is compiled
 
                 scope.$watch('model', function(newVal) {
-                    $(element).bootstrapSwitch('state', newVal, true);
+                    element.bootstrapSwitch('state', newVal, true);
                 });
 
                 scope.$watch('isDisabled', function(newVal) {
                 	if (newVal == null)
                 		newVal = false;
-                    $(element).bootstrapSwitch('disabled', newVal);
+                    element.bootstrapSwitch('disabled', newVal);
                 });
 
                 element.on('switchChange.bootstrapSwitch', function() {

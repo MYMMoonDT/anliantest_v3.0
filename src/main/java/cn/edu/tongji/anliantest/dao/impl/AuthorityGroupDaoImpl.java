@@ -2,6 +2,7 @@ package cn.edu.tongji.anliantest.dao.impl;
 
 import java.util.List;
 
+import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
@@ -58,6 +59,7 @@ public class AuthorityGroupDaoImpl extends AbstractHibernateDao<AuthorityGroup, 
 		DataWrapper<List<AuthorityGroup>> ret =  new DataWrapper<List<AuthorityGroup>>();
 		ret.setData(this.getCurrentSession().createCriteria(AuthorityGroup.class)
 					.addOrder(Order.asc("id"))
+					.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY)
 					.list());
 		return ret;
 	}

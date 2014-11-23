@@ -1,6 +1,8 @@
 package cn.edu.tongji.anliantest.service.impl;
 
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +14,7 @@ import cn.edu.tongji.anliantest.dao.EmployeeDao;
 import cn.edu.tongji.anliantest.model.Employee;
 import cn.edu.tongji.anliantest.model.EmployeeAuthorityGroup;
 import cn.edu.tongji.anliantest.service.EmployeeService;
+import cn.edu.tongji.anliantest.util.AuthorityGroupUpdate;
 import cn.edu.tongji.anliantest.util.DataWrapper;
 import cn.edu.tongji.anliantest.util.ErrorCodeEnum;
 
@@ -110,5 +113,35 @@ public class EmployeeServiceImpl implements EmployeeService{
 	public DataWrapper<List<Employee>> getAllEmployeeList() {
 		return employeeDao.getAllEmployeeList();
 	}
+
+	@Override
+	public DataWrapper<Void> updateEmployeeAuthorityGroups(Long employeeId,
+			List<AuthorityGroupUpdate> updateList) {
+		Employee e = employeeDao.getEmployeeById(employeeId);
+		Set<EmployeeAuthorityGroup> groups = e.getEmployeeAuthorityGroups();
+		//EmployeeAuthorityGroup[] groups = e.getEmployeeAuthorityGroups().toArray(new EmployeeAuthorityGroup[0]);
+		for (AuthorityGroupUpdate update : updateList) {
+			Iterator<EmployeeAuthorityGroup> it = containsAuthGrp(groups, update.getId());
+			if (it != null && !update.isSelected()) {
+				it.remove();
+			} else if (it == null && update.isSelected()){
+				EmployeeAuthorityGroup empAuthGrp = new EmployeeAuthorityGroup();
+				empAuthGrp.initEmployeeAuthorityGroup(e, authorityGroupDao.getAuthorityGroupById(update.getId()));
+				groups.add(empAuthGrp);
+			}
+			
+		}
+		logger.info("更新用户权限信息:"+e.getName()+"("+e.getId()+")");
+		return new DataWrapper<>();
+	}
 	
+	private Iterator<EmployeeAuthorityGroup> containsAuthGrp(Set<EmployeeAuthorityGroup> groups, long id) {
+		Iterator<EmployeeAuthorityGroup> it = groups.iterator();
+		while (it.hasNext()) {
+			if (it.next().getAuthorityGroup().getId().equals(id)) {
+				return it;
+			}
+		}
+		return null;
+	}
 }
