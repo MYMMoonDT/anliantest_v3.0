@@ -2,7 +2,6 @@ package cn.edu.tongji.anliantest.service.impl;
 
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -115,10 +114,10 @@ public class EmployeeServiceImpl implements EmployeeService{
 	}
 
 	@Override
-	public DataWrapper<Void> updateEmployeeAuthorityGroups(Long employeeId,
+	public DataWrapper<Employee> updateEmployeeAuthorityGroups(Long employeeId,
 			List<AuthorityGroupUpdate> updateList) {
 		Employee e = employeeDao.getEmployeeById(employeeId);
-		Set<EmployeeAuthorityGroup> groups = e.getEmployeeAuthorityGroups();
+		List<EmployeeAuthorityGroup> groups = e.getEmployeeAuthorityGroups();
 		//EmployeeAuthorityGroup[] groups = e.getEmployeeAuthorityGroups().toArray(new EmployeeAuthorityGroup[0]);
 		for (AuthorityGroupUpdate update : updateList) {
 			Iterator<EmployeeAuthorityGroup> it = containsAuthGrp(groups, update.getId());
@@ -132,10 +131,12 @@ public class EmployeeServiceImpl implements EmployeeService{
 			
 		}
 		logger.info("更新用户权限信息:"+e.getName()+"("+e.getId()+")");
-		return new DataWrapper<>();
+		DataWrapper<Employee> ret = new DataWrapper<Employee>();
+		ret.setData(e);
+		return ret;
 	}
 	
-	private Iterator<EmployeeAuthorityGroup> containsAuthGrp(Set<EmployeeAuthorityGroup> groups, long id) {
+	private Iterator<EmployeeAuthorityGroup> containsAuthGrp(List<EmployeeAuthorityGroup> groups, long id) {
 		Iterator<EmployeeAuthorityGroup> it = groups.iterator();
 		while (it.hasNext()) {
 			if (it.next().getAuthorityGroup().getId().equals(id)) {

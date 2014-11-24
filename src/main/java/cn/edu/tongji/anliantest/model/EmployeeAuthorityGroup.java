@@ -1,12 +1,11 @@
 package cn.edu.tongji.anliantest.model;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -17,6 +16,8 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -33,7 +34,7 @@ public class EmployeeAuthorityGroup implements Serializable {
 
 	private Employee employee;
 	
-	private Set<EmployeeAuthorityGroupItem> employeeAuthorityGroupItems = new HashSet<EmployeeAuthorityGroupItem>(0);
+	private List<EmployeeAuthorityGroupItem> employeeAuthorityGroupItems = new ArrayList<EmployeeAuthorityGroupItem>(0);
 	private AuthorityGroup authorityGroup;
 	
 	@Id
@@ -76,16 +77,17 @@ public class EmployeeAuthorityGroup implements Serializable {
 	}
 
 	
-	@OneToMany(fetch = FetchType.EAGER, orphanRemoval = true)
+	@OneToMany(orphanRemoval = true)
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@Cascade({CascadeType.SAVE_UPDATE, CascadeType.MERGE, CascadeType.DELETE})
 	@JoinColumn(name = "employeeAuthorityGroupId")
-	@OrderBy("id")
-	public Set<EmployeeAuthorityGroupItem> getEmployeeAuthorityGroupItems() {
+	@OrderBy("authorityItem.id")
+	public List<EmployeeAuthorityGroupItem> getEmployeeAuthorityGroupItems() {
 		return employeeAuthorityGroupItems;
 	}
 
 	public void setEmployeeAuthorityGroupItems(
-			Set<EmployeeAuthorityGroupItem> employeeAuthorityGroupItems) {
+			List<EmployeeAuthorityGroupItem> employeeAuthorityGroupItems) {
 		this.employeeAuthorityGroupItems = employeeAuthorityGroupItems;
 	}
 	

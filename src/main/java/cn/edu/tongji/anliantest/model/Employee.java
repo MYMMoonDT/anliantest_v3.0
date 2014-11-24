@@ -1,8 +1,8 @@
 package cn.edu.tongji.anliantest.model;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -34,7 +34,7 @@ public class Employee implements Serializable {
 	private String title;
 
 	private Department department;
-	private Set<EmployeeAuthorityGroup> employeeAuthorityGroups = new HashSet<EmployeeAuthorityGroup>(0);
+	private List<EmployeeAuthorityGroup> employeeAuthorityGroups = new ArrayList<EmployeeAuthorityGroup>(0);
 
 	@Id
 	@GeneratedValue
@@ -91,13 +91,13 @@ public class Employee implements Serializable {
 
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "employee", orphanRemoval = true)	
 	@Cascade({CascadeType.SAVE_UPDATE, CascadeType.MERGE, CascadeType.DELETE})
-	@OrderBy("id")
-	public Set<EmployeeAuthorityGroup> getEmployeeAuthorityGroups() {
+	@OrderBy("authorityGroup.id")
+	public List<EmployeeAuthorityGroup> getEmployeeAuthorityGroups() {
 		return employeeAuthorityGroups;
 	}
 
 	public void setEmployeeAuthorityGroups(
-			Set<EmployeeAuthorityGroup> employeeAuthorityGroups) {
+			List<EmployeeAuthorityGroup> employeeAuthorityGroups) {
 		this.employeeAuthorityGroups = employeeAuthorityGroups;
 	}
 

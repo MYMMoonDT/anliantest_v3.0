@@ -24,7 +24,7 @@ public interface EmployeeService {
 
 	public DataWrapper<List<Employee>> getAllEmployeeList();
 
-	DataWrapper<Void> updateEmployeeAuthorityGroups(Long employeeId,
+	DataWrapper<Employee> updateEmployeeAuthorityGroups(Long employeeId,
 			List<AuthorityGroupUpdate> updateList);
 	
 }

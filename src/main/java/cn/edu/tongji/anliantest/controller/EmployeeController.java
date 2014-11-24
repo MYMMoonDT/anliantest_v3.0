@@ -78,7 +78,7 @@ public class EmployeeController {
 	
 	@RequestMapping(value="employee/updateAuthorityGroups/{employeeId}", method=RequestMethod.PUT)
 	@ResponseBody
-	public DataWrapper<Void> deleteEmployee(
+	public DataWrapper<Employee> deleteEmployee(
 		@PathVariable("employeeId") Long employeeId, @RequestBody List<AuthorityGroupUpdate> updateList) {
 		return employeeService.updateEmployeeAuthorityGroups(employeeId, updateList);
 	}

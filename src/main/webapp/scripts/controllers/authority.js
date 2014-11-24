@@ -10,12 +10,7 @@
 angular.module('anliantestApp')
   .controller('AuthorityCtrl', function ($scope, $window, dialogs, EmployeeService, AuthorityService) {
     $scope.employee = EmployeeService.getCurrEmployee();
-    $scope.selectedAuthGrp = {};
-    $('#authContent').hide();
-//    $("#authGrpSelect").hide();
-//    $("#updateBtn").hide();
-//    $("#configBtn").hide();
-//    $("#authList").hide();
+  	$scope.hasAuth = false;
   
     var promise = EmployeeService.getAllEmployees($scope.employee.number, $scope.employee.password);
     promise.then(function (data){
@@ -39,64 +34,67 @@ angular.module('anliantestApp')
           expandIcon: "fa fa-chevron-right",
 //            levels: 1,
           onNodeSelected: function(event, node) {
-            var hasAuth = false;
-            for (var i in $scope.employees) {
-              if (node.employeeId === $scope.employees[i].id) {
-                $scope.curAuthEmployee = $scope.employees[i];
-                $scope.authorityGroups = $scope.employees[i].employeeAuthorityGroups;
-//                  $scope.$digest();
-                for (var j in $scope.authorityGroups) {
-                  if ($scope.authorityGroups[j].isActive) {
-                    $scope.authorityItems = $scope.authorityGroups[j].employeeAuthorityGroupItems;
-                    $scope.selectedAuthGrp = $scope.authorityGroups[j];
-                    hasAuth = true;
-                    break;
-                  }
-                }
-                break;
-              }
-            }
-            $scope.$digest();
-            if (hasAuth) {
-            	$('#authContent').show();
-//              $("#authGrpSelect").show();
-//              $("#updateBtn").show();
-//              $("#configBtn").show();
-//              $("#authList").show();
-            } else {
-            	$('#authContent').hide();
-//              $("#authGrpSelect").hide();
-//              $("#updateBtn").hide();
-//              $("#configBtn").hide();
-//              $("#authList").hide();
-            }
-//                $scope.authorityItems = [];
-//              $('.selectpicker').selectpicker();
+            $scope.$apply(function() {
+            	$scope.hasAuth = locate(node.employeeId);
+            });
           }
       };
 
       $('#tree').treeview({data: treeData});
       $('#tree').treeview(options);
-//        $('treeWrap').scrollspy();
-//        $("#tree").css("overflow", "auto");
     }, function (){
       
     });
     
-    $scope.updateAuthority = function() {
-      EmployeeService.updateEmployee($scope.curAuthEmployee);  
+//    $scope.updateAuthority = function() {
+//    	updateEmployee($scope.curAuthEmployee);
+//    };
+    
+    function reset(employee) {
+    	locate(employee.id, employee);
+    }
+    
+    function locate(employeeId, employee) {
+    	for (var i in $scope.employees) {
+    		if (employeeId === $scope.employees[i].id) {
+    			if (employee != null)
+    				$scope.employees[i] = employee;
+    			$scope.curAuthEmployee = $scope.employees[i];
+    			$scope.authorityGroups = $scope.employees[i].employeeAuthorityGroups;
+    			for (var j in $scope.authorityGroups) {
+    				if ($scope.authorityGroups[j].isActive) {
+    					$scope.authorityItems = $scope.authorityGroups[j].employeeAuthorityGroupItems;
+    					$scope.selectedAuthGrp = $scope.authorityGroups[j];
+    					return true;
+    				}
+    			}
+    		}
+    	}
+    	return false;
+    }
+    
+    $scope.toggleClicked = function() {
+    	updateEmployee($scope.curAuthEmployee);
+    };
+    
+    function updateEmployee(employee) {
+      var promise = EmployeeService.updateEmployee(employee);
+      promise.then(function(ret) {
+      	if (ret.errorCode == "No_Error") {
+      		reset(ret.data);
+      	} else {
+      		alert(ret.errorCode);
+      	}
+      });
     }
     
     $scope.changeAuthrityGroup = function() {
       for (var i in $scope.authorityGroups) {
-        if ($scope.authorityGroups[i] === $scope.selectedAuthGrp) {
-          $scope.authorityGroups[i].isActive = true;
-          $scope.authorityItems = $scope.authorityGroups[i].employeeAuthorityGroupItems;
-        } else {
           $scope.authorityGroups[i].isActive = false;
-        }
       }
-//        $scope.$digest();
+      $scope.selectedAuthGrp.isActive = true;
+      $scope.authorityItems = $scope.selectedAuthGrp.employeeAuthorityGroupItems;
+      updateEmployee($scope.curAuthEmployee);
     }
     
     $scope.showEmployeeAuthGrpDialog = function(employee, selectedAuthGrp) {
@@ -117,8 +115,15 @@ angular.module('anliantestApp')
             }
         );
         dialog.result.then(function(list) {
-          EmployeeService.updateEmployeeAuthorityGroups(employee, list);
-          $window.location.reload();
+          var promise = EmployeeService.updateEmployeeAuthorityGroups(employee, list);
+          promise.then(function(ret) {
+          	if (ret.errorCode == "No_Error") {
+          		reset(ret.data);
+//          		selectedAuthGrp = employye
+          	} else {
+          		alert(ret.errorCode);
+          	}
+          });
         });
       });
     };
