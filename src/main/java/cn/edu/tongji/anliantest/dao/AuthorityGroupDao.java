@@ -13,7 +13,7 @@ public AuthorityGroup getAuthorityGroupById(Long authorityGroupId);
 	
 	public Long addAuthorityGroup(AuthorityGroup authorityGroup);
 	
-	public void updateAuthorityGroup(AuthorityGroup authorityGroup);
+	public AuthorityGroup updateAuthorityGroup(AuthorityGroup authorityGroup);
 	
 	public void deleteAuthorityGroup(Long authorityGroupId);
 

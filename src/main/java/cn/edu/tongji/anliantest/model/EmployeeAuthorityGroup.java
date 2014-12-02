@@ -98,6 +98,8 @@ public class EmployeeAuthorityGroup implements Serializable {
 		}
 		this.authorityGroup = group;
 		this.name = group.getName();
+		if (group.getAuthorityItems() == null)
+			return;
 		for (AuthorityItem authItem : group.getAuthorityItems()) {
 			EmployeeAuthorityGroupItem empAuthItem = new EmployeeAuthorityGroupItem();
 			empAuthItem.setIsActive(false);

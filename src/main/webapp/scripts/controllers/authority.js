@@ -8,7 +8,7 @@
  * Controller of the anliantestApp
  */
 angular.module('anliantestApp')
-  .controller('AuthorityCtrl', function ($scope, $window, dialogs, EmployeeService, AuthorityService) {
+  .controller('AuthorityCtrl', function ($scope, dialogs, EmployeeService, AuthorityService) {
     $scope.employee = EmployeeService.getCurrEmployee();
   	$scope.hasAuth = false;
   

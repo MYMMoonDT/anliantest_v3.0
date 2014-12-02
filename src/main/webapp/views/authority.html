@@ -13,7 +13,7 @@
       </div>
       <div id="authContent" class="col-lg-9" x-ng-show="hasAuth">
         <div class="row">
-          <div class="col-lg-10">
+          <div class="col-lg-8">
             <select class="form-control" id="authGrpSelect"
               x-ng-change="changeAuthrityGroup()"
               x-ng-model="selectedAuthGrp"
@@ -23,6 +23,9 @@
           <div class="col-lg-2">
             <button id="configBtn" class="btn btn-primary" type="button" 
               x-ng-click="showEmployeeAuthGrpDialog(curAuthEmployee, selectedAuthGrp)">配置权限组</button>
+          </div>
+          <div class="col-lg-2">
+            <a href="#/authGrpConfig" class="btn btn-primary">配置权限组模板</a>
           </div>
         </div>
         <div class="row">

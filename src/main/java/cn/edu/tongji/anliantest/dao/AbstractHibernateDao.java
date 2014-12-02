@@ -38,8 +38,9 @@ public abstract class AbstractHibernateDao<E, I extends Serializable> {
 		return (E) getCurrentSession().get(entityClass, id);
 	}
 
-	public void saveOrUpdate(E e) {
-        getCurrentSession().merge(e);
+	@SuppressWarnings("unchecked")
+	public E saveOrUpdate(E e) {
+        return (E) getCurrentSession().merge(e);
 	}
 
 	public void delete(E e) {

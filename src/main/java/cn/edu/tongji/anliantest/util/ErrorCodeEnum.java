@@ -9,7 +9,9 @@ public enum ErrorCodeEnum implements Serializable{
 	Employee_Not_Exist("Employee not exist", 2),
 	Password_Wrong("Password Wrong", 3),
 	
-	File_Format_Wrong("File Format Wrong", 4);
+	File_Format_Wrong("File Format Wrong", 4), 
+	
+	Authority_Group_Used("Authority Group Used", 5);
 	
 	private String label;
 	private Integer code;

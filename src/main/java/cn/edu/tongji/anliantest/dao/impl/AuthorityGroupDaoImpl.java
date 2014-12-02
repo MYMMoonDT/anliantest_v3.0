@@ -44,8 +44,8 @@ public class AuthorityGroupDaoImpl extends AbstractHibernateDao<AuthorityGroup, 
 	}
 
 	@Override
-	public void updateAuthorityGroup(AuthorityGroup authorityGroup) {
-		saveOrUpdate(authorityGroup);
+	public AuthorityGroup updateAuthorityGroup(AuthorityGroup authorityGroup) {
+		return saveOrUpdate(authorityGroup);
 	}
 
 	@Override
