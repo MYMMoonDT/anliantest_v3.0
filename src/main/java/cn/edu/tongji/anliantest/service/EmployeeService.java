@@ -3,6 +3,7 @@ package cn.edu.tongji.anliantest.service;
 import java.util.List;
 
 import cn.edu.tongji.anliantest.model.Employee;
+import cn.edu.tongji.anliantest.util.AuthorityGroupUpdate;
 import cn.edu.tongji.anliantest.util.DataWrapper;
 
 public interface EmployeeService {
@@ -22,5 +23,8 @@ public interface EmployeeService {
 	public DataWrapper<List<Employee>> getEmployeeList(int currPageNum, int numPerPage);
 
 	public DataWrapper<List<Employee>> getAllEmployeeList();
+
+	DataWrapper<Employee> updateEmployeeAuthorityGroups(Long employeeId,
+			List<AuthorityGroupUpdate> updateList);
 	
 }

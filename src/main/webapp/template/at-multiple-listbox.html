@@ -1,0 +1,45 @@
+  <div class="row">
+    <div class="col-md-5">
+    <div class="alert alert-success">{{selectedTitle}}</div>
+          <ul class="list-group">
+            <li class="list-group-item"
+              x-ng-class="{active : isActive(item)}"
+              x-ng-repeat="item in list | filter:{selected:true}"
+              x-ng-click="itemClicked(item)">
+              <i class="fa fa-lock" x-ng-if="isLocked(item)"></i>
+              {{item.name}}
+            </li>
+          </ul>
+    </div>
+    <div class="col-md-1">
+      <div class="btn-group">
+        <button class="btn btn-default" x-ng-click="leftClicked()">
+          <i class="fa fa-angle-left"></i>
+        </button>
+        <button class="btn btn-default" x-ng-click="rightClicked()">
+          <i class="fa fa-angle-right"></i>
+        </button>
+      </div>
+      <!-- <div class="row">
+        <button class="btn btn-default" x-ng-click="rightClicked()">
+          <i class="fa fa-angle-right"></i>
+        </button>
+      </div>
+      <div class="row">
+        <button class="btn btn-default" x-ng-click="leftClicked()">
+          <i class="fa fa-angle-left"></i>
+        </button>
+      </div> -->
+    </div>
+    <div class="col-md-5">
+      <div class="alert alert-info">{{unselectedTitle}}</div>
+          <ul class="list-group">
+            <li class="list-group-item"
+              x-ng-class="{active : isActive(item)}"
+              x-ng-repeat="item in list | filter:{selected:false}"
+              x-ng-click="itemClicked(item)">
+              <i class="fa fa-lock" x-ng-if="isLocked(item)"></i>
+              {{item.name}}</li>
+          </ul>
+    </div>
+  </div>

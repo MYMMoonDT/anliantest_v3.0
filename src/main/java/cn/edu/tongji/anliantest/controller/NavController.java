@@ -64,6 +64,15 @@ public class NavController {
         return view;
 	}
 	
+	@RequestMapping(value = "/authGrpConfig")
+	public ModelAndView authGrpConfigPage(
+            HttpServletRequest request){
+        String host = request.getRequestURL().substring(0,request.getRequestURL().indexOf("/",10)+1);
+        ModelAndView view = new ModelAndView();
+        view.setViewName("redirect:"+host+"#/authGrpConfig");
+        return view;
+	}
+	
 	@RequestMapping(value = "/test")
 	public ModelAndView testPage(
             HttpServletRequest request){

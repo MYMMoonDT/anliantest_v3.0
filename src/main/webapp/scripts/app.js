@@ -21,7 +21,7 @@ angular
     'angularFileUpload',
     'ui.bootstrap',
     'datatables',
-    'toggle-switch'
+    "angularToggleDirectives"
   ])
   .config(function ($routeProvider, $locationProvider) {
     $routeProvider
@@ -61,9 +61,9 @@ angular
         templateUrl: 'views/test.html',
         controller: 'TestCtrl'
       })
-      .when('/authority', {
-        templateUrl: 'views/authority.html',
-        controller: 'AuthorityCtrl'
+      .when('/authGrpConfig', {
+        templateUrl: 'views/authgrpconfig.html',
+        controller: 'AuthGrpConfigCtrl'
       })
       .otherwise({
         redirectTo: '/'

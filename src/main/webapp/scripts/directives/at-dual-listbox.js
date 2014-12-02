@@ -9,10 +9,26 @@
 angular.module('anliantestApp')
   .directive('atDualListbox', function () {
     return {
-      template: '<div>TEST</div>',
       restrict: 'E',
+      //transclude: true,
+      template: '<select multiple></select>',
+      replace: true,
+      scope: {
+    	  groups: '=',
+      },
       link: function postLink(scope, element, attrs) {
-        element.text('this is the atDualListbox directive');
+        element.bootstrapDualListbox({
+        	moveOnSelect: false,
+        });
+        for (var i in scope.groups) {
+  	    	if (scope.groups[i].isActive) {
+  	    		element.append('<option selected>'+scope.groups[i].name+'</option>');
+  	    	} else {
+  	    		element.append('<option>'+scope.groups[i].name+'</option>');
+  	    	}
+  	    }
+//        element.append('<option selected>zxc</option><option>asd</option>');
+        element.bootstrapDualListbox('refresh');
       }
     };
   });

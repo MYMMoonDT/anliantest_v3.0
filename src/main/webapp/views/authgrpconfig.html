@@ -1,0 +1,38 @@
+<div id="wrapper">
+  <at-header></at-header>
+
+  <div id="page-wrapper">
+    <div class="row">
+      <div class="col-lg-12">
+        <h1 class="page-header">权限管理</h1>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-6">
+        <select class="form-control" id="authGrpSelect"
+              x-ng-model="selectedAuthGrp"
+              x-ng-options="authGrp.name for authGrp in authorityGroups">
+        </select>
+      </div>
+      <div class="col-lg-3">
+        <div class="btn-group">
+          <button class="btn btn-success"
+            x-ng-click="showAddAuthGrpDialog()">添加权限组</button>
+          <button class="btn btn-danger"
+            x-ng-click="deleteAuthGrp()">删除权限组</button>
+        </div>
+      </div>
+      <div class="col-lg-2">
+        <button class="btn btn-primary"
+          x-ng-click="save()">保存</button>
+      </div>
+    </div>
+    <div class="row">
+      <hr>
+    </div>
+    <div class="row">
+      <at-multiple-listbox x-ng-model="list"
+        x-selected-title="已有权限" x-unselected-title="可配置权限"></at-multiple-listbox>
+    </div>
+  </div>
+</div>

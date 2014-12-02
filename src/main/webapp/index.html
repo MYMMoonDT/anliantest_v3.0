@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="bower_components/bootstrap-treeview/dist/bootstrap-treeview.min.css" />
     <link rel="stylesheet" href="bower_components/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.css" />
     <link rel="stylesheet" href="bower_components/angular-ui-tree/dist/angular-ui-tree.min.css" />
-    <link rel="stylesheet" href="bower_components/angular-toggle-switch/angular-toggle-switch.css" />
+    <link rel="stylesheet" href="bower_components/fontawesome/css/font-awesome.css" />
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
@@ -27,7 +27,6 @@
 
     <link rel="stylesheet" href="bower_components/startbootstrap/templates/sb-admin-2/css/sb-admin-2.css" />
     <link rel="stylesheet" href="bower_components/startbootstrap/templates/sb-admin-2/font-awesome-4.1.0/css/font-awesome.min.css" />
-
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
     <base href="/"> 
@@ -83,7 +82,6 @@
     <script src="bower_components/bootstrap-treeview/dist/bootstrap-treeview.min.js"></script>
     <script src="bower_components/bootstrap-switch/dist/js/bootstrap-switch.js"></script>
     <script src="bower_components/angular-ui-tree/dist/angular-ui-tree.js"></script>
-    <script src="bower_components/angular-toggle-switch/angular-toggle-switch.js"></script>
     <script src="bower_components/raphael/raphael.js"></script>
     <script src="bower_components/bootstrap-duallistbox/src/jquery.bootstrap-duallistbox.js"></script>
     <!-- endbower -->
@@ -117,10 +115,13 @@
         <script src="scripts/directives/at-datepicker.js"></script>
         <script src="scripts/directives/at-progress.js"></script>
         <script src="scripts/directives/at-dual-listbox.js"></script>
-
+        <script src="scripts/directives/angular-toggle.js"></script>
+        <script src="scripts/directives/at-multiple-listbox.js"></script>
+        
         <script src="scripts/services/project.js"></script>
         <script src="scripts/services/employee.js"></script>
         <script src="scripts/services/department.js"></script>
+        <script src="scripts/services/authority.js"></script>
 
         <script src="scripts/factorys/employee.js"></script>
         <script src="scripts/factorys/customer.js"></script>
@@ -140,6 +141,8 @@
         
         <script src="scripts/interceptors/loading.js"></script>
         
+        <script src="scripts/filters/item-state.js"></script>
+        <script src="scripts/controllers/authgrpconfig.js"></script>
         <!-- endbuild -->
 </body>
 </html>
