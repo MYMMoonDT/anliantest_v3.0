@@ -14,20 +14,27 @@ angular.module('anliantestApp')
     $scope.fileCurrPageNum = 1;
     $scope.fileTotalItemNum = 0;
 
-    refreshData();
+    refreshProjectData();
+    refreshProjectFileData();
 
-    function refreshData() {
+    function refreshProjectData() {
       $scope.project = Project.get({projectId: $scope.projectId}, function(data){
         $scope.step = data.step;
       });
+    }
 
+    function refreshProjectFileData(){
       Files.query({projectId: $scope.projectId, currPageNum: $scope.fileCurrPageNum}, function(data){
-        $scope.projectFileGroupList = data.data;
+        if(data != null) {
+          $scope.projectFileGroupList = data.data;
+          $scope.fileCurrPageNum = data.currPageNum;
+          $scope.fileTotalItemNum = data.totalItemNum;
+        }
       });
     }
 
     $scope.filePageChanged = function(){
-      refreshData();
+      refreshProjectFileData();
     };
 
     $scope.showInputJCBGDialog = function() {
@@ -64,7 +71,7 @@ angular.module('anliantestApp')
         windowClass: 'model-overlay'
       });
       dialog.result.then(function(data) {
-        /*
+        
         var files = [];
         for(var i = 0; i < data.item.items.length; i++) {
           files.push(data.item.items[i].file);
@@ -77,9 +84,10 @@ angular.module('anliantestApp')
           data: data.item,
           file: files
         }).success(function(data, status, headers, config) {
-          
+          refreshProjectFileData();
         });
-        */
+        
+        /*
         var files = [];
         for(var i = 0; i < data.item.items.length; i++) {
           files.push(data.item.items[i].file);
@@ -90,8 +98,10 @@ angular.module('anliantestApp')
         angular.extend(files, data.item);
 
         files.$save(function(){
-          refreshData();
+          refreshProjectFileData();
         });
+        */
+
       }, function() {
 
       });
@@ -117,7 +127,7 @@ angular.module('anliantestApp')
         var _files = new Files();
 
         _files.$delete({fileGroupId:fileGroup.id}, function(){
-          refreshData();
+          refreshProjectFileData();
         });
 
       }, function () {

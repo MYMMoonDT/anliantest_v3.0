@@ -1,6 +1,9 @@
 package cn.edu.tongji.anliantest.controller;
 
+import java.io.IOException;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,10 +13,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import cn.edu.tongji.anliantest.model.FileGroup;
+import cn.edu.tongji.anliantest.model.FileItem;
+import cn.edu.tongji.anliantest.model.Project;
 import cn.edu.tongji.anliantest.service.FileService;
 import cn.edu.tongji.anliantest.util.DataWrapper;
+
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller
 @RequestMapping("api")
@@ -44,8 +54,25 @@ public class FileController {
 	@RequestMapping(value="files", method=RequestMethod.POST)
 	@ResponseBody
 	public DataWrapper<FileGroup> addFileGroup(
-		@RequestBody FileGroup fileGroup) {
-		return fileService.addFileGroup(fileGroup);
+		HttpServletRequest request,
+		@RequestParam("groupName") String groupName,
+		@RequestParam("comment") String comment,
+		@RequestParam("project") String project,
+		@RequestParam("items") String items,
+		@RequestParam("file") List<MultipartFile> files) throws JsonParseException, JsonMappingException, IOException {
+		
+		FileGroup fileGroup = new FileGroup();
+		fileGroup.setGroupName(groupName);
+		fileGroup.setComment(comment);
+		
+		ObjectMapper mapper = new ObjectMapper();
+		Project projectTemp = mapper.readValue(project, Project.class);
+		fileGroup.setProject(projectTemp);
+		
+		mapper = new ObjectMapper();
+		FileItem[] itemsTemp = mapper.readValue(items, FileItem[].class);
+		
+		return fileService.addFileGroup(fileGroup, itemsTemp, files);
 	}
 	
 	@RequestMapping(value="files", method=RequestMethod.PUT)

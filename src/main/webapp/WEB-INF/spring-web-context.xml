@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:context="http://www.springframework.org/schema/context" xmlns:mvc="http://www.springframework.org/schema/mvc"
-       xmlns:aop="http://www.springframework.org/schema/aop"
-       xsi:schemaLocation="http://www.springframework.org/schema/mvc
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc
         http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
 		http://www.springframework.org/schema/beans
 		http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
@@ -11,43 +11,46 @@
 		http://www.springframework.org/schema/aop
 		http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
 
-    <context:component-scan base-package="cn.edu.tongji.anliantest.controller">
-    	<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
-    </context:component-scan>
-    
-    <mvc:annotation-driven/>
+	<context:component-scan base-package="cn.edu.tongji.anliantest.controller">
+		<context:include-filter type="annotation"
+			expression="org.springframework.stereotype.Controller" />
+	</context:component-scan>
 
-	  <mvc:default-servlet-handler/>
+	<mvc:annotation-driven />
 
-    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-        <property name="defaultEncoding" value="UTF-8"/>
-    </bean>
+	<mvc:default-servlet-handler />
 
-<!--JSON配置-->    
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="defaultEncoding" value="UTF-8" />
+	</bean>
 
-    <bean 
+	<!--JSON配置 -->
 
-       class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter"> 
+	<bean
 
-        <property name="messageConverters">   
+		class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
 
-            <list>
+		<property name="messageConverters">
 
-              <!-- 该类只有org.springframework.web-3.1.2.RELEASE.jar及以上版本才有  使用该配置后，才可以使用JSON相关的一些注解-->
+			<list>
 
-                <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+				<!-- 该类只有org.springframework.web-3.1.2.RELEASE.jar及以上版本才有 使用该配置后，才可以使用JSON相关的一些注解 -->
 
-                    <property name="objectMapper">
+				<bean
+					class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
 
-                 <bean class="com.fasterxml.jackson.databind.ObjectMapper"/>
+					<property name="objectMapper">
 
-              </property>
+						<bean class="com.fasterxml.jackson.databind.ObjectMapper" />
 
-                </bean>
+					</property>
 
-            </list>
+				</bean>
 
-        </property>
+			</list>
 
-    </bean> 
+		</property>
+
+	</bean>
 </beans>

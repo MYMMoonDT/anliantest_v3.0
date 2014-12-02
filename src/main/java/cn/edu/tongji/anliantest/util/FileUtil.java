@@ -33,6 +33,13 @@ public class FileUtil {
 		return targetFile;
 	}
 	
+	public static void deleteFile(String path, String fileName) {
+		File targetFile = new File(path, fileName);
+		if(targetFile.exists()) {
+			targetFile.delete();
+		}
+	}
+	
 	public static void downloadFile(File file, HttpServletResponse response) throws Exception{
 		String fileName = URLEncoder.encode(file.getName(), "UTF-8");
 		
