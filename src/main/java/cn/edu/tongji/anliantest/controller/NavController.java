@@ -55,6 +55,15 @@ public class NavController {
         return view;
 	}
 	
+	@RequestMapping(value = "/department")
+	public ModelAndView departmentPage(
+            HttpServletRequest request){
+        String host = request.getRequestURL().substring(0,request.getRequestURL().indexOf("/",10)+1);
+        ModelAndView view = new ModelAndView();
+        view.setViewName("redirect:"+host+"#/department");
+        return view;
+	}
+	
 	@RequestMapping(value = "/authority")
 	public ModelAndView authorityPage(
             HttpServletRequest request){

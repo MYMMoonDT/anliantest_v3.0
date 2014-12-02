@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import cn.edu.tongji.anliantest.model.Department;
@@ -23,14 +22,6 @@ DepartmentService departmentService;
 	@Autowired
 	public DepartmentController(DepartmentService departmentService) {
 		this.departmentService = departmentService;
-	}
-	
-	@RequestMapping(value="department", method=RequestMethod.GET)
-	@ResponseBody
-	public DataWrapper<List<Department>> getDepartmentList(
-		@RequestParam(value = "currPageNum") int currPageNum,
-		@RequestParam(value = "numPerPage") int numPerPage) {
-		return departmentService.getDepartmentList(currPageNum, numPerPage);
 	}
 	
 	@RequestMapping(value="department/{departmentId}", method=RequestMethod.GET)

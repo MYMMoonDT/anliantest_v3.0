@@ -14,8 +14,6 @@ public interface DepartmentService {
 	public DataWrapper<Department> updateDepartment(Department department);
 	
 	public DataWrapper<Void> deleteDepartment(Long departmentId);
-	
-	public DataWrapper<List<Department>> getDepartmentList(int currPageNum, int numPerPage);
 
 	public DataWrapper<List<Department>> getAllDepartments();	
 }

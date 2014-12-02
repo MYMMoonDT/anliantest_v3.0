@@ -22,33 +22,49 @@ public class DepartmentServiceImpl implements DepartmentService{
 
 	@Override
 	public DataWrapper<Department> getDepartmentById(Long departmentId) {
-		// TODO Auto-generated method stub
-		return null;
+		DataWrapper<Department> ret = new DataWrapper<>();
+        
+		Department department = departmentDao.getDepartmentById(departmentId);
+        ret.setData(department);
+        
+        return ret;
 	}
 
 	@Override
 	public DataWrapper<Department> addDepartment(Department department) {
-		// TODO Auto-generated method stub
-		return null;
+		DataWrapper<Department> ret = new DataWrapper<>();
+		
+		departmentDao.addDepartment(department);
+		
+		ret.setData(departmentDao.getDepartmentById(department.getId()));
+		
+		logger.info("添加部门信息:"+department.getName()+"("+department.getId()+")");
+		
+		return ret;
 	}
 
 	@Override
 	public DataWrapper<Department> updateDepartment(Department department) {
-		// TODO Auto-generated method stub
-		return null;
+		DataWrapper<Department> ret = new DataWrapper<>();
+		
+		departmentDao.updateDepartment(department);
+		
+		ret.setData(departmentDao.getDepartmentById(department.getId()));
+		
+		logger.info("更新部门信息:"+department.getName()+"("+department.getId()+")");
+		
+		return ret;
 	}
 
 	@Override
 	public DataWrapper<Void> deleteDepartment(Long departmentId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public DataWrapper<List<Department>> getDepartmentList(int currPageNum,
-			int numPerPage) {
-		// TODO Auto-generated method stub
-		return null;
+		DataWrapper<Void> ret = new DataWrapper<>();
+		
+		departmentDao.deleteDepartment(departmentId);
+		
+		logger.info("删除部门信息:" + "(" + departmentId + ")");
+		
+		return ret;
 	}
 
 	@Override

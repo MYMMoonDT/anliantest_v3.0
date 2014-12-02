@@ -65,6 +65,10 @@ angular
         templateUrl: 'views/authgrpconfig.html',
         controller: 'AuthGrpConfigCtrl'
       })
+      .when('/department', {
+        templateUrl: 'views/department.html',
+        controller: 'DepartmentCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });
