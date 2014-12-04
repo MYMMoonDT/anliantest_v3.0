@@ -1,6 +1,8 @@
 package cn.edu.tongji.anliantest.document;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -8,6 +10,22 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+
+import org.apache.poi.hssf.usermodel.HSSFHeader;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.hssf.usermodel.HeaderFooter;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.CreationHelper;
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.Header;
+import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.usermodel.PrintSetup;
+import org.apache.poi.ss.usermodel.RichTextString;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.util.CellRangeAddress;
 
 import cn.edu.tongji.anliantest.model.experiment.JCBGGroup;
 import cn.edu.tongji.anliantest.model.experiment.JCBGSiO2Item;
@@ -225,6 +243,340 @@ public class JCBGDocument {
 		jacob.save(filePath);
 		jacob.closeWordDoc();
 		jacob.closeWord();
+	}
+	
+	private static final float ROW_HEIGHT = (float) 12.75;
+	public static void generateJSJGFilePOI(JSJGTable jsjgTable, String filePath) {
+		try {
+			Workbook wb = new HSSFWorkbook();
+			CreationHelper createHelper = wb.getCreationHelper();
+		    Sheet sheet = wb.createSheet();
+		    
+		    // 设置页面属性
+		    PrintSetup ps = sheet.getPrintSetup();
+		    ps.setLandscape(true);
+		    ps.setPaperSize(PrintSetup.A4_PAPERSIZE);
+		    
+		    // 设置页眉
+		    sheet.setMargin(Sheet.TopMargin, 1.5);
+		    Header header = sheet.getHeader();
+		    header.setLeft(HSSFHeader.font("宋体", "regular") + 
+		    		HSSFHeader.fontSize((short) 14) + space(18) + "检测报告计算判定过程记录——有毒物质\n" + 
+		    		HSSFHeader.fontSize((short) 10)+ 
+		    			"表码：" + jsjgTable.getTableNum() + space(25) + "修订状态：1/0" + space(25) + "第 "+ HeaderFooter.page() +"页  共 "+ HeaderFooter.numPages() +"页\n" + 
+		    			"项目编号："+ space(11) + space(22) + "项目类型： 检评  预评  控评√");
+		    //TODO Change space(11) to projectNumber
+		    
+		    // 设置字体
+		    Font defaultFont = wb.getFontAt((short)0);
+		    defaultFont.setFontName("宋体");
+		    
+		    Font boldFont = wb.createFont();
+		    boldFont.setFontName("宋体");
+		    boldFont.setBoldweight(Font.BOLDWEIGHT_BOLD);
+		    Font superFont = wb.createFont();
+		    superFont.setFontName("宋体");
+			superFont.setTypeOffset(Font.SS_SUPER);
+		    Font subFont = wb.createFont();
+		    subFont.setFontName("宋体");
+			subFont.setTypeOffset(Font.SS_SUB);
+			
+		    // 设置注释
+		    sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 14));
+		    Row row = sheet.createRow((short)0);
+		    RichTextString rs = createHelper.createRichTextString(
+		    		"注：有毒物质CSTEL的选取和CTWA的计算：\n"
+		    		+ "    采用定点、短时间采样方法的采样，在某工作岗位选取有代表性的、工人可能接触有毒物质浓度最高的几个时段进行短时间采样。几个时段中有毒物质浓度的最高值即是该岗位工人接触的CSTEL，用几个时段中有毒物质的浓度分别乘以所代表的相应接触时间，再除以8小时即是该岗位工人接触的CTWA的计算公式：\n"
+		    		+ space(16) + "CTWA=(C1T1+C2T2+…CnTn)/8\n"
+		    		+ space(8) + "CTWA---空气中有害物质8h时间加权平均浓度，mg/m3\n"
+		    		+ space(8) + "C1、C2、Cn---空气中有害物质浓度，mg/m3\n"
+		    		+ space(8) + "T1、T2、Tn---劳动者在相应的有害物质浓度下的工作时间，h\n"
+		    		+ space(8) + "8---时间加权平均容许浓度规定的8h"
+		    		);
+		    //注：
+		    rs.applyFont(0, 2, boldFont);
+		    //CSTEL
+		    rs.applyFont(7, 11, subFont);
+		    //CTWA
+		    rs.applyFont(16, 19, subFont);
+		    //CSTEL
+		    rs.applyFont(111, 115, subFont);
+		    //CTWA
+		    rs.applyFont(161, 164, subFont);
+		    //CTWA
+		    rs.applyFont(188, 191, subFont);
+		    //C1
+		    rs.applyFont(194, 195, subFont);
+		    //T1
+		    rs.applyFont(196, 197, subFont);
+		    //C2
+		    rs.applyFont(199, 200, subFont);
+		    //T2
+		    rs.applyFont(201, 202, subFont);
+		    //Cn
+		    rs.applyFont(205, 206, subFont);
+		    //Tn
+		    rs.applyFont(207, 208, subFont);
+		    //CTWA
+		    rs.applyFont(221, 224, subFont);
+		    //m3
+		    rs.applyFont(249, 250, superFont);
+		    //C1
+		    rs.applyFont(260, 261, subFont);
+		    //C2
+		    rs.applyFont(263, 264, subFont);
+		    //Cn
+		    rs.applyFont(266, 267, subFont);
+		    //m3
+		    rs.applyFont(284, 285, superFont);
+		    //T1
+		    rs.applyFont(295, 296, subFont);
+		    //T2
+		    rs.applyFont(298, 299, subFont);
+		    //Tn
+		    rs.applyFont(301, 302, subFont);
+		    
+		    Cell cell = row.createCell(0);
+		    cell.setCellValue(rs);
+		    CellStyle wrapStyle = wb.createCellStyle();
+		    wrapStyle.setWrapText(true);
+		    cell.setCellStyle(wrapStyle);
+		    row.setHeightInPoints(ROW_HEIGHT*8);
+		    
+		    // 生成表格
+		    // 表头
+		    CellStyle defalutCellStyle = wb.createCellStyle();
+		    defalutCellStyle.setWrapText(true);
+		    defalutCellStyle.setAlignment(CellStyle.ALIGN_CENTER);
+		    defalutCellStyle.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
+		    defalutCellStyle.setBorderBottom(CellStyle.BORDER_THIN);
+		    defalutCellStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+		    defalutCellStyle.setBorderLeft(CellStyle.BORDER_THIN);
+		    defalutCellStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
+		    defalutCellStyle.setBorderRight(CellStyle.BORDER_THIN);
+		    defalutCellStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
+		    defalutCellStyle.setBorderTop(CellStyle.BORDER_THIN);
+		    defalutCellStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
+		    
+		    row = sheet.createRow(1);
+		    row.setHeightInPoints(ROW_HEIGHT*2);
+		    cell = row.createCell(0);
+		    cell.setCellStyle(defalutCellStyle);
+		    cell.setCellValue("日期");
+		    cell = row.createCell(1);
+		    cell.setCellStyle(defalutCellStyle);
+		    cell.setCellValue("车间/岗位");
+		    cell = row.createCell(2);
+		    cell.setCellStyle(defalutCellStyle);
+		    cell.setCellValue("危害因素");
+		    cell = row.createCell(3);
+		    cell.setCellStyle(defalutCellStyle);
+		    cell.setCellValue("样品编号");
+		    cell = row.createCell(4);
+		    cell.setCellStyle(defalutCellStyle);
+		    rs = createHelper.createRichTextString("检测结果\n（mg/m3）");
+		    rs.applyFont(10, 11, superFont);
+		    cell.setCellValue(rs);
+		    cell = row.createCell(5);
+		    cell.setCellStyle(defalutCellStyle);
+		    cell.setCellValue("代表接触\n时间(h)");
+		    cell = row.createCell(6);
+		    cell.setCellStyle(defalutCellStyle);
+		    cell.setCellValue(rs);
+		    cell = row.createCell(7);
+		    cell.setCellStyle(defalutCellStyle);
+		    cell = row.createCell(8);
+		    cell.setCellStyle(defalutCellStyle);
+		    cell = row.createCell(9);
+		    cell.setCellStyle(defalutCellStyle);
+		    cell = row.createCell(10);
+		    cell.setCellStyle(defalutCellStyle);
+		    rs = createHelper.createRichTextString("职业接触限值（mg/m3）");
+		    rs.applyFont(11, 12, superFont);
+		    cell.setCellValue(rs);
+		    cell = row.createCell(11);
+		    cell.setCellStyle(defalutCellStyle);
+		    cell = row.createCell(12);
+		    cell.setCellStyle(defalutCellStyle);
+		    cell = row.createCell(13);
+		    cell.setCellStyle(defalutCellStyle);
+		    cell = row.createCell(14);
+		    cell.setCellStyle(defalutCellStyle);
+		    cell.setCellValue("判定结果");
+		    row = sheet.createRow(2);
+		    row.setHeightInPoints(ROW_HEIGHT*2);
+		    cell = row.createCell(6);
+		    cell.setCellStyle(defalutCellStyle);
+		    cell = row.createCell(0);
+		    cell.setCellStyle(defalutCellStyle);
+		    cell = row.createCell(1);
+		    cell.setCellStyle(defalutCellStyle);
+		    cell = row.createCell(2);
+		    cell.setCellStyle(defalutCellStyle);
+		    cell = row.createCell(3);
+		    cell.setCellStyle(defalutCellStyle);
+		    cell = row.createCell(4);
+		    cell.setCellStyle(defalutCellStyle);
+		    cell = row.createCell(5);
+		    cell.setCellStyle(defalutCellStyle);
+		    cell = row.createCell(6);
+		    cell.setCellStyle(defalutCellStyle);
+		    cell.setCellValue("MAC");
+		    cell = row.createCell(7);
+		    cell.setCellStyle(defalutCellStyle);
+		    rs = createHelper.createRichTextString("CTWA");
+		    rs.applyFont(1, 4, subFont);
+		    cell.setCellValue(rs);
+		    cell = row.createCell(8);
+		    cell.setCellStyle(defalutCellStyle);
+		    rs = createHelper.createRichTextString("CSTEL");
+		    rs.applyFont(1, 5, subFont);
+		    cell.setCellValue(rs);
+		    cell = row.createCell(9);
+		    cell.setCellStyle(defalutCellStyle);
+		    cell.setCellValue("超限倍数");
+		    cell = row.createCell(10);
+		    cell.setCellStyle(defalutCellStyle);
+		    cell.setCellValue("MAC");
+		    cell = row.createCell(11);
+		    cell.setCellStyle(defalutCellStyle);
+		    cell.setCellValue("PC-TWA");
+		    cell = row.createCell(12);
+		    cell.setCellStyle(defalutCellStyle);
+		    cell.setCellValue("PC-STEL");
+		    cell = row.createCell(13);
+		    cell.setCellStyle(defalutCellStyle);
+		    cell.setCellValue("超限倍数");
+		    cell = row.createCell(14);
+		    cell.setCellStyle(defalutCellStyle);
+
+		    sheet.addMergedRegion(new CellRangeAddress(1, 2, 0, 0));
+		    sheet.addMergedRegion(new CellRangeAddress(1, 2, 1, 1));
+		    sheet.addMergedRegion(new CellRangeAddress(1, 2, 2, 2));
+		    sheet.addMergedRegion(new CellRangeAddress(1, 2, 3, 3));
+		    sheet.addMergedRegion(new CellRangeAddress(1, 2, 4, 4));
+		    sheet.addMergedRegion(new CellRangeAddress(1, 2, 5, 5));
+		    sheet.addMergedRegion(new CellRangeAddress(1, 2, 14, 14));
+		    sheet.addMergedRegion(new CellRangeAddress(1, 1, 6, 9));
+		    sheet.addMergedRegion(new CellRangeAddress(1, 1, 10, 13));
+		    
+		    sheet.setRepeatingRows(CellRangeAddress.valueOf("2:3"));
+
+		    sheet.setColumnWidth(1, 256*14);
+		    sheet.setColumnWidth(2, 256*14);
+		    sheet.setColumnWidth(3, 256*14);
+		    for (int i = 6; i < 14; i++) {
+		    	sheet.setColumnWidth(i, 1280);
+		    }
+		    sheet.setColumnWidth(14, 256*8);
+		    
+		    int rowIndex = 3;
+		    // 表格主体
+		    SimpleDateFormat dateFormat =  new SimpleDateFormat("MM月dd号");
+		    List<JSJGGroup> groups = jsjgTable.getGroups();
+		    int prevWorkPositionIndex = -1, prevSubstanceIndex = -1;
+		    String prevWorkPositionStr = null, prevSubstanceStr = null; 
+		    for (JSJGGroup group : groups) {
+		    	row = sheet.createRow(rowIndex++);
+		    	for (int i = 0; i < 15; i++) {
+		    		row.createCell(i).setCellStyle(defalutCellStyle);
+		    	}
+		    	row.getCell(0).setCellValue(dateFormat.format(group.getTestDate()));
+		    	row.getCell(1).setCellValue(group.getWorkshopPosition());
+		    	String type = group.getResultType();
+		    	ZYBWHYSItem substance = group.getZybwhysItem();
+		    	row.getCell(2).setCellValue(substance.getChineseName());
+				row.getCell(6).setCellValue(strForNull(
+						new DataValueScale(group.getMAC(), group.getMAC_Scale()).toTypeString(type),
+						"-"));
+				row.getCell(7).setCellValue(strForNull(
+						new DataValueScale(group.getPC_TWA(), group.getPC_TWA_Scale()).toTypeString(type),
+						"-"));
+				row.getCell(8).setCellValue(strForNull(
+						new DataValueScale(group.getPC_STEL(), group.getPC_STEL_Scale()).toTypeString(type),
+						"-"));
+				row.getCell(9).setCellValue(strForNull(
+						new DataValueScale(group.getOM(), group.getOM_Scale()).toTypeString(type),
+						"-"));
+				row.getCell(10).setCellValue(strForNull(
+						new DataValueScale(substance.getMAC(), substance.getMAC_Scale()).toString(),
+						"-"));
+				row.getCell(11).setCellValue(strForNull(
+						new DataValueScale(substance.getPC_TWA(), substance.getPC_TWA_Scale()).toString(),
+						"-"));
+				row.getCell(12).setCellValue(strForNull(
+						new DataValueScale(substance.getPC_STEL(), substance.getPC_STEL_Scale()).toString(),
+						"-"));
+				row.getCell(13).setCellValue(strForNull(
+						new DataValueScale(substance.getOM(), substance.getOM_Scale()).toString(),
+						"-"));
+				row.getCell(14).setCellValue(group.getResult());
+		    	boolean isFirstRow = true;
+		    	List<JSJGItem> items = group.getItems();
+		    	for (JSJGItem item : items) {
+		    		if (isFirstRow) {
+		    			isFirstRow = false;
+		    		} else {
+		    			row = sheet.createRow(rowIndex++);
+		    			for (int i = 0; i < 15; i++) {
+				    		row.createCell(i).setCellStyle(defalutCellStyle);
+				    	}
+		    		}
+		    		row.getCell(3).setCellValue(item.getSampleNum());
+		    		row.getCell(4).setCellValue(new DataValueScale(item.getResult(), item.getResultScale()).toTypeString(item.getResultType()));
+		    		row.getCell(5).setCellValue(new DataValueScale(item.getTouchTime(), item.getTouchTimeScale()).toString());
+		    	}
+		    	for (int i = 0; i < 15; i++) {
+		    		if (i != 3 && i != 4 && i != 5) {
+		    		    sheet.addMergedRegion(new CellRangeAddress(rowIndex-items.size(), rowIndex-1, i, i));
+		    		}
+		    	}
+//		    	if (prevWorkPositionIndex == -1) {
+//		    		prevWorkPositionIndex = rowIndex-items.size();
+//		    		prevWorkPositionStr = group.getWorkshopPosition();
+//		    	} else {
+		    		if (prevWorkPositionStr != null && prevWorkPositionStr.equals(group.getWorkshopPosition())) {
+		    			sheet.getRow(rowIndex-items.size()).getCell(1).setCellValue("");
+		    			sheet.addMergedRegion(new CellRangeAddress(prevWorkPositionIndex, rowIndex-items.size(), 1, 1));
+		    		} else {
+			    		prevWorkPositionIndex = rowIndex-items.size();
+			    		prevWorkPositionStr = group.getWorkshopPosition();
+			    		prevSubstanceIndex = -1;
+			    		prevSubstanceStr = null;
+		    		}
+		    		
+		    		if (prevSubstanceStr != null && prevSubstanceStr.equals(substance.getChineseName())) {
+		    			sheet.getRow(rowIndex-items.size()).getCell(2).setCellValue("");
+		    			sheet.addMergedRegion(new CellRangeAddress(prevSubstanceIndex, rowIndex-items.size(), 2, 2));
+		    		} else {
+			    		prevSubstanceIndex = rowIndex-items.size();
+			    		prevSubstanceStr = substance.getChineseName();
+		    		}
+//		    	}
+		    		
+		    }
+		    
+		    
+		    FileOutputStream fileOut = new FileOutputStream("workbook.xls");
+		    wb.write(fileOut);
+		    fileOut.close();
+			System.out.println("Created File: "+filePath);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	private static String strForNull(String val, String str) {
+		return (val == null ? str : val);
+	}
+	
+	private static String space(int number) {
+		StringBuffer buf = new StringBuffer(number);
+		while(number-->0) {
+			buf.append(' ');
+		}
+		return buf.toString();
 	}
 	
 	public static void generateJGPJFile(JGPJTable jgpjTable, String filePath) {
