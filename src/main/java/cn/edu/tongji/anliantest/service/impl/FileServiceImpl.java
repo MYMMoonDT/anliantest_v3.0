@@ -94,4 +94,9 @@ public class FileServiceImpl implements FileService{
 			int numPerPage) {
 		return fileGroupDao.getFileGroupList(projectId, currPageNum, numPerPage);
 	}
+
+	@Override
+	public DataWrapper<List<FileGroup>> getAllFileGroupList(Long projectId) {
+		return fileGroupDao.getFileGroupList(projectId);
+	}
 }

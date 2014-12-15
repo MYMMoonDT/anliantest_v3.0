@@ -6,7 +6,8 @@ public enum ProjectStatusEnum {
 	CREATE_GZRWD,  	//创建工作任务单
 	APPOINT_XMFZR, 	//指定项目负责人
 	CREATE_KHZLDJD,	//创建客户资料登记单
-	CREATE_XCDCJL; 	//创建现场调查记录
+	CREATE_XCDCJL, 	//创建现场调查记录
+	UPLOAD_PJFA; 	//上传评价方案
 	
 	@Override
 	public String toString() {
@@ -24,6 +25,8 @@ public enum ProjectStatusEnum {
 			ret = "创建客户资料登记单";
 		} else if(this == ProjectStatusEnum.CREATE_XCDCJL) {
 			ret = "创建现场调查记录";
+		} else if(this == ProjectStatusEnum.UPLOAD_PJFA) {
+			ret = "上传评价方案";
 		}
 		
 		return ret;

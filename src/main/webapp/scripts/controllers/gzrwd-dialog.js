@@ -12,6 +12,8 @@ angular.module('anliantestApp')
     $scope.data = data;
 
     $scope.data.item = {
+      tableNum: 'ALJC/JL32-01',
+      revisionStatus: '1/0',
       issueDate: new Date(),
       items: [
         {

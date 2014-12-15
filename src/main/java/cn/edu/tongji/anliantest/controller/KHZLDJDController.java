@@ -14,7 +14,7 @@ import cn.edu.tongji.anliantest.util.DataWrapper;
 
 @Controller
 @RequestMapping("api")
-public class KHZLDJDController {
+public class KHZLDJDController{
 	KHZLDJDService khzldjdService;
 	
 	@Autowired

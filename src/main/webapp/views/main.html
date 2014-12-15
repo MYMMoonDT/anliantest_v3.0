@@ -19,12 +19,15 @@
               </div>
               <div class="panel-body">
                 <div class="list-group">
-                  <div class="list-group-item" ng-repeat="task in employeeTaskList">
-                    <i class="fa fa-tasks fa-fw"></i> {{task.projectStatus | projectStatus}}
-                    <div class="options">
-                      <button class="btn btn-default" popover="{{'项目名称: ' + task.project.name + ' 项目编号: ' + task.project.number}}" popover-title="任务详情">详情</button>
+                  <div class="list-group-item" ng-repeat="task in employeeTaskList" style="line-height:36px;">
+                    <i class="fa fa-tasks fa-fw"></i> {{task.project.number}}&nbsp;{{task.projectStatus | projectStatus}}
+                    <div class="options pull-right">
+                      <button class="btn btn-default" ng-click="showProjectDetailDialog(task.project)">详情</button>
+                    </div>
+                    <div class="options pull-right" style="margin-right:10px;">
                       <button class="btn btn-success" ng-click="finishTask(task)">{{task.projectStatus | taskOption}}</button>
                     </div>
+                    <div class="clearfix"></div>
                   </div>
                 </div>
               </div>
@@ -42,10 +45,12 @@
               <div class="panel-body">
                 <div class="list-group">
                   <div class="list-group-item" ng-repeat="task in departmentTaskList">
-                    <i class="fa fa-tasks fa-fw"></i> {{task.projectStatus | projectStatus}}
+                    <i class="fa fa-tasks fa-fw"></i> {{task.project.number}}&nbsp;{{task.projectStatus | projectStatus}}
                     <div class="options">
-                      <button class="btn btn-default" popover="{{'项目名称: ' + task.project.name}}" popover-title="任务详情">详情</button>
                       <button class="btn btn-success" ng-click="finishTask(task)">{{task.projectStatus | taskOption}}</button>
+                    </div>
+                    <div class="options pull-right">
+                      <button class="btn btn-default" ng-click="showProjectDetailDialog(task.project)">详情</button>
                     </div>
                   </div>
                 </div>

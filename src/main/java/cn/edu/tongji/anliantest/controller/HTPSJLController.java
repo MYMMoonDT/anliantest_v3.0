@@ -30,6 +30,13 @@ public class HTPSJLController {
 		return htpsjlService.getHTPSJLTableById(htpsjlTableId);
 	}
 	
+	@RequestMapping(value="htpsjl/project", method=RequestMethod.GET)
+	@ResponseBody
+	public DataWrapper<HTPSJLTable> getHTPSJLByProject(
+		@RequestParam("projectId") Long projectId) {
+		return htpsjlService.getHTPSJLTableByProject(projectId);
+	}
+	
 	@RequestMapping(value="htpsjl", method=RequestMethod.POST)
 	@ResponseBody
 	public DataWrapper<HTPSJLTable> addHTPSJL(

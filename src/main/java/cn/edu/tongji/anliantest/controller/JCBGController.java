@@ -29,9 +29,5 @@ public class JCBGController {
 			 @RequestParam("projectId") Long projectId) {
 		return jcbgService.uploadJCBGTable(projectId, file);
 	}
-	
-	@RequestMapping(value="jcbg/test", method=RequestMethod.GET)
-	public void test() {
-		jcbgService.test();
-	}
+
 }

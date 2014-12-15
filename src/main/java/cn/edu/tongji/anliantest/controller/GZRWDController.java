@@ -30,4 +30,11 @@ public class GZRWDController {
 		@RequestBody GZRWDTable gzrwdTable) {
 		return gzrwdService.addGZRWDTable(gzrwdTable, taskId, employeeId);
 	}
+	
+	@RequestMapping(value="gzrwd/project", method=RequestMethod.GET)
+	@ResponseBody
+	public DataWrapper<GZRWDTable> getGZRWDByProject(
+		@RequestParam("projectId") Long projectId) {
+		return gzrwdService.getGZRWDTableByProject(projectId);
+	}
 }

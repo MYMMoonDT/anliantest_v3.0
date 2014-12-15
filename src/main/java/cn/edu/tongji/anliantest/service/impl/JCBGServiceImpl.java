@@ -514,10 +514,4 @@ public class JCBGServiceImpl implements JCBGService{
 		return u;
 	}
 
-	@Override
-	public void test() {
-		JSJGTable oldJSJGTable = jsjgTableDao.getJSJGTableByProjectId(Long.valueOf(1));
-//		System.out.println(oldJSJGTable.getTableNum());
-		JCBGDocument.generateJSJGFilePOI(oldJSJGTable, "workbook.xls");
-	}
 }

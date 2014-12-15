@@ -24,6 +24,9 @@ angular.module('anliantestApp')
         case 'CREATE_XCDCJL':
           ret = '创建现场调查记录';
           break;
+        case 'UPLOAD_PJFA':
+          ret = '上传评价方案';
+          break;
       }
 
       return ret;

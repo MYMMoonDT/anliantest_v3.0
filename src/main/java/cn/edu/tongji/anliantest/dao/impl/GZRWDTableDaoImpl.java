@@ -1,5 +1,10 @@
 package cn.edu.tongji.anliantest.dao.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 import cn.edu.tongji.anliantest.dao.AbstractHibernateDao;
@@ -31,6 +36,20 @@ public class GZRWDTableDaoImpl extends AbstractHibernateDao<GZRWDTable, Long> im
 	@Override
 	public void deleteGZRWD(Long gzrwdTableId) {
 		delete(findById(gzrwdTableId));
+	}
+
+	@Override
+	public GZRWDTable getGZRWDByProjectId(Long projectId) {
+		List<Criterion> criterions = new ArrayList<Criterion>();
+		
+		criterions.add(Restrictions.eq("project.id", projectId));
+
+		List<GZRWDTable> list = findByCriteria(criterions);
+		if(list != null && list.size() > 0) {
+			return list.get(0);
+		}else {
+			return null;
+		}
 	}
 
 }

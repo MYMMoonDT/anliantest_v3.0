@@ -16,5 +16,4 @@ public interface JCBGService {
 	
 	public DataWrapper<Void> deleteJCBGTable(Long jcbgTableId);
 	
-	public void test();
 }

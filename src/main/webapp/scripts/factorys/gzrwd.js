@@ -9,5 +9,10 @@
  */
 angular.module('anliantestApp')
   .factory('GZRWD', function GZRWD($resource) {
-    return $resource('api/gzrwd/:gzrwdTableId');
+    return $resource('api/gzrwd/:gzrwdTableId',{}, {
+      project: {
+        method: 'GET',
+        url: 'api/gzrwd/project'
+      }
+    });
   });

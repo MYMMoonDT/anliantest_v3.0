@@ -9,58 +9,88 @@
 
 <div class="content">
   <div class="row">
+    <div class="cell" style="width: 180px;">
+      <label>项目名称:</label>
+    </div>
+    <div class="cell">
+      {{data.project.name}}
+    </div>
+  </div>
+  <div class="row">
+    <div class="cell" style="width: 180px;">
+      <label>项目编号:</label>
+    </div>
+    <div class="cell">
+      {{data.project.number}}
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="cell" style="width: 180px;">
+      <label>表码:</label>
+    </div>
+    <div class="cell">
+      <input ng-model="data.item.tableNum" type="text" class="form-control" style="width: 150px;">
+    </div>
+  </div>
+  <div class="row">
+    <div class="cell" style="width: 180px;">
+      <label>修订状态:</label>
+    </div>
+    <div class="cell">
+      <input ng-model="data.item.revisionStatus" type="text" class="form-control" style="width: 150px;">
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="cell" style="width: 180px;">
+      <label>建设单位提供的资料:</label>
+    </div>
+    <div class="cell">
+      <textarea class="form-control" rows="5" ng-model="data.item.supportResourceContent" style="margin: 10px 0;"></textarea>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="cell" style="width: 180px;">
+      <label style="line-height:40px;">现场调查情况:</label>
+    </div>
+    <div class="cell">
+      <div style="line-height:40px;">总工艺流程:</div>
+      <textarea class="form-control" rows="5" ng-model="data.item.processFlowContent"></textarea>
+      <div style="line-height:40px;">原辅材料清单:</div>
+      <textarea class="form-control" rows="5" ng-model="data.item.sourceListContent"></textarea>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="cell" style="width: 180px;">
+      <label>建设项目总平面布局图:</label>
+    </div>
+    <div class="cell">
+      <select ng-model="data.item.layoutFile" ng-options="resource.groupName for resource in resourceList" class="form-control" style="margin:10px 0;"></select>
+    </div>
+  </div>
+</div>
+<div class="content">
+  <div class="row">
+    <div class="cell" style="width: 90px;">
+      <label>陪同人员:</label>
+    </div>
+    <div class="cell">
+      <input type="text" class="form-control" date="data.item.attendEmployee" style="width: 110px;">
+    </div>
+    <div class="cell" style="width: 90px;">
+      <label>调查人员:</label>
+    </div>
+    <div class="cell">
+      <input type="text" class="form-control" date="data.item.investigateEmployee" style="width: 110px;">
+    </div>
     <div class="cell" style="width: 90px;">
       <label>创建时间:</label>
     </div>
     <div class="cell">
       <input at-datepicker date="data.item.createDate" type="text" class="form-control date">
-    </div>
-  </div>
-  <div class="row">
-    <div class="cell" style="width:30%;">
-      <label>建设单位提供的资料:</label>
-    </div>
-    <div class="cell" style="width:70%;">
-      <textarea class="form-control" rows="5"></textarea>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="cell" style="width:30%;">
-      <div style="line-height:40px;">现场调查情况:</div>
-    </div>
-    <div class="cell" style="width:70%;">
-      <div style="line-height:40px;">总工艺流程:</div>
-      <textarea class="form-control" rows="5"></textarea>
-      <div style="line-height:40px;">原辅材料清单:</div>
-      <textarea class="form-control" rows="5"></textarea>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="cell" style="width:30%;">
-      <label>建设项目总平面布局图:</label>
-    </div>
-    <div class="cell" style="width:70%;">
-      <input type="file" class="form-control">
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="cell" style="width:30%;">
-      <label>调查人员:</label>
-    </div>
-    <div class="cell" style="width:70%;">
-      <input type="text" class="form-control">
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="cell" style="width:30%;">
-      <label>陪同人员:</label>
-    </div>
-    <div class="cell" style="width:70%;">
-      <input type="text" class="form-control">
     </div>
   </div>
 </div>

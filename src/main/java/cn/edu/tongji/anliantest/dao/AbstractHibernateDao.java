@@ -8,6 +8,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -86,6 +87,7 @@ public abstract class AbstractHibernateDao<E, I extends Serializable> {
 		
 		criteria.setFirstResult(PageResult.getStartOfPage(pageResult.getCurrPageNum(), pageResult.getNumPerPage()));
 		criteria.setMaxResults(pageResult.getNumPerPage());
+		criteria.addOrder(Order.asc("id"));
 		pageResult.setData(criteria.list());
 		
 		return pageResult;

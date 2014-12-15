@@ -28,6 +28,10 @@ angular.module('anliantestApp')
             return null;
           }
         }
+      },
+      list: {
+        method: 'GET',
+        url: 'api/files/all'
       }
     });
   });

@@ -13,6 +13,10 @@ angular.module('anliantestApp')
       sign: {
         method: 'POST',
         url: 'api/htpsjl/sign'
+      },
+      project: {
+        method: 'GET',
+        url: 'api/htpsjl/project'
       }
     });
   });

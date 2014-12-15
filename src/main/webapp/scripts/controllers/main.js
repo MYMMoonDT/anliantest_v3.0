@@ -8,7 +8,7 @@
  * Controller of the anliantestApp
  */
 angular.module('anliantestApp')
-  .controller('MainCtrl', function ($scope, $rootScope, $location, dialogs, EmployeeService, Task, Project, HTPSJL, GZRWD, KHZLDJD) {
+  .controller('MainCtrl', function ($scope, $rootScope, $location, dialogs, EmployeeService, Task, Project, HTPSJL, GZRWD, KHZLDJD, XCDCJL) {
     $scope.employee = EmployeeService.getCurrEmployee();
 
     refreshData();
@@ -88,7 +88,9 @@ angular.module('anliantestApp')
     }
 
     function CREATE_GZRWD(task) {
-      var dialog = dialogs.create('template/at-gzrwd-dialog.html', 'GzrwdDialogCtrl', {}, 
+      var dialog = dialogs.create('template/at-gzrwd-dialog.html', 'GzrwdDialogCtrl', {
+        project: task.project
+      }, 
       {
         size: 'lg',
         keyboard: true,
@@ -136,7 +138,9 @@ angular.module('anliantestApp')
     }
 
     function CREATE_KHZLDJD(task) {
-      var dialog = dialogs.create('template/at-khzldjd-dialog.html', 'KhzldjdDialogCtrl', {}, 
+      var dialog = dialogs.create('template/at-khzldjd-dialog.html', 'KhzldjdDialogCtrl', {
+        project: task.project
+      }, 
       {
         size: 'lg',
         keyboard: true,
@@ -159,7 +163,9 @@ angular.module('anliantestApp')
     }
 
     function CREATE_XCDCJL(task) {
-      var dialog = dialogs.create('template/at-xcdcjl-dialog.html', 'XcdcjlDialogCtrl', {}, 
+      var dialog = dialogs.create('template/at-xcdcjl-dialog.html', 'XcdcjlDialogCtrl', {
+        project: task.project
+      }, 
       {
         size: 'lg',
         keyboard: true,
@@ -168,7 +174,13 @@ angular.module('anliantestApp')
       });
 
       dialog.result.then(function (data) {
-        
+        var xcdcjl = new XCDCJL();
+
+        angular.extend(xcdcjl, data.item);
+
+        xcdcjl.$save({taskId: task.id, employeeId: $rootScope.employee.id}, function() {
+          refreshData();
+        });
 
       }, function () {
         
@@ -189,4 +201,16 @@ angular.module('anliantestApp')
         });
       }
     }
+
+    $scope.showProjectDetailDialog = function(project) {
+      dialogs.create('template/at-project-detail-dialog.html', 'projectDetailDialogCtrl', {
+        item: project
+      }, 
+      {
+        size: 'md',
+        keyboard: true,
+        backdrop: true,
+        windowClass: 'model-overlay'
+      });
+    };
   });

@@ -3,17 +3,14 @@ package cn.edu.tongji.anliantest.model;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
-import org.codehaus.jackson.annotate.JsonIgnore;
 
 /*
  *	《客户资料登记单》条目-实体类 
@@ -27,15 +24,13 @@ public class KHZLDJDItem implements Serializable{
 	
 	private Long id;
 	
-	private KHZLDJDTable table;
-	
-	private String resourceName;
+	private FileGroup resource;
 	private Date submitDate;
 	private Integer resourceNum;
 	private Date returnDate;
 	
-	private Employee receiveEmployee;
-	private Employee returnEmployee;
+	private String receiveEmployee;
+	private String returnEmployee;
 	
 	@Id
 	@GeneratedValue
@@ -44,22 +39,6 @@ public class KHZLDJDItem implements Serializable{
 	}
 	public void setId(Long id) {
 		this.id = id;
-	}
-	
-	@ManyToOne(cascade = {CascadeType.REFRESH})
-	@JoinColumn(name="tableId")
-	@JsonIgnore
-	public KHZLDJDTable getTable() {
-		return table;
-	}
-	public void setTable(KHZLDJDTable table) {
-		this.table = table;
-	}
-	public String getResourceName() {
-		return resourceName;
-	}
-	public void setResourceName(String resourceName) {
-		this.resourceName = resourceName;
 	}
 	
 	@Temporal(TemporalType.DATE)
@@ -84,22 +63,25 @@ public class KHZLDJDItem implements Serializable{
 		this.returnDate = returnDate;
 	}
 	
-	@ManyToOne
-	@JoinColumn(name="receiveEmployeeId")
-	public Employee getReceiveEmployee() {
-		return receiveEmployee;
+	@OneToOne
+	@JoinColumn(name="fileGroupId")
+	public FileGroup getResource() {
+		return resource;
 	}
-	public void setReceiveEmployee(Employee receiveEmployee) {
-		this.receiveEmployee = receiveEmployee;
+	public void setResource(FileGroup resource) {
+		this.resource = resource;
 	}
-	
-	@ManyToOne
-	@JoinColumn(name="returnEmployeeId")
-	public Employee getReturnEmployee() {
+	public String getReturnEmployee() {
 		return returnEmployee;
 	}
-	public void setReturnEmployee(Employee returnEmployee) {
+	public void setReturnEmployee(String returnEmployee) {
 		this.returnEmployee = returnEmployee;
+	}
+	public String getReceiveEmployee() {
+		return receiveEmployee;
+	}
+	public void setReceiveEmployee(String receiveEmployee) {
+		this.receiveEmployee = receiveEmployee;
 	}
 	
 	

@@ -60,9 +60,6 @@ public class HTPSJLServiceImpl implements HTPSJLService{
 	public DataWrapper<HTPSJLTable> addHTPSJLTable(HTPSJLTable htpsjlTable, Long employeeId) {
 		DataWrapper<HTPSJLTable> ret = new DataWrapper<>();
 		
-		for(HTPSJLItem item : htpsjlTable.getItems()) {
-			item.setTable(htpsjlTable);
-		}
 		htpsjlTableDao.addHTPSJL(htpsjlTable);
 		
 		//完成新建合同评审记录的Task
@@ -179,6 +176,16 @@ public class HTPSJLServiceImpl implements HTPSJLService{
 		logger.info("合同评审记录签字信息:" + htpsjlTable.getId());
 		
 		return ret;
+	}
+
+	@Override
+	public DataWrapper<HTPSJLTable> getHTPSJLTableByProject(Long projectId) {
+		DataWrapper<HTPSJLTable> ret = new DataWrapper<>();
+        
+		HTPSJLTable htpsjlTable = htpsjlTableDao.getHTPSJLByProjectId(projectId);
+        ret.setData(htpsjlTable);
+        
+        return ret;
 	}
 
 }

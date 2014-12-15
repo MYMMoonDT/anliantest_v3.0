@@ -15,4 +15,6 @@ public interface FileGroupDao {
 	public void deleteFileGroup(Long fileGroupId);
 	
 	public DataWrapper<List<FileGroup>> getFileGroupList(Long projectId, int currPageNum, int numPerPage);
+
+	public DataWrapper<List<FileGroup>> getFileGroupList(Long projectId);
 }

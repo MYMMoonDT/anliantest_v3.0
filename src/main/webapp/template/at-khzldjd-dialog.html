@@ -9,8 +9,42 @@
 
 <div class="content">
   <div class="row">
+    <div class="cell" style="width: 90px;">
+      <label>项目名称:</label>
+    </div>
     <div class="cell">
-      <button type="button" class="btn btn-primary pull-right"  ng-click="addItem()">&nbsp;添加&nbsp;</button>
+      {{data.project.name}}
+    </div>
+  </div>
+  <div class="row">
+    <div class="cell" style="width: 90px;">
+      <label>项目编号:</label>
+    </div>
+    <div class="cell">
+      {{data.project.number}}
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="cell" style="width: 90px;">
+      <label>表码:</label>
+    </div>
+    <div class="cell">
+      <input ng-model="data.item.tableNum" type="text" class="form-control" style="width: 150px;">
+    </div>
+  </div>
+  <div class="row">
+    <div class="cell" style="width: 90px;">
+      <label>修订状态:</label>
+    </div>
+    <div class="cell">
+      <input ng-model="data.item.revisionStatus" type="text" class="form-control" style="width: 150px;">
+    </div>
+  </div>
+  <div class="row">
+    <div class="cell"></div>
+    <div class="cell">
+      <button type="button" class="btn btn-primary pull-right" ng-click="addItem()">&nbsp;添加&nbsp;</button>
     </div>
   </div>
 </div>
@@ -29,12 +63,14 @@
   </thead>
   <tbody>
     <tr ng-repeat="item in data.item.items">
-      <td><input ng-model="item.resourceName" class="form-control"></td>
+      <td style="width: 200px;">
+        <select ng-model="item.resource" ng-options="resource.groupName for resource in resourceList" class="form-control"></select>
+      </td>
       <td style="width: 120px;"><input at-datepicker date="item.submitDate" type="text" class="form-control date"></td>
       <td style="width: 60px;"><input ng-model="item.resourceNum" class="form-control"></td>
-      <td style="line-height: 34px;">{{item.receiveEmployee.name}}&nbsp;<button type="button" class="btn btn-primary"  ng-click="selectReceiveEmployee(item)">&nbsp;指定&nbsp;</button></td>
+      <td style="line-height: 34px;"><input ng-model="item.receiveEmployee" class="form-control"></td>
       <td style="width: 120px;"><input at-datepicker date="item.returnDate" type="text" class="form-control date"></td>
-      <td style="line-height: 34px;">{{item.returnEmployee.name}}&nbsp;<button type="button" class="btn btn-primary"  ng-click="selectReturnEmployee(item)">&nbsp;指定&nbsp;</button></td>
+      <td style="line-height: 34px;"><input ng-model="item.returnEmployee" class="form-control"></td>
       <td><button type="button" class="btn btn-danger"  ng-click="deleteItem(item)">&nbsp;删除&nbsp;</button></td>
     </tr>
   </tbody>

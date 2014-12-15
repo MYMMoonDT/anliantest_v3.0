@@ -44,6 +44,13 @@ public class FileController {
 		return fileService.getFileGroupList(projectId, currPageNum, numPerPage);
 	}
 	
+	@RequestMapping(value="files/all", method=RequestMethod.GET)
+	@ResponseBody
+	public DataWrapper<List<FileGroup>> getAllFileGroupList(
+		@RequestParam(value = "projectId") Long projectId) {
+		return fileService.getAllFileGroupList(projectId);
+	}
+	
 	@RequestMapping(value="files/{fileGroupId}", method=RequestMethod.GET)
     @ResponseBody
     public DataWrapper<FileGroup> getFileGroupById(

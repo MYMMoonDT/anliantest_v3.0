@@ -8,21 +8,25 @@
  * Controller of the anliantestApp
  */
 angular.module('anliantestApp')
-  .controller('KhzldjdDialogCtrl', function ($scope, $modalInstance, data, dialogs) {
+  .controller('KhzldjdDialogCtrl', function ($scope, $modalInstance, data, dialogs, Files) {
     $scope.data = data;
 
     $scope.data.item = {
+      tableNum: 'ALJC/JL32-02',
+      revisionStatus: '1/0',
       items: []
     };
 
+    loadResourceList();
+
     $scope.addItem = function () {
       var item = {
-        resourceName: '',
+        resource: null,
         submitDate: new Date(),
         resourceNum: 0,
         returnDate: new Date(),
-        receiveEmployee: null,
-        returnEmployee: null
+        receiveEmployee: '',
+        returnEmployee: ''
       }; 
       $scope.data.item.items.push(item);
     };
@@ -68,6 +72,18 @@ angular.module('anliantestApp')
       $modalInstance.dismiss('Canceled');
     };
     $scope.save = function() {
+      for(var i = 0; i < $scope.data.item.items.length; i++) {
+        $scope.data.item.items[i].resource = {
+          id: $scope.data.item.items[i].resource.id
+        };
+      }
       $modalInstance.close($scope.data);
     };
+
+    function loadResourceList() {
+      var files = new Files();
+      files.$list({projectId : data.project.id}, function(data){
+        $scope.resourceList = data.data;
+      });
+    }
   });

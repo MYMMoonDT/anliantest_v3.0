@@ -27,7 +27,8 @@
     "raphael": "~2.1.2",
     "is-loading": "https://github.com/hekigan/is-loading.git#~1.0.4",
     "bootstrap-duallistbox": "~3.0.2",
-    "fontawesome": "~4.2.0"
+    "fontawesome": "~4.2.0",
+    "angular-rt-popup": "https://github.com/rubenv/angular-rt-popup"
   },
   "devDependencies": {
     "angular-mocks": "1.2.16",

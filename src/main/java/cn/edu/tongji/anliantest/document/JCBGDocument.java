@@ -557,7 +557,7 @@ public class JCBGDocument {
 		    }
 		    
 		    
-		    FileOutputStream fileOut = new FileOutputStream("workbook.xls");
+		    FileOutputStream fileOut = new FileOutputStream(filePath);
 		    wb.write(fileOut);
 		    fileOut.close();
 			System.out.println("Created File: "+filePath);

@@ -24,6 +24,9 @@ angular.module('anliantestApp')
         case 'CREATE_XCDCJL':
           ret = '创建';
           break;
+        case 'UPLOAD_PJFA':
+          ret = '上传';
+          break;
       }
 
       return ret;

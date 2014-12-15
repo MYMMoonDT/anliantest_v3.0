@@ -37,7 +37,7 @@ angular.module('anliantestApp')
         
         project.$save(function(){
           refreshData();
-
+          /*
           var dialog = dialogs.create('template/at-confirm-dialog.html', 'ConfirmCtrl', 
           {
             text: '是否立即创建合同评审记录?',
@@ -79,7 +79,7 @@ angular.module('anliantestApp')
           }, function () {
             
           });
-
+          */
         });
 
       }, function () {
@@ -251,6 +251,14 @@ angular.module('anliantestApp')
     $scope.save = function() {
       $scope.data.item.type = $scope.type.value;
       $modalInstance.close($scope.data);
+    };
+  })
+
+  .controller('projectDetailDialogCtrl', function ($scope, $modalInstance, data){
+    $scope.data = data;
+
+    $scope.cancel = function() {
+      $modalInstance.dismiss('Canceled');
     };
   });
 

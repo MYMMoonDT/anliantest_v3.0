@@ -1,0 +1,98 @@
+<div class="panel panel-default" style="margin-bottom:0;">
+  <div class="panel-heading">
+    <i class="fa fa-bar-chart-o fa-fw"></i> 项目详情
+  </div>
+  <div class="panel-body">
+    <table class="table table-striped">
+      <tbody>
+          <tr>
+              <td>
+                项目编号:
+              </td>
+              <td>
+                {{data.item.number}}
+              </td>
+          </tr>
+          <tr>
+              <td>
+                项目名称:
+              </td>
+              <td>
+                {{data.item.name}}
+              </td>
+          </tr>
+          <tr>
+              <td>
+                项目类型:
+              </td>
+              <td>
+                {{data.item.type | projectType}}
+              </td>
+          </tr>
+          <tr>
+              <td>
+                项目客户:
+              </td>
+              <td>
+                {{data.item.customer.companyName}}
+              </td>
+          </tr>
+          <tr>
+              <td>
+                项目客户地址:
+              </td>
+              <td>
+                {{data.item.companyAddress}}
+              </td>
+          </tr>
+          <tr>
+              <td>
+                项目客户联系人:
+              </td>
+              <td>
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th><label>姓名</label></th>
+                      <th><label>工作部门</label></th>
+                      <th><label>联系电话</label></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-repeat="item in data.item.contactPersonItems">
+                      <td>{{item.name}}</td>
+                      <td>{{item.department}}</td>
+                      <td>{{item.tel}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </td>
+          </tr>
+          <tr>
+              <td>
+                合同额:
+              </td>
+              <td>
+                {{data.item.contractAmount}}
+              </td>
+          </tr>
+          <tr>
+              <td>
+                业务负责人:
+              </td>
+              <td>
+                {{data.item.businessEmployee.name}}
+              </td>
+          </tr>
+          <tr>
+              <td>
+                项目负责人:
+              </td>
+              <td>
+                {{data.item.projectEmployee.name}}
+              </td>
+          </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

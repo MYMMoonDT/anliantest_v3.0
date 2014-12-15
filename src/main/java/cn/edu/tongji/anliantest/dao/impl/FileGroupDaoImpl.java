@@ -59,4 +59,19 @@ public class FileGroupDaoImpl extends AbstractHibernateDao<FileGroup, Long> impl
 		return ret;
 	}
 
+	@Override
+	public DataWrapper<List<FileGroup>> getFileGroupList(Long projectId) {
+		DataWrapper<List<FileGroup>> ret = new DataWrapper<List<FileGroup>>();
+		
+		List<Criterion> criterions = new ArrayList<Criterion>();
+		criterions.add(Restrictions.eq("project.id", projectId));
+		
+		PageResult<FileGroup> pageResult = new PageResult<FileGroup>();
+		pageResult.setData(findByCriteria(criterions));
+		
+		ret.setData(pageResult.getData());
+		
+		return ret;
+	}
+
 }

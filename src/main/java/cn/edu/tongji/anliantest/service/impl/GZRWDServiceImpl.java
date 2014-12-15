@@ -12,7 +12,6 @@ import cn.edu.tongji.anliantest.dao.LogDao;
 import cn.edu.tongji.anliantest.dao.ProjectDao;
 import cn.edu.tongji.anliantest.dao.TaskDao;
 import cn.edu.tongji.anliantest.model.DepartmentTypeEnum;
-import cn.edu.tongji.anliantest.model.GZRWDItem;
 import cn.edu.tongji.anliantest.model.GZRWDTable;
 import cn.edu.tongji.anliantest.model.Log;
 import cn.edu.tongji.anliantest.model.Project;
@@ -21,7 +20,6 @@ import cn.edu.tongji.anliantest.model.ProjectStepEnum;
 import cn.edu.tongji.anliantest.model.Task;
 import cn.edu.tongji.anliantest.service.GZRWDService;
 import cn.edu.tongji.anliantest.util.DataWrapper;
-import cn.edu.tongji.anliantest.util.TableNumEnum;
 
 @Service("gzrwdService")
 public class GZRWDServiceImpl implements GZRWDService{
@@ -59,12 +57,6 @@ public class GZRWDServiceImpl implements GZRWDService{
 		
 		Task createTask = taskDao.getTaskById(taskId);
 		Project project = createTask.getProject();
-		
-		gzrwdTable.setTableNum(TableNumEnum.GZRWD);
-		
-		for(GZRWDItem item : gzrwdTable.getItems()) {
-			item.setTable(gzrwdTable);
-		}
 		
 		gzrwdTable.setProject(project);
 		
@@ -116,6 +108,16 @@ public class GZRWDServiceImpl implements GZRWDService{
 		logger.info("删除工作任务单信息:" + "(" + gzrwdTableId + ")");
 		
 		return ret;
+	}
+
+	@Override
+	public DataWrapper<GZRWDTable> getGZRWDTableByProject(Long projectId) {
+		DataWrapper<GZRWDTable> ret = new DataWrapper<>();
+        
+		GZRWDTable gzrwdTable = gzrwdTableDao.getGZRWDByProjectId(projectId);
+        ret.setData(gzrwdTable);
+        
+        return ret;
 	}
 	
 }

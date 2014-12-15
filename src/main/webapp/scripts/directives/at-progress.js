@@ -12,33 +12,26 @@ angular.module('anliantestApp')
       restrict: 'A',
       require: 'ngModel',
       scope: {},
-      link: function postLink(scope, element, attrs, ngModel) {
-        var stepMap = {
-          'STEP1': {
-            id: 1,
-            name: '1.项目录入'
-          },
-          'STEP2': {
-            id: 2,
-            name: '2.项目下达'
-          },
-          'STEP3': {
-            id: 3,
-            name: '3.项目前期准备'
-          },
-          'STEP4': {
-            id: 4,
-            name: '4.项目检测环节'
-          },
-          'STEP5': {
-            id: 5,
-            name: '5.项目实验环节'
-          },
-          'STEP6': {
-            id: 6,
-            name: '6.项目数据处理'
-          }
+      controller: function($scope, ProgressService, dialogs) {
+        $scope.showStepDetailDialog = function(project, stepId) {
+          var dialog = dialogs.create('template/at-progress-dialog.html', 'ProgressDialogCtrl', {
+            item: project,
+            stepId: stepId
+          }, 
+          {
+            size: 'md',
+            keyboard: true,
+            backdrop: true,
+            windowClass: 'model-overlay'
+          });
         };
+
+        $scope.getStepMap = function() {
+          return ProgressService.getStepMap();
+        };
+      },
+      link: function postLink(scope, element, attrs, ngModel) {
+        var stepMap = scope.getStepMap();
 
         ngModel.$render = function () {
           var val = ngModel.$viewValue || null;
@@ -49,9 +42,15 @@ angular.module('anliantestApp')
               var $progressBar = element.progressStep();
               for(var step in stepMap) {
                 $progressBar.addStep(stepMap[step].name);
-                $progressBar.getStep(stepMap[step].id - 1).onClick = function() {
-                  
-                };
+
+                (function(){
+                  var stepTemp = step;
+                  $progressBar.getStep(stepMap[stepTemp].id - 1).onClick = function() {
+                    if(stepMap[stepTemp].id <= stepId)
+                      scope.showStepDetailDialog(val, stepMap[stepTemp].id);
+                  };
+                })();
+                
               }
               element.refreshLayout();  
               element.setCurrentStep(stepId-1);

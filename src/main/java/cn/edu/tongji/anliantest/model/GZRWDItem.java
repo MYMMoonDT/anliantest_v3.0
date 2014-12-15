@@ -2,16 +2,11 @@ package cn.edu.tongji.anliantest.model;
 
 import java.io.Serializable;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
-import org.codehaus.jackson.annotate.JsonIgnore;
 
 /*
  *	《工作任务单》条目-实体类 
@@ -25,8 +20,6 @@ public class GZRWDItem implements Serializable{
 	
 	private Long id;
 	
-	private GZRWDTable table;
-	
 	private String groupName;
 	private String workContent;
 	private String workTimeLimit;
@@ -39,17 +32,6 @@ public class GZRWDItem implements Serializable{
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	@ManyToOne(cascade = {CascadeType.REFRESH})
-	@JoinColumn(name="tableId")
-	@JsonIgnore
-	public GZRWDTable getTable() {
-		return table;
-	}
-
-	public void setTable(GZRWDTable table) {
-		this.table = table;
 	}
 
 	public String getGroupName() {

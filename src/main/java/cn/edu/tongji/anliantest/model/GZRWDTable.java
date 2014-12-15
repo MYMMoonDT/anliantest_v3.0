@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -18,7 +17,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import cn.edu.tongji.anliantest.util.TableNumEnum;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 /*
  *	《工作任务单》表-实体类 
@@ -34,7 +34,8 @@ public class GZRWDTable implements Serializable{
 	
 	private Project project;
 	
-	private TableNumEnum tableNum;
+	private String tableNum;
+	private String revisionStatus;
 	
 	private Employee issueEmployee;
 	
@@ -62,14 +63,6 @@ public class GZRWDTable implements Serializable{
 		this.project = project;
 	}
 
-	public TableNumEnum getTableNum() {
-		return tableNum;
-	}
-
-	public void setTableNum(TableNumEnum tableNum) {
-		this.tableNum = tableNum;
-	}
-
 	@ManyToOne
 	@JoinColumn(name="issueEmployeeId")
 	public Employee getIssueEmployee() {
@@ -89,12 +82,30 @@ public class GZRWDTable implements Serializable{
 		this.issueDate = issueDate;
 	}
 
-	@OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "table")
+	@OneToMany(fetch = FetchType.EAGER, orphanRemoval = true)
+	@Cascade({CascadeType.SAVE_UPDATE, CascadeType.MERGE, CascadeType.DELETE})
+	@JoinColumn(name="tableId")
 	public Set<GZRWDItem> getItems() {
 		return items;
 	}
 
 	public void setItems(Set<GZRWDItem> items) {
 		this.items = items;
+	}
+
+	public String getTableNum() {
+		return tableNum;
+	}
+
+	public void setTableNum(String tableNum) {
+		this.tableNum = tableNum;
+	}
+
+	public String getRevisionStatus() {
+		return revisionStatus;
+	}
+
+	public void setRevisionStatus(String revisionStatus) {
+		this.revisionStatus = revisionStatus;
 	}
 }

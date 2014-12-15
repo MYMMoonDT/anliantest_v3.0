@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -14,7 +13,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import cn.edu.tongji.anliantest.util.TableNumEnum;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 /*
  *	《客户资料登记单》表-实体类 
@@ -30,7 +30,8 @@ public class KHZLDJDTable implements Serializable{
 	
 	private Project project;
 	
-	private TableNumEnum tableNum;
+	private String tableNum;
+	private String revisionStatus;
 	
 	private Set<KHZLDJDItem> items = new HashSet<KHZLDJDItem>(0);
 
@@ -54,20 +55,30 @@ public class KHZLDJDTable implements Serializable{
 		this.project = project;
 	}
 
-	public TableNumEnum getTableNum() {
-		return tableNum;
-	}
-
-	public void setTableNum(TableNumEnum tableNum) {
-		this.tableNum = tableNum;
-	}
-
-	@OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "table")
+	@OneToMany(fetch = FetchType.EAGER, orphanRemoval = true)
+	@Cascade({CascadeType.SAVE_UPDATE, CascadeType.MERGE, CascadeType.DELETE})
+	@JoinColumn(name="tableId")
 	public Set<KHZLDJDItem> getItems() {
 		return items;
 	}
 
 	public void setItems(Set<KHZLDJDItem> items) {
 		this.items = items;
+	}
+
+	public String getTableNum() {
+		return tableNum;
+	}
+
+	public void setTableNum(String tableNum) {
+		this.tableNum = tableNum;
+	}
+
+	public String getRevisionStatus() {
+		return revisionStatus;
+	}
+
+	public void setRevisionStatus(String revisionStatus) {
+		this.revisionStatus = revisionStatus;
 	}
 }

@@ -19,4 +19,5 @@ public interface FileService {
 	
 	public DataWrapper<List<FileGroup>> getFileGroupList(Long projectId, int currPageNum, int numPerPage);
 
+	public DataWrapper<List<FileGroup>> getAllFileGroupList(Long projectId);
 }

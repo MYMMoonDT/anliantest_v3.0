@@ -10,7 +10,6 @@ import cn.edu.tongji.anliantest.dao.KHZLDJDTableDao;
 import cn.edu.tongji.anliantest.dao.LogDao;
 import cn.edu.tongji.anliantest.dao.ProjectDao;
 import cn.edu.tongji.anliantest.dao.TaskDao;
-import cn.edu.tongji.anliantest.model.KHZLDJDItem;
 import cn.edu.tongji.anliantest.model.KHZLDJDTable;
 import cn.edu.tongji.anliantest.model.Log;
 import cn.edu.tongji.anliantest.model.Project;
@@ -19,7 +18,6 @@ import cn.edu.tongji.anliantest.model.ProjectStepEnum;
 import cn.edu.tongji.anliantest.model.Task;
 import cn.edu.tongji.anliantest.service.KHZLDJDService;
 import cn.edu.tongji.anliantest.util.DataWrapper;
-import cn.edu.tongji.anliantest.util.TableNumEnum;
 
 @Service("khzldjService")
 public class KHZLDJDServiceImpl implements KHZLDJDService{
@@ -56,12 +54,6 @@ public class KHZLDJDServiceImpl implements KHZLDJDService{
 		
 		Task createTask = taskDao.getTaskById(taskId);
 		Project project = createTask.getProject();
-		
-		khzldjdTable.setTableNum(TableNumEnum.KHZLDJD);
-		
-		for(KHZLDJDItem item : khzldjdTable.getItems()) {
-			item.setTable(khzldjdTable);
-		}
 		
 		khzldjdTable.setProject(project);
 		
