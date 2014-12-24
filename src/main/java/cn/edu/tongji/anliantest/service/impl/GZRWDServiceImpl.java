@@ -112,7 +112,7 @@ public class GZRWDServiceImpl implements GZRWDService{
 
 	@Override
 	public DataWrapper<GZRWDTable> getGZRWDTableByProject(Long projectId) {
-		DataWrapper<GZRWDTable> ret = new DataWrapper<>();
+		DataWrapper<GZRWDTable> ret = new DataWrapper<GZRWDTable>();
         
 		GZRWDTable gzrwdTable = gzrwdTableDao.getGZRWDByProjectId(projectId);
         ret.setData(gzrwdTable);

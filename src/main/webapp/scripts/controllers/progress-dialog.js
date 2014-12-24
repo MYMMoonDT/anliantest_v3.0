@@ -8,7 +8,7 @@
  * Controller of the anliantestApp
  */
 angular.module('anliantestApp')
-  .controller('ProgressDialogCtrl', function ($scope, $modalInstance, ProgressService, data, HTPSJL, GZRWD) {
+  .controller('ProgressDialogCtrl', function ($scope, $modalInstance, ProgressService, data, HTPSJL, GZRWD, KHZLDJD, XCDCJL, PJFA, PJFASHJL) {
     $scope.data = data;
 
     $scope.stepMap = ProgressService.getStepMap();
@@ -69,6 +69,86 @@ angular.module('anliantestApp')
           table.status = '未创建';
         }else{
           table.status = '完成';
+        }
+
+        $scope.tableList.push(table);
+      });
+    }else if($scope.data.stepId == 3) {      //3.项目前期准备
+      var khzldjd = new KHZLDJD();
+      khzldjd.$project({projectId : $scope.data.item.id}, function(data){
+        
+        var table = {
+          data: null,
+          label: '客户资料登记单'
+        };
+        table.data = data.data;
+
+        if(table.data == null) {
+          table.status = '未创建';
+        }else{
+          table.status = '完成';
+        }
+
+        $scope.tableList.push(table);
+      });
+
+      var xcdcjl = new XCDCJL();
+      xcdcjl.$project({projectId : $scope.data.item.id}, function(data){
+        
+        var table = {
+          data: null,
+          label: '现场调查记录'
+        };
+        table.data = data.data;
+
+        if(table.data == null) {
+          table.status = '未创建';
+        }else{
+          table.status = '完成';
+        }
+
+        $scope.tableList.push(table);
+      });
+
+      var pjfa = new PJFA();
+      pjfa.$project({projectId : $scope.data.item.id}, function(data){
+        
+        var table = {
+          data: null,
+          label: '评价方案'
+        };
+        table.data = data.data;
+
+        if(table.data == null) {
+          table.status = '未创建';
+        }else{
+          table.status = '完成';
+        }
+
+        $scope.tableList.push(table);
+      });
+
+      var pjfashjl = new PJFASHJL();
+      pjfashjl.$project({projectId : $scope.data.item.id}, function(data){
+        
+        var table = {
+          data: null,
+          label: '评价方案审核记录'
+        };
+        table.data = data.data;
+
+        if(table.data == null) {
+          table.status = '未创建';
+        }else{
+          var index = 0;
+          for(index = 0; index < table.data.items.length; index++) {
+            if(table.data.items[index].employee == null) {
+              table.status = '未签字';
+              break;
+            }
+          }
+          if(index == table.data.items.length)
+            table.status = '完成';
         }
 
         $scope.tableList.push(table);

@@ -7,6 +7,8 @@ public interface XCDCJLService {
 	
 	public DataWrapper<XCDCJLTable> getXCDCJLById(Long xcdcjlTableId);
 	
+	public DataWrapper<XCDCJLTable> getXCDCJLByProject(Long projectId);
+	
 	public DataWrapper<XCDCJLTable> addXCDCJL(XCDCJLTable xcdcjlTable, Long taskId, Long employeeId);
 	
 	public DataWrapper<XCDCJLTable> updateXCDCJL(XCDCJLTable xcdcjlTable);

@@ -202,7 +202,7 @@ public class JCBGServiceImpl implements JCBGService{
 						}
 						temp.setSampleNum(jcbgGroup.getSampleNum()[i][j]);
 						
-						temp.setZybwhysItem(zybwhysItemDao.getZYBWHYSItemByIName(jcbgGroup.getZybwhysItem()));
+						temp.setZybwhysItem(zybwhysItemDao.getZYBWHYSItemByName(jcbgGroup.getZybwhysItem()));
 						
 						temp.setTestDate(jcbgGroup.getTestDate()[i]);
 						temp.setWorkshopPosition(jcbgGroup.getWorkshopPosition());

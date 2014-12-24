@@ -6,6 +6,8 @@ import cn.edu.tongji.anliantest.util.DataWrapper;
 public interface KHZLDJDService {
 	public DataWrapper<KHZLDJDTable> getKHZLDJDById(Long khzldjdTableId);
 	
+	public DataWrapper<KHZLDJDTable> getKHZLDJDByProject(Long projectId);
+	
 	public DataWrapper<KHZLDJDTable> addKHZLDJD(KHZLDJDTable khzldjdTable, Long taskId, Long employeeId);
 	
 	public DataWrapper<KHZLDJDTable> updateKHZLDJD(KHZLDJDTable khzldjdTable);

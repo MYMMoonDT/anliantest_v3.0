@@ -30,14 +30,16 @@ public class ProjectController {
 	public DataWrapper<List<Project>> getProjectList(
 		@RequestParam(value = "currPageNum") int currPageNum,
 		@RequestParam(value = "numPerPage") int numPerPage) {
-		return projectService.getProjectList(currPageNum, numPerPage);
+		DataWrapper<List<Project>> projectList = projectService.getProjectList(currPageNum, numPerPage);
+		return projectList;
 	}
 	
 	@RequestMapping(value="project/{projectId}", method=RequestMethod.GET)
     @ResponseBody
     public DataWrapper<Project> getProjectById(
 		@PathVariable("projectId") Long projectId) {
-		return projectService.getProjectById(projectId);
+		DataWrapper<Project> project = projectService.getProjectById(projectId);
+		return project;
 	}
 	
 	@RequestMapping(value="project", method=RequestMethod.POST)

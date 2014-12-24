@@ -1,0 +1,140 @@
+<div class="row">
+  <div class="col-md-6">
+    <button type="button" class="btn btn-default pull-left" ng-click="cancel()">&nbsp;取消&nbsp;</button>
+  </div>
+  <div class="col-md-6">
+    <button type="button" class="btn btn-success pull-right" ng-click="save()">&nbsp;确定&nbsp;</button>
+  </div>
+</div>
+
+<div class="content">
+  <div class="row">
+    <div class="cell" style="width: 120px;">
+      <label>表码:</label>
+    </div>
+    <div class="cell">
+      <input ng-model="data.item.tableNum" type="text" class="form-control" style="width: 150px;">
+    </div>
+    <div class="cell" style="width: 120px;">
+      <label>修订状态:</label>
+    </div>
+    <div class="cell">
+      <input ng-model="data.item.revisionStatus" type="text" class="form-control" style="width: 150px;">
+    </div>
+  </div>
+</div>
+
+<div class="content" style="padding:5px;">
+  <div class="row">
+    <div class="cell" style="width: 120px;">
+      <label>项目名称:</label>
+    </div>
+    <div class="cell">
+      {{data.project.name}}
+    </div>
+  </div>
+  <div class="row">
+    <div class="cell" style="width: 120px;">
+      <label>项目编号:</label>
+    </div>
+    <div class="cell">
+      {{data.project.number}}
+    </div>
+  </div>
+  <div class="row">
+    <div class="cell" style="width: 120px;">
+      <label>企业名称:</label>
+    </div>
+    <div class="cell">
+      {{data.project.customer.companyName}}
+    </div>
+  </div>
+  <div class="row">
+    <div class="cell" style="width: 120px;">
+      <label>企业地址:</label>
+    </div>
+    <div class="cell">
+      {{data.project.companyAddress}}
+    </div>
+  </div>
+  <div class="row">
+    <div class="cell" style="width: 120px;">
+      <label>企业联系人:</label>
+    </div>
+    <div class="cell">
+      <table class="table table-bordered" style="margin-bottom: 0;">
+        <thead>
+          <tr>
+            <th><label>姓名</label></th>
+            <th><label>联系电话</label></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="item in data.project.contactPersonItems">
+            <td>{{item.name}}</td>
+            <td>{{item.tel}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="content" style="padding:5px;">
+  <div class="row">
+    <div class="cell" style="width: 120px;">
+      <label>检测日期:</label>
+    </div>
+    <div class="cell">
+      <input at-datepicker date="data.item.testStartDate" type="text" class="form-control date" style="display: inline-block">
+      &nbsp;&nbsp;至&nbsp;&nbsp;
+      <input at-datepicker date="data.item.testEndDate" type="text" class="form-control date" style="display: inline-block">
+    </div>
+    <div class="cell">
+      <button class="btn btn-primary pull-right" ng-click="addWorkshopPosition()">添加车间/岗位</button>
+    </div>
+  </div>
+</div>
+
+<div class="content" style="padding:5px;">
+  <div class="row">
+    <div class="cell">
+      <table class="table table-bordered" style="margin-bottom: 0;">
+        <thead>
+          <tr>
+            <th style="width: 40%;"><label>车间/岗位</label></th>
+            <th style="width: 50%;"><label>检测项目</label></th>
+            <th style="width: 10%;"><label>样品数</label></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="item in data.item.items">
+            <td>
+              <input ng-model="item.workshopPosition" type="text" class="form-control">
+              <br/>
+              <button class="btn btn-primary" ng-click="addZYBWHYSItem(item)">添加检测项目</button>
+            </td>
+            <td>
+              <table class="table table-bordered" style="margin-bottom: 0;">
+                <tr ng-repeat="subItem in item.items">
+                  <td>
+                    <select ng-model="subItem.zybwhysItem" ng-options="zybwhysItem.chineseName for zybwhysItem in zybwhysList" class="form-control"></select>
+                  </td>
+                </tr>
+              </table>
+            </td>
+            <td>
+              <table class="table table-bordered" style="margin-bottom: 0;">
+                <tr ng-repeat="subItem in item.items">
+                  <td>
+                    <input ng-model="subItem.sampleCount" type="text" class="form-control">
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

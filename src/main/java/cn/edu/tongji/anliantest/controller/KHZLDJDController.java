@@ -24,10 +24,17 @@ public class KHZLDJDController{
 	
 	@RequestMapping(value="khzldjd", method=RequestMethod.POST)
 	@ResponseBody
-	public DataWrapper<KHZLDJDTable> addKHzLDJD(
+	public DataWrapper<KHZLDJDTable> addKHZLDJD(
 		@RequestParam("taskId") Long taskId,
 		@RequestParam("employeeId") Long employeeId,
 		@RequestBody KHZLDJDTable khzldjdTable) {
 		return khzldjdService.addKHZLDJD(khzldjdTable, taskId, employeeId);
+	}
+	
+	@RequestMapping(value="khzldjd/project", method=RequestMethod.GET)
+	@ResponseBody
+	public DataWrapper<KHZLDJDTable> getKHZLDJDByProject(
+		@RequestParam("projectId") Long projectId) {
+		return khzldjdService.getKHZLDJDByProject(projectId);
 	}
 }

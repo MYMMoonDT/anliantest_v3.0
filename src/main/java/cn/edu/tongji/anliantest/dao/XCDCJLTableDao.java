@@ -5,6 +5,8 @@ import cn.edu.tongji.anliantest.model.XCDCJLTable;
 public interface XCDCJLTableDao {
 	public XCDCJLTable getXCDCJLById(Long xcdcjlTableId);
 	
+	public XCDCJLTable getXCDCJLByProjectId(Long projectId);
+	
 	public Long addXCDCJL(XCDCJLTable xcdcjlTable);
 	
 	public void updateXCDCJL(XCDCJLTable xcdcjlTable);

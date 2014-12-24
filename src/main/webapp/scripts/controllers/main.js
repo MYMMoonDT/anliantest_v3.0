@@ -8,7 +8,7 @@
  * Controller of the anliantestApp
  */
 angular.module('anliantestApp')
-  .controller('MainCtrl', function ($scope, $rootScope, $location, dialogs, EmployeeService, Task, Project, HTPSJL, GZRWD, KHZLDJD, XCDCJL) {
+  .controller('MainCtrl', function ($scope, $rootScope, $location, dialogs, EmployeeService, Task, Project, HTPSJL, GZRWD, KHZLDJD, XCDCJL, PJFA, PJFASHJL) {
     $scope.employee = EmployeeService.getCurrEmployee();
 
     refreshData();
@@ -32,6 +32,18 @@ angular.module('anliantestApp')
           break;
         case 'CREATE_XCDCJL':
           CREATE_XCDCJL(task);
+          break;
+        case 'UPLOAD_PJFA':
+          UPLOAD_PJFA(task);
+          break;
+        case 'CREATE_PJFASHJL':
+          CREATE_PJFASHJL(task);
+          break;
+        case 'SIGN_PJFASHJL':
+          SIGN_PJFASHJL(task);
+          break;
+        case 'CREATE_JCTZD':
+          CREATE_JCTZD(task);
           break;
       }
     };
@@ -182,6 +194,101 @@ angular.module('anliantestApp')
           refreshData();
         });
 
+      }, function () {
+        
+      });
+    }
+
+    function UPLOAD_PJFA(task) {
+      var dialog = dialogs.create('template/at-pjfa-dialog.html', 'PjfaDialogCtrl', {
+        project: task.project
+      }, 
+      {
+        size: 'md',
+        keyboard: true,
+        backdrop: 'static',
+        windowClass: 'model-overlay'
+      });
+
+      dialog.result.then(function (data) {
+        var pjfa = new PJFA();
+
+        angular.extend(pjfa, data.item);
+
+        pjfa.$save({taskId: task.id, employeeId: $rootScope.employee.id}, function() {
+          refreshData();
+        });
+      }, function () {
+        
+      });
+    }
+
+    function CREATE_PJFASHJL(task) {
+      var dialog = dialogs.create('template/at-pjfashjl-dialog.html', 'PjfashjlDialogCtrl', {
+        project: task.project
+      }, 
+      {
+        size: 'lg',
+        keyboard: true,
+        backdrop: 'static',
+        windowClass: 'model-overlay'
+      });
+
+      dialog.result.then(function (data) {
+        var pjfashjl = new PJFASHJL();
+
+        angular.extend(pjfashjl, data.item);
+
+        pjfashjl.$save({taskId: task.id, employeeId: $rootScope.employee.id}, function() {
+          refreshData();
+        });
+      }, function () {
+        
+      });
+    }
+
+    function SIGN_PJFASHJL(task) {
+      var dialog = dialogs.create('template/at-sign-pjfashjl-dialog.html', 'SignPjfashjlDialogCtrl', {
+        project: task.project,
+        saveText: '签字'
+      }, 
+      {
+        size: 'md',
+        keyboard: true,
+        backdrop: 'static',
+        windowClass: 'model-overlay'
+      });
+
+      dialog.result.then(function (data) {
+        var pjfashjl = new PJFASHJL();
+
+        angular.extend(pjfashjl, data.item);
+
+        pjfashjl.employee = {
+          id: $rootScope.employee.id
+        };
+
+        pjfashjl.$sign({taskId: task.id, employeeId: $rootScope.employee.id}, function() {
+          refreshData();
+        });
+      }, function () {
+        
+      });
+    }
+
+    function CREATE_JCTZD(task) {
+      var dialog = dialogs.create('template/at-jctzd-dialog.html', 'JctzdDialogCtrl', {
+        project: task.project
+      }, 
+      {
+        size: 'lg',
+        keyboard: true,
+        backdrop: 'static',
+        windowClass: 'model-overlay'
+      });
+
+      dialog.result.then(function (data) {
+        
       }, function () {
         
       });

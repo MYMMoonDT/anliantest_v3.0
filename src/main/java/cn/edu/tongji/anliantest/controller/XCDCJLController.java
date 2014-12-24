@@ -24,10 +24,17 @@ public class XCDCJLController {
 	
 	@RequestMapping(value="xcdcjl", method=RequestMethod.POST)
 	@ResponseBody
-	public DataWrapper<XCDCJLTable> addKHzLDJD(
+	public DataWrapper<XCDCJLTable> addXCDCJL(
 		@RequestParam("taskId") Long taskId,
 		@RequestParam("employeeId") Long employeeId,
 		@RequestBody XCDCJLTable xcdcjlTable) {
 		return xcdcjlService.addXCDCJL(xcdcjlTable, taskId, employeeId);
+	}
+	
+	@RequestMapping(value="xcdcjl/project", method=RequestMethod.GET)
+	@ResponseBody
+	public DataWrapper<XCDCJLTable> getXCDCJLByProject(
+		@RequestParam("projectId") Long projectId) {
+		return xcdcjlService.getXCDCJLByProject(projectId);
 	}
 }

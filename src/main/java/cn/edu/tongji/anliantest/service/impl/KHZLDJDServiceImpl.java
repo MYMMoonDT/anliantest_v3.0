@@ -106,5 +106,15 @@ public class KHZLDJDServiceImpl implements KHZLDJDService{
 		
 		return ret;
 	}
+
+	@Override
+	public DataWrapper<KHZLDJDTable> getKHZLDJDByProject(Long projectId) {
+		DataWrapper<KHZLDJDTable> ret = new DataWrapper<KHZLDJDTable>();
+        
+		KHZLDJDTable khzldjdTable = khzldjdTableDao.getKHZLDJDByProjectId(projectId);
+        ret.setData(khzldjdTable);
+        
+        return ret;
+	}
 	
 }

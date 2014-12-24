@@ -113,7 +113,7 @@ public class Project implements Serializable{
 		this.status = status;
 	}
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="businessEmployeeId")
 	public Employee getBusinessEmployee() {
 		return businessEmployee;
@@ -123,7 +123,7 @@ public class Project implements Serializable{
 		this.businessEmployee = businessEmployee;
 	}
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="projectEmployeeId")
 	public Employee getProjectEmployee() {
 		return projectEmployee;
@@ -133,7 +133,7 @@ public class Project implements Serializable{
 		this.projectEmployee = projectEmployee;
 	}
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="customerId")
 	public Customer getCustomer() {
 		return customer;
@@ -152,7 +152,7 @@ public class Project implements Serializable{
 	}
 	
 	@ManyToMany(fetch = FetchType.EAGER)
-	@Cascade({CascadeType.SAVE_UPDATE, CascadeType.MERGE, CascadeType.DELETE})
+	@Cascade({CascadeType.SAVE_UPDATE, CascadeType.MERGE})
 	@JoinTable(name="project_contact_person",
 		joinColumns={@JoinColumn(name="projectId")},
 		inverseJoinColumns={@JoinColumn(name="contactPersonId")}

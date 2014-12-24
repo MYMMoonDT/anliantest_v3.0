@@ -1,0 +1,119 @@
+<div class="row">
+  <div class="col-md-6">
+    <button type="button" class="btn btn-default pull-left" ng-click="cancel()">&nbsp;取消&nbsp;</button>
+  </div>
+  <div class="col-md-6">
+    <button type="button" class="btn btn-success pull-right" ng-click="save()">&nbsp;确定&nbsp;</button>
+  </div>
+</div>
+
+<div class="content">
+  <div class="row">
+    <div class="cell" style="width: 120px;">
+      <label>项目名称:</label>
+    </div>
+    <div class="cell">
+      {{data.project.name}}
+    </div>
+  </div>
+  <div class="row">
+    <div class="cell" style="width: 120px;">
+      <label>项目编号:</label>
+    </div>
+    <div class="cell">
+      {{data.project.number}}
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="cell" style="width: 120px;">
+      <label>表码:</label>
+    </div>
+    <div class="cell">
+      <input ng-model="data.item.tableNum" type="text" class="form-control" style="width: 150px;">
+    </div>
+  </div>
+  <div class="row">
+    <div class="cell" style="width: 120px;">
+      <label>修订状态:</label>
+    </div>
+    <div class="cell">
+      <input ng-model="data.item.revisionStatus" type="text" class="form-control" style="width: 150px;">
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="cell" style="width: 120px;">
+      <label>审核主持人:</label>
+    </div>
+    <div class="cell">
+      <input ng-model="data.item.reviewHost" type="text" class="form-control">
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="cell" style="width: 120px;">
+      <label>审核参加人:</label>
+    </div>
+    <div class="cell">
+      <input ng-model="data.item.reviewAttendant" type="text" class="form-control">
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="cell" style="width: 120px;">
+      <label>编写人:</label>
+    </div>
+    <div class="cell">
+      <input ng-model="data.item.reviewWriter" type="text" class="form-control">
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="cell" style="width: 120px;">
+      <label>时间:</label>
+    </div>
+    <div class="cell">
+      <input at-datepicker date="data.item.createDate" type="text" class="form-control date">
+    </div>
+  </div>
+</div>
+
+<div class="content">
+  <div class="row">
+    <div class="cell" style="padding-right:10px;">
+      <label style="line-height:40px;">审核记录:</label>
+      <textarea class="form-control" rows="10" ng-model="data.item.reviewRecord"></textarea>
+      <div style="height:10px;"></div>
+      <div class="row">
+        <div class="cell" style="width: 90px;"><label>审核人:</label></div>
+        <div class="cell">
+          <input ng-model="data.item.reviewEmployee" type="text" class="form-control" style="width: 110px;">
+        </div>
+      </div>
+      <div class="row">
+        <div class="cell" style="width: 90px;"><label>时间:</label></div>
+        <div class="cell">
+          <input at-datepicker date="data.item.reviewDate" type="text" class="form-control date">
+        </div>
+      </div>
+    </div>
+    <div class="cell" style="padding-left:10px;">
+      <label style="line-height:40px;">修改结果:</label>
+      <textarea class="form-control" rows="10" ng-model="data.item.reviewRecord"></textarea>
+      <div style="height:10px;"></div>
+      <div class="row">
+        <div class="cell" style="width: 90px;"><label>修改人:</label></div>
+        <div class="cell">
+          <input ng-model="data.item.modifyEmployee" type="text" class="form-control" style="width: 110px;">
+        </div>
+      </div>
+      <div class="row">
+        <div class="cell" style="width: 90px;"><label>时间:</label></div>
+        <div class="cell">
+          <input at-datepicker date="data.item.modifyDate" type="text" class="form-control date">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

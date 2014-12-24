@@ -85,4 +85,14 @@ public class XCDCJLServiceImpl implements XCDCJLService{
 	public DataWrapper<Void> deleteXCDCJL(Long xcdcjlTableId) {
 		return null;
 	}
+	@Override
+	public DataWrapper<XCDCJLTable> getXCDCJLByProject(Long projectId) {
+		
+		DataWrapper<XCDCJLTable> ret = new DataWrapper<XCDCJLTable>();
+        
+		XCDCJLTable xcdcjlTable = xcdcjlTableDao.getXCDCJLByProjectId(projectId);
+        ret.setData(xcdcjlTable);
+        
+        return ret;
+	}
 }

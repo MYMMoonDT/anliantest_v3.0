@@ -9,5 +9,10 @@
  */
 angular.module('anliantestApp')
   .factory('XCDCJL', function XCDCJL($resource) {
-    return $resource('api/xcdcjl/:xcdcjlTableId');
+    return $resource('api/xcdcjl/:xcdcjlTableId',{},{
+      project: {
+        method: 'GET',
+        url: 'api/xcdcjl/project'
+      }
+    });
   });

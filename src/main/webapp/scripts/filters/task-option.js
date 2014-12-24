@@ -27,6 +27,17 @@ angular.module('anliantestApp')
         case 'UPLOAD_PJFA':
           ret = '上传';
           break;
+        case 'CREATE_PJFASHJL':
+          ret = '创建';
+          break;
+        case 'SIGN_PJFASHJL':
+          ret = '签字';
+          break;
+        case 'CREATE_JCTZD':
+          ret = '创建';
+          break;
+        default:
+          ret = '创建';
       }
 
       return ret;

@@ -1,0 +1,35 @@
+<div class="row">
+  <div class="col-md-6">
+    <button type="button" class="btn btn-default pull-left" ng-click="cancel()">&nbsp;取消&nbsp;</button>
+  </div>
+  <div class="col-md-6">
+    <button type="button" class="btn btn-success pull-right" ng-click="save()">&nbsp;确定&nbsp;</button>
+  </div>
+</div>
+
+<div class="content">
+  <div class="row">
+    <div class="cell" style="width: 90px;">
+      <label>项目名称:</label>
+    </div>
+    <div class="cell">
+      {{data.project.name}}
+    </div>
+  </div>
+  <div class="row">
+    <div class="cell" style="width: 90px;">
+      <label>项目编号:</label>
+    </div>
+    <div class="cell">
+      {{data.project.number}}
+    </div>
+  </div>
+  <div class="row">
+    <div class="cell" style="width: 90px;">
+      <label>评价方案:</label>
+    </div>
+    <div class="cell">
+      <select ng-model="data.item.pjfaFile" ng-options="resource.groupName for resource in resourceList" class="form-control"></select>
+    </div>
+  </div>
+</div>

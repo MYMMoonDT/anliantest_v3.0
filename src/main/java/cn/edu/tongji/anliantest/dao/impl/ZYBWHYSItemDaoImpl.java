@@ -24,7 +24,7 @@ public class ZYBWHYSItemDaoImpl extends AbstractHibernateDao<ZYBWHYSItem, Long> 
 	}
 	
 	@Override
-	public ZYBWHYSItem getZYBWHYSItemByIName(String zybwhysItemName) {
+	public ZYBWHYSItem getZYBWHYSItemByName(String zybwhysItemName) {
 		List<Criterion> criterions = new ArrayList<Criterion>();
 		
 		criterions.add(Restrictions.eq("chineseName", zybwhysItemName));
@@ -50,6 +50,12 @@ public class ZYBWHYSItemDaoImpl extends AbstractHibernateDao<ZYBWHYSItem, Long> 
 	@Override
 	public void deleteZYBWHYSItem(Long zybwhysItemId) {
 		delete(findById(zybwhysItemId));
+	}
+
+	@Override
+	public List<ZYBWHYSItem> getAllZYBWHYSItem() {
+		List<ZYBWHYSItem> list = findByCriteria(null);
+		return list;
 	}
 
 }

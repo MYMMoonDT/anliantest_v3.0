@@ -1,5 +1,10 @@
 package cn.edu.tongji.anliantest.dao.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 import cn.edu.tongji.anliantest.dao.AbstractHibernateDao;
@@ -30,7 +35,21 @@ public class KHZLDJDTableDaoImpl extends AbstractHibernateDao<KHZLDJDTable, Long
 
 	@Override
 	public void updateKHZLDJD(KHZLDJDTable khzldjdTable) {
-		updateKHZLDJD(khzldjdTable);
+		saveOrUpdate(khzldjdTable);
+	}
+
+	@Override
+	public KHZLDJDTable getKHZLDJDByProjectId(Long projectId) {
+		List<Criterion> criterions = new ArrayList<Criterion>();
+		
+		criterions.add(Restrictions.eq("project.id", projectId));
+
+		List<KHZLDJDTable> list = findByCriteria(criterions);
+		if(list != null && list.size() > 0) {
+			return list.get(0);
+		}else {
+			return null;
+		}
 	}
 
 }

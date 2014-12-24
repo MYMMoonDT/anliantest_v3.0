@@ -27,6 +27,15 @@ angular.module('anliantestApp')
         case 'UPLOAD_PJFA':
           ret = '上传评价方案';
           break;
+        case 'CREATE_PJFASHJL':
+          ret = '创建评价方案审核记录';
+          break;
+        case 'SIGN_PJFASHJL':
+          ret = '评价方案审核记录签字';
+          break;
+        case 'CREATE_JCTZD':
+          ret = '创建检测通知单';
+          break;
       }
 
       return ret;

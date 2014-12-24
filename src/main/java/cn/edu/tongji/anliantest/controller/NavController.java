@@ -9,6 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class NavController {
+	
 	@RequestMapping(value = "/login")
 	public ModelAndView loginPage(
             HttpServletRequest request){
@@ -85,7 +86,8 @@ public class NavController {
 	@RequestMapping(value = "/test")
 	public ModelAndView testPage(
             HttpServletRequest request){
-        String host = request.getRequestURL().substring(0,request.getRequestURL().indexOf("/",10)+1);
+		
+		String host = request.getRequestURL().substring(0,request.getRequestURL().indexOf("/",10)+1);
         ModelAndView view = new ModelAndView();
         view.setViewName("redirect:"+host+"#/test");
         return view;
