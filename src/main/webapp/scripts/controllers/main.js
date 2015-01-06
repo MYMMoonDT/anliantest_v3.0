@@ -8,7 +8,7 @@
  * Controller of the anliantestApp
  */
 angular.module('anliantestApp')
-  .controller('MainCtrl', function ($scope, $rootScope, $location, dialogs, EmployeeService, Task, Project, HTPSJL, GZRWD, KHZLDJD, XCDCJL, PJFA, PJFASHJL) {
+  .controller('MainCtrl', function ($scope, $rootScope, $location, dialogs, EmployeeService, Task, Project, HTPSJL, GZRWD, KHZLDJD, XCDCJL, PJFA, PJFASHJL, JCTZD) {
     $scope.employee = EmployeeService.getCurrEmployee();
 
     refreshData();
@@ -288,7 +288,12 @@ angular.module('anliantestApp')
       });
 
       dialog.result.then(function (data) {
-        
+        var jctzd = new JCTZD();
+        angular.extend(jctzd, data.item);
+
+        jctzd.$save({taskId: task.id, employeeId: $rootScope.employee.id}, function() {
+          refreshData();
+        });
       }, function () {
         
       });

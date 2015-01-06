@@ -1,8 +1,8 @@
 package cn.edu.tongji.anliantest.model;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Cascade;
@@ -25,7 +26,7 @@ public class JCTZDGroup implements Serializable{
 	
 	private String workshopPosition; 	//车间岗位
 	
-	private Set<JCTZDItem> items = new HashSet<JCTZDItem>(0);
+	private List<JCTZDItem> items = new ArrayList<JCTZDItem>(0);
 
 	@Id
 	@GeneratedValue
@@ -45,14 +46,15 @@ public class JCTZDGroup implements Serializable{
 		this.workshopPosition = workshopPosition;
 	}
 
+	@OrderBy
 	@OneToMany(fetch = FetchType.EAGER, orphanRemoval = true)
 	@Cascade({CascadeType.SAVE_UPDATE, CascadeType.MERGE, CascadeType.DELETE})
 	@JoinColumn(name="groupId")
-	public Set<JCTZDItem> getItems() {
+	public List<JCTZDItem> getItems() {
 		return items;
 	}
 
-	public void setItems(Set<JCTZDItem> items) {
+	public void setItems(List<JCTZDItem> items) {
 		this.items = items;
 	}
 }

@@ -45,6 +45,32 @@ angular.module('anliantestApp')
       item.items.push(zybwhysItem);
     };
 
+    $scope.selectEmployee = function(type){
+      var dialog = dialogs.create('template/at-select-employee-dialog.html', 'SelectEmployeeDialogCtrl', {}, 
+      {
+        size: 'md',
+        keyboard: true,
+        backdrop: 'static',
+        windowClass: 'model-overlay'
+      });
+
+      dialog.result.then(function (data) {
+        switch(type) {
+          case 'notify':
+            $scope.data.item.notifyEmployee = data;
+          break;
+          case 'review':
+            $scope.data.item.reviewEmployee = data;
+          break;
+          case 'receive':
+            $scope.data.item.receiveEmployee = data;
+          break;
+        }
+      }, function () {
+        
+      });
+    }
+
     $scope.cancel = function() {
       $modalInstance.dismiss('Canceled');
     };

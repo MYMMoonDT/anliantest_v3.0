@@ -1,6 +1,7 @@
 package cn.edu.tongji.anliantest.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -11,6 +12,8 @@ import cn.edu.tongji.anliantest.model.JCTZDTable;
 import cn.edu.tongji.anliantest.service.JCTZDService;
 import cn.edu.tongji.anliantest.util.DataWrapper;
 
+@Controller
+@RequestMapping("api")
 public class JCTZDController {
 	JCTZDService jctzdService;
 	

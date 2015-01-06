@@ -1,9 +1,9 @@
 package cn.edu.tongji.anliantest.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -42,7 +43,7 @@ public class JCTZDTable implements Serializable{
 	private Date submitDate;
 	private Date receiveDate;
 	
-	private Set<JCTZDGroup> items = new HashSet<JCTZDGroup>(0);
+	private List<JCTZDGroup> items = new ArrayList<JCTZDGroup>(0);
 	
 	@Id
 	@GeneratedValue
@@ -129,13 +130,14 @@ public class JCTZDTable implements Serializable{
 		this.receiveDate = receiveDate;
 	}
 	
+	@OrderBy
 	@OneToMany(fetch = FetchType.EAGER, orphanRemoval = true)
 	@Cascade({CascadeType.SAVE_UPDATE, CascadeType.MERGE, CascadeType.DELETE})
 	@JoinColumn(name="tableId")
-	public Set<JCTZDGroup> getItems() {
+	public List<JCTZDGroup> getItems() {
 		return items;
 	}
-	public void setItems(Set<JCTZDGroup> items) {
+	public void setItems(List<JCTZDGroup> items) {
 		this.items = items;
 	}
 }

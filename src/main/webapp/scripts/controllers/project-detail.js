@@ -38,7 +38,21 @@ angular.module('anliantestApp')
     };
 
     $scope.showInputJCBGDialog = function() {
+      var dialog = dialogs.create('template/at-input-jcbg-dialog.html', 'inputJCBGDialogCtrl', 
+      {
+        project: $scope.project
+      }, 
+      {
+        size: 'sg',
+        keyboard: true,
+        backdrop: 'static',
+        windowClass: 'model-overlay'
+      });
+      dialog.result.then(function(data) {
 
+      }, function() {
+
+      });
     };
 
     $scope.showUploadJCBGDialog = function() {
@@ -185,6 +199,252 @@ angular.module('anliantestApp')
     };
   })
 
-  .controller('inputJCBGDialogCtrl', function ($scope, $modalInstance, data) {
+  .controller('inputJCBGDialogCtrl', function ($scope, $modalInstance, dialogs, data, ZYBWHYS, JCBG, JSJG, JGPJ) {
+    var DEFAULT_ZYBWHYS_TD_HEIGHT = 135;
+    var DEFAULT_TESTDATE_TD_HEIGHT = 110;
+    var DEFAULT_SAMPLE_TD_HEIGHT = 55;
 
+    $scope.data = data;
+
+    $scope.canDownloadJSGCB = false;
+    $scope.canDownloadJGYPDB = false;
+    
+    $scope.data.item = [];
+
+    loadAllZYBWHYSItem();
+
+    $scope.addWorkshopPosition = function() {
+      var workshopPosition = {
+        workshopPosition: '',
+        list: []
+      };
+      $scope.data.item.push(workshopPosition);
+    };
+
+    $scope.deleteWorkshopPosition = function(workshopPosition) {
+      var index = $scope.data.item.indexOf(workshopPosition);
+      $scope.data.item.splice(index, 1);
+    };
+
+    $scope.addZYBWHYSItem = function(workshopPosition) {
+      var zybwhysItem = {
+        zybwhysItem: null,
+        zybwhysItemDetailName: '',
+        height: DEFAULT_ZYBWHYS_TD_HEIGHT,
+        list: []
+      };
+      workshopPosition.list.push(zybwhysItem);
+    };
+
+    $scope.deleteZYBWHYSItem = function(workshopPosition, zybwhysItem) {
+      var index = workshopPosition.list.indexOf(zybwhysItem);
+      workshopPosition.list.splice(index, 1);
+    };
+
+    $scope.addTestDate = function(zybwhysItem) {
+      var testDate = {
+        testDate: new Date(),
+        height: DEFAULT_TESTDATE_TD_HEIGHT,
+        list: []
+      };
+      zybwhysItem.list.push(testDate);
+
+      var height = 0;
+      for(var i = 0; i < zybwhysItem.list.length; i++) {
+        height += zybwhysItem.list[i].height;
+      }
+      zybwhysItem.height = height > zybwhysItem.height ? height : zybwhysItem.height;
+    };
+
+    $scope.deleteTestDate = function(zybwhysItem, testDate){
+      var index = zybwhysItem.list.indexOf(testDate);
+      zybwhysItem.list.splice(index, 1);
+
+      var height = 0;
+      for(var i = 0; i < zybwhysItem.list.length; i++) {
+        height += zybwhysItem.list[i].height;
+      }
+      zybwhysItem.height = height;
+    };
+
+    $scope.addSample = function(zybwhysItem, testDate) {
+      var sample = {
+        sampleNum: '',
+        result: '',
+        touchTime: '',
+        collectTime: '',
+        height: DEFAULT_SAMPLE_TD_HEIGHT
+      };
+      testDate.list.push(sample);
+
+      var height = 0;
+      for(var i = 0; i < testDate.list.length; i++) {
+        height += testDate.list[i].height;
+      }
+      testDate.height = height > testDate.height ? height : testDate.height;
+
+      height = 0;
+      for(var i = 0; i < zybwhysItem.list.length; i++) {
+        height += zybwhysItem.list[i].height;
+      }
+      zybwhysItem.height = height > zybwhysItem.height ? height : zybwhysItem.height;
+    };
+
+    $scope.deleteSample = function(zybwhysItem, testDate, sample) {
+      var index = testDate.list.indexOf(sample);
+      testDate.list.splice(index, 1);
+
+      var height = 0;
+      for(var i = 0; i < testDate.list.length; i++) {
+        height += testDate.list[i].height;
+      }
+      testDate.height = height;
+
+      height = 0;
+      for(var i = 0; i < zybwhysItem.list.length; i++) {
+        height += zybwhysItem.list[i].height;
+      }
+      zybwhysItem.height = height;
+    };
+
+    $scope.submit = function() {
+      var canSubmit = true;
+      for(var i = 0; i < $scope.data.item.length; i++) {
+        if($scope.data.item[i].workshopPosition == undefined || 
+           $scope.data.item[i].workshopPosition == null || 
+           $scope.data.item[i].workshopPosition == '') {
+          canSubmit = false;
+          break;
+        }
+        for(var j = 0; j < $scope.data.item[i].list.length; j++) {
+          if($scope.data.item[i].list[j].selected == undefined ||
+             $scope.data.item[i].list[j].selected == null) {
+            canSubmit = false;
+            break;
+          }
+          for(var k = 0; k < $scope.data.item[i].list[j].list.length; k++) {
+            if($scope.data.item[i].list[j].list[k].testDate == undefined ||
+               $scope.data.item[i].list[j].list[k].testDate == null ||
+               $scope.data.item[i].list[j].list[k].testDate == '') {
+              canSubmit = false;
+              break;
+            }
+            for(var p = 0; p < $scope.data.item[i].list[j].list[k].list.length; p++) {
+              if($scope.data.item[i].list[j].list[k].list[p].sampleNum == undefined ||
+                 $scope.data.item[i].list[j].list[k].list[p].sampleNum == null ||
+                 $scope.data.item[i].list[j].list[k].list[p].sampleNum == '' || 
+                 $scope.data.item[i].list[j].list[k].list[p].result == undefined ||
+                 $scope.data.item[i].list[j].list[k].list[p].result == null ||
+                 $scope.data.item[i].list[j].list[k].list[p].result == '' ||
+                 $scope.data.item[i].list[j].list[k].list[p].touchTime == undefined ||
+                 $scope.data.item[i].list[j].list[k].list[p].touchTime == null ||
+                 $scope.data.item[i].list[j].list[k].list[p].touchTime == '' ||
+                 $scope.data.item[i].list[j].list[k].list[p].collectTime == undefined ||
+                 $scope.data.item[i].list[j].list[k].list[p].collectTime == null ||
+                 $scope.data.item[i].list[j].list[k].list[p].collectTime == '') {
+                canSubmit = false;
+                break;
+              }
+            }
+            if(!canSubmit)
+              break;
+          }
+          if(!canSubmit)
+            break;
+        }
+        if(!canSubmit)
+          break;
+      }
+
+      if(!canSubmit) {
+        dialogs.create('template/at-alert-dialog.html', 'AlertCtrl', 
+        {
+          text: '数据输入不完整'
+        }, 
+        {
+          size: 'sm',
+          keyboard: true,
+          backdrop: 'static',
+          windowClass: 'model-overlay'
+        });
+        return;
+      }
+        
+
+      var jcbg = new JCBG();
+
+      var list = [];
+      for(var i = 0; i < $scope.data.item.length; i++) {
+        for(var j = 0; j < $scope.data.item[i].list.length; j++) {
+          var item = {
+            workshopPosition: $scope.data.item[i].workshopPosition,
+            zybwhysItem: $scope.data.item[i].list[j].selected.chineseName,
+            zybwhysItemDetailName: $scope.data.item[i].list[j].zybwhysItemDetailName,
+            testDate: [],
+            sampleNum: [],
+            result: [],
+            touchTime: [],
+            collectTime: []
+          };
+
+          for(var k = 0; k < $scope.data.item[i].list[j].list.length; k++) {
+            item.testDate.push($scope.data.item[i].list[j].list[k].testDate);
+            var sampleNum = [];
+            var result = [];
+            var touchTime = [];
+            var collectTime = [];
+            for(var p = 0; p < $scope.data.item[i].list[j].list[k].list.length; p++) {
+              sampleNum.push($scope.data.item[i].list[j].list[k].list[p].sampleNum);
+              result.push($scope.data.item[i].list[j].list[k].list[p].result);
+              touchTime.push($scope.data.item[i].list[j].list[k].list[p].touchTime);
+              collectTime.push($scope.data.item[i].list[j].list[k].list[p].collectTime);
+            }
+            item.sampleNum.push(sampleNum);
+            item.result.push(result);
+            item.touchTime.push(touchTime);
+            item.collectTime.push(collectTime);
+          }
+          list.push(item);
+        }
+      }
+
+      angular.extend(jcbg, {list:list});
+
+      jcbg.$input({projectId: $scope.data.project.id}, function(data){
+        if(data.callStatus == 'FAILED') {
+          var dialog = dialogs.create('template/at-alert-dialog.html', 'AlertCtrl', 
+          {
+            text: data.errorMsg
+          }, 
+          {
+            size: 'sm',
+            keyboard: true,
+            backdrop: 'static',
+            windowClass: 'model-overlay'
+          });
+        }else if(data.callStatus == 'SUCCEED') {
+          $scope.canDownloadJSGCB = true;
+          $scope.canDownloadJGYPDB = true;
+        }
+      });
+    };
+    
+    $scope.cancel = function() {
+      $modalInstance.dismiss('Canceled');
+    };
+
+    $scope.downloadJSGCB = function() {
+      window.location.href = "api/jsjg/download?projectId="+$scope.data.project.id;
+    };
+
+    $scope.downloadJGYPDB = function() {
+      window.location.href = "api/jgpj/download?projectId="+$scope.data.project.id;
+    };
+
+    function loadAllZYBWHYSItem() {
+      var zybwhys = new ZYBWHYS();
+      zybwhys.$query(function(data){
+        $scope.zybwhysList = data.data;
+      });
+    }
   });

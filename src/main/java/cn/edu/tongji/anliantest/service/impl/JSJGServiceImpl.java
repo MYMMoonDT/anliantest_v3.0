@@ -49,7 +49,7 @@ public class JSJGServiceImpl implements JSJGService{
 		JSJGTable jsjgTable = jsjgTableDao.getJSJGTableByProjectId(projectId);
 		ServletContext context = ApplicationContextUtil.getContext().getServletContext();
 		Project project = jsjgTable.getProject();
-		String filePath = context.getRealPath("tmp") + "\\" + project.getNumber() + "-" + project.getName() + "-" + "计算过程表" + ".doc";
+		String filePath = context.getRealPath("tmp") + "\\" + project.getNumber() + "-" + project.getName() + "-" + "计算过程表" + ".xls";
 		File file = new File(filePath);
 		if(file.exists()){
 			logger.info("下载" + project.getName() + "计算过程表");

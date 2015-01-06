@@ -1,16 +1,23 @@
 package cn.edu.tongji.anliantest.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 @Entity
 @Table(name="cyfa_table")
@@ -28,6 +35,8 @@ public class CYFATable implements Serializable{
 	
 	private Date sampleStartDate;
 	private Date sampleEndDate;
+	
+	private List<CYFAGroup> items = new ArrayList<CYFAGroup>(0);
 	
 	private Employee planEmployee;
 	private Date planDate;
@@ -137,6 +146,18 @@ public class CYFATable implements Serializable{
 
 	public void setReviewDate(Date reviewDate) {
 		this.reviewDate = reviewDate;
+	}
+
+	@OneToMany(fetch = FetchType.EAGER, orphanRemoval = true)
+	@Cascade({CascadeType.SAVE_UPDATE, CascadeType.MERGE, CascadeType.DELETE})
+	@JoinColumn(name="tableId")
+	public List<CYFAGroup> getItems() {
+		return items;
+	}
+
+
+	public void setItems(List<CYFAGroup> items) {
+		this.items = items;
 	}
 	
 }

@@ -88,10 +88,10 @@ public class JCBGDocument {
 			
 			jacob.getTable(3);
 			Date[] testTime = new Date[3];
-			String[][] testSampleNum = new String[3][4];
-			String[][] testResult = new String[3][4];
-			String[][] testTouchTime = new String[3][4];
-			Integer[][] testCollectTime = new Integer[3][4];
+			String[][] testSampleNum = new String[3][20];
+			String[][] testResult = new String[3][20];
+			String[][] testTouchTime = new String[3][20];
+			Integer[][] testCollectTime = new Integer[3][20];
 			tableRow = jacob.getRowsCount();
 			int i = -1, j = 0, prevRowIdx = -1 ;
 			int prevTestTime = 1, prevSubstance = 1, prevWorkshopJob = 2;
@@ -113,10 +113,10 @@ public class JCBGDocument {
 									i = 0;
 									j = 0;
 									testTime = new Date[3];
-									testSampleNum = new String[3][4];
-									testResult = new String[3][4];
-									testTouchTime = new String[3][4];
-									testCollectTime = new Integer[3][4];
+									testSampleNum = new String[3][20];
+									testResult = new String[3][20];
+									testTouchTime = new String[3][20];
+									testCollectTime = new Integer[3][20];
 								}
 								prevRowIdx=1;
 								

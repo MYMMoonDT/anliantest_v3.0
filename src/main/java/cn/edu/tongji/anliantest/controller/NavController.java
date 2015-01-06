@@ -2,13 +2,23 @@ package cn.edu.tongji.anliantest.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import cn.edu.tongji.anliantest.service.TestService;
+
 @Controller
 public class NavController {
+	
+	TestService testService;
+	
+	@Autowired
+	public NavController(TestService testService){
+		this.testService = testService;
+	}
 	
 	@RequestMapping(value = "/login")
 	public ModelAndView loginPage(
@@ -86,6 +96,8 @@ public class NavController {
 	@RequestMapping(value = "/test")
 	public ModelAndView testPage(
             HttpServletRequest request){
+		
+		testService.test();
 		
 		String host = request.getRequestURL().substring(0,request.getRequestURL().indexOf("/",10)+1);
         ModelAndView view = new ModelAndView();

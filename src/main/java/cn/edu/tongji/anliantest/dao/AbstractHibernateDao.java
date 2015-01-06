@@ -56,6 +56,8 @@ public abstract class AbstractHibernateDao<E, I extends Serializable> {
 				criteria.add(criterions.get(i));
 			}
 		}
+		criteria.setResultTransformer(CriteriaSpecification.DISTINCT_ROOT_ENTITY);
+		criteria.addOrder(Order.asc("id"));
 		return criteria.list();
 	}
 	

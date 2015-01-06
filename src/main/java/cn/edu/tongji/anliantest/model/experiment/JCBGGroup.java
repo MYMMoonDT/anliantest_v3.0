@@ -7,11 +7,11 @@ public class JCBGGroup {
 	private String zybwhysItem;         //检测项目
 	private String zybwhysItemDetailName;         
 	
-	private Date[] testDate;
-	private String[][] sampleNum;
-	private String[][] result;
-	private String[][] touchTime;
-	private Integer[][] collectTime;
+	private Date[] testDate = new Date[3];
+	private String[][] sampleNum = new String[3][20];
+	private String[][] result = new String[3][20];
+	private String[][] touchTime = new String[3][20];
+	private Integer[][] collectTime = new Integer[3][20];
 	
 	public String getWorkshopPosition() {
 		return workshopPosition;

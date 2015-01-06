@@ -16,6 +16,9 @@ body {
 .modal-dialog {
   margin: 10% auto;
 }
+.modal-sg {
+  width: 1200px;
+}
 .modal-content {
   padding: 10px;
 }
@@ -53,4 +56,12 @@ body {
 }
 .isloading-overlay .isloading-wrapper .fa-refresh {
   font-size: 36px;
+}
+/*
+ * JCBG CSS Style
+ */
+.jcbg-table-container input[type='text'] {
+  height: 30px;
+  padding: 6px 6px;
+  font-size: 12px;
 }

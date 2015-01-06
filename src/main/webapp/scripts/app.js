@@ -21,7 +21,8 @@ angular
     'angularFileUpload',
     'ui.bootstrap',
     'datatables',
-    'angularToggleDirectives'
+    'angularToggleDirectives',
+    'ui.select'
   ])
   .config(function ($routeProvider, $locationProvider) {
     $routeProvider
