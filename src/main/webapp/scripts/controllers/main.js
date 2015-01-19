@@ -8,7 +8,7 @@
  * Controller of the anliantestApp
  */
 angular.module('anliantestApp')
-  .controller('MainCtrl', function ($scope, $rootScope, $location, dialogs, EmployeeService, Task, Project, HTPSJL, GZRWD, KHZLDJD, XCDCJL, PJFA, PJFASHJL, JCTZD) {
+  .controller('MainCtrl', function ($scope, $rootScope, $location, dialogs, EmployeeService, Task, Project, HTPSJL, GZRWD, KHZLDJD, XCDCJL, PJFA, PJFASHJL, JCTZD, CYFA, SYSYJL) {
     $scope.employee = EmployeeService.getCurrEmployee();
 
     refreshData();
@@ -44,6 +44,18 @@ angular.module('anliantestApp')
           break;
         case 'CREATE_JCTZD':
           CREATE_JCTZD(task);
+          break;
+        case 'CONFIRM_CYFA':
+          CONFIRM_CYFA(task);
+          break;
+        case 'CREATE_SYSYJL':
+          CREATE_SYSYJL(task);
+          break;
+        case 'CONFIRM_SYSYJL':
+          CONFIRM_SYSYJL(task);
+          break;
+        case 'INPUT_JCBG':
+          INPUT_JCBG(task);
           break;
       }
     };
@@ -133,7 +145,7 @@ angular.module('anliantestApp')
       {
         size: 'md',
         keyboard: true,
-        backdrop: 'static',
+        backdrop: true,
         windowClass: 'model-overlay'
       });
 
@@ -278,7 +290,8 @@ angular.module('anliantestApp')
 
     function CREATE_JCTZD(task) {
       var dialog = dialogs.create('template/at-jctzd-dialog.html', 'JctzdDialogCtrl', {
-        project: task.project
+        project: task.project,
+        task: task
       }, 
       {
         size: 'lg',
@@ -288,12 +301,108 @@ angular.module('anliantestApp')
       });
 
       dialog.result.then(function (data) {
+        /*
         var jctzd = new JCTZD();
         angular.extend(jctzd, data.item);
 
         jctzd.$save({taskId: task.id, employeeId: $rootScope.employee.id}, function() {
           refreshData();
         });
+        */
+        refreshData();
+      }, function () {
+        
+      });
+    }
+
+    function CONFIRM_CYFA(task) {
+      var dialog = dialogs.create('template/at-cyfa-dialog.html', 'CyfaDialogCtrl', {
+        project: task.project
+      }, 
+      {
+        size: 'sg',
+        keyboard: true,
+        backdrop: 'static',
+        windowClass: 'model-overlay'
+      });
+
+      dialog.result.then(function (data) {
+        var cyfa = new CYFA();
+
+        angular.extend(cyfa, data.item);
+
+        cyfa.$confirm({taskId: task.id, employeeId: $rootScope.employee.id},function(){
+          refreshData();
+        });
+      }, function () {
+        
+      });
+    }
+
+    function CREATE_SYSYJL(task) {
+      var dialog = dialogs.create('template/at-sysyjl-dialog.html', 'SysyjlDialogCtrl', {
+        project: task.project,
+        type: 'CREATE'
+      }, 
+      {
+        size: 'sg',
+        keyboard: true,
+        backdrop: 'static',
+        windowClass: 'model-overlay'
+      });
+
+      dialog.result.then(function (data) {
+        var sysyjl = new SYSYJL();
+
+        angular.extend(sysyjl, data.item);
+
+        sysyjl.$save({taskId: task.id, employeeId: $rootScope.employee.id}, function(){
+          refreshData();
+        });
+      }, function () {
+        
+      });
+    }
+
+    function CONFIRM_SYSYJL(task) {
+      var dialog = dialogs.create('template/at-sysyjl-dialog.html', 'SysyjlDialogCtrl', {
+        project: task.project,
+        type: 'CONFIRM'
+      }, 
+      {
+        size: 'sg',
+        keyboard: true,
+        backdrop: 'static',
+        windowClass: 'model-overlay'
+      });
+
+      dialog.result.then(function (data) {
+        var sysyjl = new SYSYJL();
+
+        angular.extend(sysyjl, data.item);
+
+        sysyjl.$confirm({taskId: task.id, employeeId: $rootScope.employee.id}, function(){
+          refreshData();
+        });
+      }, function () {
+        
+      });
+    }
+
+    function INPUT_JCBG(task) {
+      var dialog = dialogs.create('template/at-jcbg-dialog.html', 'JcbgDialogCtrl', {
+        project: task.project,
+        task: task
+      }, 
+      {
+        size: 'sg',
+        keyboard: true,
+        backdrop: 'static',
+        windowClass: 'model-overlay'
+      });
+
+      dialog.result.then(function (data) {
+        refreshData();
       }, function () {
         
       });

@@ -46,6 +46,8 @@ public class Project implements Serializable{
 	private Employee businessEmployee;
 	private Employee projectEmployee;
 	
+	private String comment;
+	
 	@Id
 	@GeneratedValue
 	public Long getId() {
@@ -163,5 +165,13 @@ public class Project implements Serializable{
 
 	public void setContactPersonItems(Set<CustomerContactPerson> contactPersonItems) {
 		this.contactPersonItems = contactPersonItems;
+	}
+
+	public String getComment() {
+		return comment;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
 	}
 }

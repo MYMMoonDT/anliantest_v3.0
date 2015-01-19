@@ -40,6 +40,8 @@ public class CYJCFFItem implements Serializable{
 	private String sampleStatus;     //样品状态
 	private String sampleMethodAndPeriod;     //样品状态保存方式及期限
 	
+	private String comment;			 //备注
+	
 	@Id
 	@GeneratedValue
 	public Long getId() {
@@ -126,5 +128,13 @@ public class CYJCFFItem implements Serializable{
 
 	public void setSampleComment(String sampleComment) {
 		this.sampleComment = sampleComment;
+	}
+
+	public String getComment() {
+		return comment;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
 	}
 }

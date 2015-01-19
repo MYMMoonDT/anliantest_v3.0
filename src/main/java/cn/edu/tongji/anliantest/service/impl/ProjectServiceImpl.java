@@ -1,8 +1,11 @@
 package cn.edu.tongji.anliantest.service.impl;
 
+import java.io.File;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
+import javax.servlet.ServletContext;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +24,7 @@ import cn.edu.tongji.anliantest.model.ProjectStepEnum;
 import cn.edu.tongji.anliantest.model.ProjectTypeEnum;
 import cn.edu.tongji.anliantest.model.Task;
 import cn.edu.tongji.anliantest.service.ProjectService;
+import cn.edu.tongji.anliantest.util.ApplicationContextUtil;
 import cn.edu.tongji.anliantest.util.DataWrapper;
 
 @Service("projectService")
@@ -53,10 +57,17 @@ public class ProjectServiceImpl implements ProjectService{
 	public DataWrapper<Project> addProject(Project project) {
 		DataWrapper<Project> ret = new DataWrapper<>();
 		
+		ServletContext context = ApplicationContextUtil.getContext().getServletContext();
+		
 		project.setStep(ProjectStepEnum.STEP1);
 		project.setStatus(ProjectStatusEnum.CREATE_HTPSJL);
 				
 		projectDao.addProject(project);
+		
+		File file = new File(context.getRealPath("report") + File.separator + project.getNumber());
+		if(!file.exists()) {
+			file.mkdir();
+		}
 		
 		//为项目业务负责人创建新建合同评审记录的Task
 		Task task = new Task(project, 

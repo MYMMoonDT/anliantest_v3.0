@@ -17,7 +17,7 @@ import cn.edu.tongji.anliantest.util.DataWrapper;
 @Controller
 @RequestMapping("api")
 public class DepartmentController {
-DepartmentService departmentService;
+	DepartmentService departmentService;
 	
 	@Autowired
 	public DepartmentController(DepartmentService departmentService) {

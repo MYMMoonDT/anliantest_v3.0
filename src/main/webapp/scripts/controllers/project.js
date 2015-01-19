@@ -165,7 +165,9 @@ angular.module('anliantestApp')
 
         contractAmount: '',
 
-        businessEmployee: null
+        businessEmployee: null,
+
+        comment: ''
       };
     } else if ($scope.data.type == 'EDIT') {
       
@@ -176,6 +178,22 @@ angular.module('anliantestApp')
       {
         value: 'JSXMZYBWHKZXGPJ',
         name: '建设项目职业病危害控制效果评价'
+      },
+      {
+        value: 'JSXMZYBWHYPJ',
+        name: '建设项目职业病危害预评价'
+      },
+      {
+        value: 'JSXMZYBWHXZPJ',
+        name: '建设项目职业病危害现状评价'
+      },
+      {
+        value: 'GGCSWSJCYPJ',
+        name: '公共场所卫生检测与评价'
+      },
+      {
+        value: 'GZCSZYBWHYSJCYPJ',
+        name: '工作场所职业病危害因素检测与评价'
       }
     ];
     if ($scope.data.type == 'EDIT') {
@@ -251,6 +269,13 @@ angular.module('anliantestApp')
     $scope.save = function() {
       $scope.data.item.type = $scope.type.value;
       $modalInstance.close($scope.data);
+    };
+  })
+
+  .controller('projectDialogSubCtrl', function ($scope) {
+    $scope.changeType = function() {
+      $scope.$parent.$parent.type = $scope.type;
+      $scope.$parent.$parent.changeType();
     };
   })
 

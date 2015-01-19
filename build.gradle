@@ -63,3 +63,7 @@ dependencies {
    compile 'com.fasterxml.jackson.core:jackson-annotations:2.4.3'   
    compile 'net.sf.jacob-project:jacob:1.14.3'
 }
+
+tasks.withType(Compile) {
+    options.encoding = "UTF-8"
+}

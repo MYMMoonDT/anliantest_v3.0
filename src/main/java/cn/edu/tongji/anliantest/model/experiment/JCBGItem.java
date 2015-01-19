@@ -14,7 +14,7 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "jcbg_item")
-public class JCBGItem implements java.io.Serializable{
+public class JCBGItem implements java.io.Serializable, java.lang.Comparable<JCBGItem>{
 
 	private static final long serialVersionUID = -847719545841146352L;
 	
@@ -114,5 +114,9 @@ public class JCBGItem implements java.io.Serializable{
 	}
 	public void setTestDate(Date testDate) {
 		this.testDate = testDate;
+	}
+	@Override
+	public int compareTo(JCBGItem o) {
+		return this.sampleNum.compareTo(o.getSampleNum()) ;
 	}
 }

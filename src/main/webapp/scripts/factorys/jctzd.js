@@ -10,5 +10,9 @@
 angular.module('anliantestApp')
   .factory('JCTZD', function JCTZD($resource) {
     return $resource('api/jctzd/:jctzdTableId', {}, {
+      project: {
+        method: 'GET',
+        url: 'api/jctzd/project'
+      }
     });
   });

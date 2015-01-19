@@ -36,6 +36,21 @@ angular.module('anliantestApp')
         case 'CREATE_JCTZD':
           ret = '创建检测通知单';
           break;
+        case 'CONFIRM_CYFA':
+          ret = '确认采样方案';
+          break;
+        case 'CREATE_SYSYJL':
+          ret = '创建送样收样记录';
+          break;
+        case 'CONFIRM_SYSYJL':
+          ret = '确认送样收样记录';
+          break;
+        case 'INPUT_JCBG':
+          ret = '输入检测报告';
+          break;
+        case 'COMPUTE_JCBG':
+          ret = '计算检测报告';
+          break;
       }
 
       return ret;

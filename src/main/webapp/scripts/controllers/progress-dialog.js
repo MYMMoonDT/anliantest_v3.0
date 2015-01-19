@@ -8,7 +8,7 @@
  * Controller of the anliantestApp
  */
 angular.module('anliantestApp')
-  .controller('ProgressDialogCtrl', function ($scope, $modalInstance, ProgressService, data, HTPSJL, GZRWD, KHZLDJD, XCDCJL, PJFA, PJFASHJL) {
+  .controller('ProgressDialogCtrl', function ($scope, $modalInstance, ProgressService, data, HTPSJL, GZRWD, KHZLDJD, XCDCJL, PJFA, PJFASHJL, JCTZD, CYFA) {
     $scope.data = data;
 
     $scope.stepMap = ProgressService.getStepMap();
@@ -151,6 +151,45 @@ angular.module('anliantestApp')
             table.status = '完成';
         }
 
+        $scope.tableList.push(table);
+      });
+
+      var jctzd = new JCTZD();
+      jctzd.$project({projectId : $scope.data.item.id}, function(data){
+        
+        var table = {
+          data: null,
+          label: '检测通知单'
+        };
+        table.data = data.data;
+
+        if(table.data == null) {
+          table.status = '未创建';
+        }else{
+          table.status = '完成';
+        }
+
+        $scope.tableList.push(table);
+      });
+    } else if($scope.data.stepId == 4) {    //4.项目检测环节
+      var cyfa = new CYFA();
+      cyfa.$project({projectId : $scope.data.item.id}, function(data){
+        
+        var table = {
+          data: null,
+          label: '采样方案'
+        };
+        table.data = data.data;
+
+        if(table.data == null) {
+          table.status = '未创建';
+        }else{
+          if(table.data.confirm) {
+            table.status = '完成';
+          }else{
+            table.status = '未确认';
+          }
+        }
         $scope.tableList.push(table);
       });
     }

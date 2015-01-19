@@ -15,6 +15,8 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 @Entity
 @Table(name="jctzd_group")
@@ -50,6 +52,7 @@ public class JCTZDGroup implements Serializable{
 	@OneToMany(fetch = FetchType.EAGER, orphanRemoval = true)
 	@Cascade({CascadeType.SAVE_UPDATE, CascadeType.MERGE, CascadeType.DELETE})
 	@JoinColumn(name="groupId")
+	@Fetch(FetchMode.SUBSELECT)
 	public List<JCTZDItem> getItems() {
 		return items;
 	}

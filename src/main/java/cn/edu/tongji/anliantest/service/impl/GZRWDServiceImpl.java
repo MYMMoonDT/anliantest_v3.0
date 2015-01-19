@@ -70,14 +70,14 @@ public class GZRWDServiceImpl implements GZRWDService{
 		Log createLog = new Log(employeeDao.getEmployeeById(employeeId), createTask);
 		logDao.addLog(createLog);
 		
-		//为行政部创建指定项目负责人的Task,同时更新项目状态
+		//为评价部创建指定项目负责人的Task,同时更新项目状态
 		project.setStep(ProjectStepEnum.STEP2);
 		project.setStatus(ProjectStatusEnum.APPOINT_XMFZR);
 		projectDao.updateProject(project);
 		
 		taskDao.addTask(new Task(project, ProjectStepEnum.STEP2, 
 				ProjectStatusEnum.APPOINT_XMFZR, 
-				departmentDao.getDepartmentByType(DepartmentTypeEnum.ADMIN)));
+				departmentDao.getDepartmentByType(DepartmentTypeEnum.EVALUATION)));
 		
 		ret.setData(gzrwdTableDao.getGZRWDById(gzrwdTable.getId()));
 		

@@ -65,3 +65,31 @@ body {
   padding: 6px 6px;
   font-size: 12px;
 }
+/*
+ * CYFA CSS Style
+ */
+.cyfa-table-container {
+  font-size: 12px;
+}
+.cyfa-table-container thead tr th label {
+  font-size: 12px !important;
+}
+.cyfa-table-container input[type='text'] {
+  height: 30px;
+  padding: 6px 6px;
+  font-size: 12px;
+}
+/*
+ * SYSYJL CSS Style
+ */
+.sysyjl-table-container {
+  font-size: 12px;
+}
+.sysyjl-table-container thead tr th label {
+  font-size: 12px !important;
+}
+.sysyjl-table-container input[type='text'] {
+  height: 30px;
+  padding: 6px 6px;
+  font-size: 12px;
+}

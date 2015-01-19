@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -17,6 +18,8 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import cn.edu.tongji.anliantest.model.Employee;
 import cn.edu.tongji.anliantest.model.Project;
@@ -32,6 +35,7 @@ public class JCBGTable implements java.io.Serializable{
 	private Project project;
 	
 	private String tableNum;
+	private String revisionStatus;
 	
 	private Date sampleStartDate;
 	private Date sampleEndDate;
@@ -40,6 +44,7 @@ public class JCBGTable implements java.io.Serializable{
 	private Date testEndDate;
 	
 	private Date reportDate;
+	private Date receiveDate;
 	
 	private Employee prepareEmployee;   //编制人
 	private Employee reviewEmployee;    //审核人
@@ -76,6 +81,15 @@ public class JCBGTable implements java.io.Serializable{
 		this.reportDate = reportDate;
 	}
 
+	@Temporal(TemporalType.DATE)
+	public Date getReceiveDate() {
+		return receiveDate;
+	}
+
+	public void setReceiveDate(Date receiveDate) {
+		this.receiveDate = receiveDate;
+	}
+
 	@OneToOne
 	@JoinColumn(name="prepareEmployeeId")
 	public Employee getPrepareEmployee() {
@@ -107,9 +121,10 @@ public class JCBGTable implements java.io.Serializable{
 	}
 
 	@OrderBy
-	@OneToMany
+	@OneToMany(fetch = FetchType.EAGER, orphanRemoval = true)
 	@Cascade({CascadeType.SAVE_UPDATE, CascadeType.MERGE, CascadeType.DELETE})
 	@JoinColumn(name="tableId")
+	@Fetch(FetchMode.SUBSELECT)
 	public List<JCBGItem> getItems() {
 		return items;
 	}
@@ -126,6 +141,14 @@ public class JCBGTable implements java.io.Serializable{
 		this.tableNum = tableNum;
 	}
 	
+	public String getRevisionStatus() {
+		return revisionStatus;
+	}
+
+	public void setRevisionStatus(String revisionStatus) {
+		this.revisionStatus = revisionStatus;
+	}
+
 	@Temporal(TemporalType.DATE)
 	public Date getTestStartDate() {
 		return testStartDate;

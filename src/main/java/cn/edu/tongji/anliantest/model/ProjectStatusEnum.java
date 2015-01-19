@@ -10,7 +10,12 @@ public enum ProjectStatusEnum {
 	UPLOAD_PJFA, 		//上传评价方案
 	CREATE_PJFASHJL, 	//创建评价方案审核记录
 	SIGN_PJFASHJL, 	    //评价方案审核记录签字
-	CREATE_JCTZD; 	    //创建检测通知单
+	CREATE_JCTZD, 	    //创建检测通知单
+	CONFIRM_CYFA, 	    //确认采样方案
+	CREATE_SYSYJL, 	    //创建送样收样记录
+	CONFIRM_SYSYJL, 	//确认送样收样记录
+	INPUT_JCBG, 	    //输入检测报告
+	COMPUTE_JCBG; 	    //计算检测报告
 	
 	@Override
 	public String toString() {
@@ -36,6 +41,12 @@ public enum ProjectStatusEnum {
 			ret = "评价方案审核记录签字";
 		} else if(this == ProjectStatusEnum.CREATE_JCTZD) {
 			ret = "创建检测通知单";
+		} else if(this == ProjectStatusEnum.CREATE_SYSYJL) {
+			ret = "创建送样收样记录";
+		} else if(this == ProjectStatusEnum.INPUT_JCBG) {
+			ret = "输入检测报告";
+		} else if(this == ProjectStatusEnum.COMPUTE_JCBG) {
+			ret = "计算检测报告";
 		}
 		
 		return ret;

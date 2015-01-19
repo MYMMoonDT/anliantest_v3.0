@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -14,6 +15,8 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import cn.edu.tongji.anliantest.model.Project;
 
@@ -60,9 +63,10 @@ public class JGPJTable implements java.io.Serializable{
 	}
 
 	@OrderBy
-	@OneToMany
+	@OneToMany(fetch = FetchType.EAGER, orphanRemoval = true)
 	@Cascade({CascadeType.SAVE_UPDATE, CascadeType.MERGE, CascadeType.DELETE})
 	@JoinColumn(name="tableId")
+	@Fetch(FetchMode.SUBSELECT)
 	public List<JGPJItem> getItems() {
 		return items;
 	}

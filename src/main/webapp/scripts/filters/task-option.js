@@ -36,6 +36,18 @@ angular.module('anliantestApp')
         case 'CREATE_JCTZD':
           ret = '创建';
           break;
+        case 'CONFIRM_CYFA':
+          ret = '确认';
+          break;
+        case 'CREATE_SYSYJL':
+          ret = '创建';
+          break;
+        case 'CONFIRM_SYSYJL':
+          ret = '确认';
+          break;
+        case 'INPUT_JCBG':
+          ret = '输入';
+          break;
         default:
           ret = '创建';
       }

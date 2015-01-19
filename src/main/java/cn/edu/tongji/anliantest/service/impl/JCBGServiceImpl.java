@@ -15,13 +15,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import cn.edu.tongji.anliantest.dao.EmployeeDao;
 import cn.edu.tongji.anliantest.dao.JCBGTableDao;
 import cn.edu.tongji.anliantest.dao.JGPJTableDao;
 import cn.edu.tongji.anliantest.dao.JSJGTableDao;
+import cn.edu.tongji.anliantest.dao.LogDao;
 import cn.edu.tongji.anliantest.dao.ProjectDao;
+import cn.edu.tongji.anliantest.dao.TaskDao;
 import cn.edu.tongji.anliantest.dao.ZYBWHYSItemDao;
 import cn.edu.tongji.anliantest.document.JCBGDocument;
+import cn.edu.tongji.anliantest.model.Employee;
+import cn.edu.tongji.anliantest.model.Log;
 import cn.edu.tongji.anliantest.model.Project;
+import cn.edu.tongji.anliantest.model.ProjectStatusEnum;
+import cn.edu.tongji.anliantest.model.ProjectStepEnum;
+import cn.edu.tongji.anliantest.model.Task;
 import cn.edu.tongji.anliantest.model.experiment.JCBGGroup;
 import cn.edu.tongji.anliantest.model.experiment.JCBGItem;
 import cn.edu.tongji.anliantest.model.experiment.JCBGTable;
@@ -56,23 +64,99 @@ public class JCBGServiceImpl implements JCBGService{
 	@Autowired
 	private ProjectDao projectDao;
 	
+	@Autowired
+    private TaskDao taskDao;
+	@Autowired
+	private LogDao logDao;
+	
+	@Autowired
+	private EmployeeDao employeeDao;
+	
 	@Override
 	public DataWrapper<JCBGTable> getJCBGTableById(Long jcbgTableId) {
 		return null;
 	}
 
 	@Override
-	public DataWrapper<JCBGTable> addJCBGTable(Long projectId, ArrayList<JCBGGroup> list) {
+	public DataWrapper<JCBGTable> addJCBGTable(Long taskId, Long employeeId, JCBGTableInput jcbgTableInput) {
+		String errorMsg = "";
+		
 		DataWrapper<JCBGTable> ret = new DataWrapper<JCBGTable>();
 		
-		JCBGTable oldJCBGTable = jcbgTableDao.getJCBGTableByProjectId(projectId);
-		JSJGTable oldJSJGTable = jsjgTableDao.getJSJGTableByProjectId(projectId);
-		JGPJTable oldJGPJTable = jgpjTableDao.getJGPJTableByProjectId(projectId);
-		if(oldJCBGTable != null) {
-			jcbgTableDao.deleteJCBGTable(oldJCBGTable.getId());
-			jsjgTableDao.deleteJSJGTable(oldJSJGTable.getId());
-			jgpjTableDao.deleteJGPJTable(oldJGPJTable.getId());
+		Task inputTask = taskDao.getTaskById(taskId);
+		Project project = inputTask.getProject();
+		Employee employee = employeeDao.getEmployeeById(employeeId);
+		
+		ServletContext context = ApplicationContextUtil.getContext().getServletContext();
+		
+		JCBGTable jcbgTable = new JCBGTable();
+		ArrayList<JCBGGroup> jcbgGroups = (ArrayList<JCBGGroup>)jcbgTableInput.getList();
+		
+		try {
+			logger.info("输入" + project.getName() + "项目检测报告");
+			
+			JCBGTable oldJCBGTable = jcbgTableDao.getJCBGTableByProjectId(project.getId());
+			JSJGTable oldJSJGTable = jsjgTableDao.getJSJGTableByProjectId(project.getId());
+			JGPJTable oldJGPJTable = jgpjTableDao.getJGPJTableByProjectId(project.getId());
+			if(oldJCBGTable != null) {
+				jcbgTableDao.deleteJCBGTable(oldJCBGTable.getId());
+			}
+			if(oldJSJGTable != null) {
+				jsjgTableDao.deleteJSJGTable(oldJSJGTable.getId());
+			}
+			if(oldJGPJTable != null) {
+				jgpjTableDao.deleteJGPJTable(oldJGPJTable.getId());
+			}
+			
+			JSJGTable jsjgTable = new JSJGTable();
+			JGPJTable jgpjTable = new JGPJTable();
+			
+			JCBGGroup jcbgGroup = null;
+			Iterator<JCBGGroup> jcbgGroupIter = jcbgGroups.iterator();
+			while (jcbgGroupIter.hasNext()) {
+				jcbgGroup = jcbgGroupIter.next();
+				errorMsg = "<p>车间/岗位：" + jcbgGroup.getWorkshopPosition() + "</p>" +
+						   "<p>检测项目：" + jcbgGroup.getZybwhysItem() + "处</p>";
+				addJCBGGroupAndCalculate(jcbgGroup, jcbgTable, jsjgTable, jgpjTable);
+			}
+			
+			jcbgTable.setProject(projectDao.getProjectById(project.getId()));
+			jsjgTable.setProject(projectDao.getProjectById(project.getId()));
+			jsjgTable.setTableNum(TableNumEnum.JSJG.getTableNum());
+			jgpjTable.setProject(projectDao.getProjectById(project.getId()));
+			jcbgTableDao.addJCBGTable(jcbgTable);
+			jsjgTableDao.addJSJGTable(jsjgTable);
+			jgpjTableDao.addJGPJTable(jgpjTable);
+			
+			String filePath = context.getRealPath("report") + File.separator + project.getNumber() + File.separator + project.getNumber() + "-" + project.getName() + "-" + "计算过程表" + ".xls";
+			JCBGDocument.generateJSJGFilePOI(jsjgTable, filePath);
+			logger.info("生成" + project.getName() + "计算过程表");
+			filePath = context.getRealPath("report") + File.separator + project.getNumber() + File.separator + project.getNumber() + "-" + project.getName() + "-" + "结果与判定表" + ".doc";
+			JCBGDocument.generateJGPJFile(jgpjTable, filePath);
+			logger.info("生成" + project.getName() + "结果与判定表");
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+			ret.setCallStatus(CallStatusEnum.FAILED);
+			ret.setErrorCode(ErrorCodeEnum.File_Format_Wrong);
+			if(e.getMessage() != null)
+				ret.setErrorMsg("错误：" + errorMsg + e.getMessage().toString());
+			else
+				ret.setErrorMsg("错误：" + errorMsg);
 		}
+		
+		//完成输入检测报告的Task
+		inputTask.setStatus(false);
+		taskDao.updateTask(inputTask);
+		
+		//记录完成Task的employee
+		Log inputLog = new Log(employee, inputTask);
+		logDao.addLog(inputLog);
+		
+		//项目完成,同时更新项目状态
+		project.setStep(ProjectStepEnum.STEP6);
+		project.setStatus(ProjectStatusEnum.COMPUTE_JCBG);
+		projectDao.updateProject(project);
 		
 		return ret;
 	}
@@ -104,7 +188,11 @@ public class JCBGServiceImpl implements JCBGService{
 			JGPJTable oldJGPJTable = jgpjTableDao.getJGPJTableByProjectId(projectId);
 			if(oldJCBGTable != null) {
 				jcbgTableDao.deleteJCBGTable(oldJCBGTable.getId());
+			}
+			if(oldJSJGTable != null) {
 				jsjgTableDao.deleteJSJGTable(oldJSJGTable.getId());
+			}
+			if(oldJGPJTable != null) {
 				jgpjTableDao.deleteJGPJTable(oldJGPJTable.getId());
 			}
 			
@@ -115,8 +203,8 @@ public class JCBGServiceImpl implements JCBGService{
 			Iterator<JCBGGroup> jcbgGroupIter = jcbgGroups.iterator();
 			while (jcbgGroupIter.hasNext()) {
 				jcbgGroup = jcbgGroupIter.next();
-				errorMsg = "<p>车间/岗位：" + jcbgGroup.getWorkshopPosition() + "</p>" +
-						   "<p>检测项目：" + jcbgGroup.getZybwhysItem() + "处</p>";
+				errorMsg = "车间/岗位:" + jcbgGroup.getWorkshopPosition() +
+						   "检测项目:" + jcbgGroup.getZybwhysItem() + "处";
 				addJCBGGroupAndCalculate(jcbgGroup, jcbgTable, jsjgTable, jgpjTable);
 			}
 			
@@ -128,10 +216,10 @@ public class JCBGServiceImpl implements JCBGService{
 			jsjgTableDao.addJSJGTable(jsjgTable);
 			jgpjTableDao.addJGPJTable(jgpjTable);
 			
-			String filePath = context.getRealPath("tmp") + "\\" + project.getNumber() + "-" + project.getName() + "-" + "计算过程表" + ".xls";
+			String filePath = context.getRealPath("tmp") + File.separator + project.getNumber() + "-" + project.getName() + "-" + "计算过程表" + ".xls";
 			JCBGDocument.generateJSJGFilePOI(jsjgTable, filePath);
 			logger.info("生成" + project.getName() + "计算过程表");
-			filePath = context.getRealPath("tmp") + "\\" + project.getNumber() + "-" + project.getName() + "-" + "结果与判定表" + ".doc";
+			filePath = context.getRealPath("tmp") + File.separator + project.getNumber() + "-" + project.getName() + "-" + "结果与判定表" + ".doc";;
 			JCBGDocument.generateJGPJFile(jgpjTable, filePath);
 			logger.info("生成" + project.getName() + "结果与判定表");
 			
@@ -171,7 +259,11 @@ public class JCBGServiceImpl implements JCBGService{
 			JGPJTable oldJGPJTable = jgpjTableDao.getJGPJTableByProjectId(projectId);
 			if(oldJCBGTable != null) {
 				jcbgTableDao.deleteJCBGTable(oldJCBGTable.getId());
+			}
+			if(oldJSJGTable != null) {
 				jsjgTableDao.deleteJSJGTable(oldJSJGTable.getId());
+			}
+			if(oldJGPJTable != null) {
 				jgpjTableDao.deleteJGPJTable(oldJGPJTable.getId());
 			}
 			
@@ -195,10 +287,10 @@ public class JCBGServiceImpl implements JCBGService{
 			jsjgTableDao.addJSJGTable(jsjgTable);
 			jgpjTableDao.addJGPJTable(jgpjTable);
 			
-			String filePath = context.getRealPath("tmp") + "\\" + project.getNumber() + "-" + project.getName() + "-" + "计算过程表" + ".xls";
+			String filePath = context.getRealPath("tmp") + File.separator + project.getNumber() + "-" + project.getName() + "-" + "计算过程表" + ".xls";
 			JCBGDocument.generateJSJGFilePOI(jsjgTable, filePath);
 			logger.info("生成" + project.getName() + "计算过程表");
-			filePath = context.getRealPath("tmp") + "\\" + project.getNumber() + "-" + project.getName() + "-" + "结果与判定表" + ".doc";
+			filePath = context.getRealPath("tmp") + File.separator + project.getNumber() + "-" + project.getName() + "-" + "结果与判定表" + ".doc";;
 			JCBGDocument.generateJGPJFile(jgpjTable, filePath);
 			logger.info("生成" + project.getName() + "结果与判定表");
 		} catch (Exception e) {
@@ -591,5 +683,14 @@ public class JCBGServiceImpl implements JCBGService{
 			u = v.setScale(scale++, RoundingMode.HALF_EVEN);
 		} while (u.compareTo(zero) == 0);
 		return u;
+	}
+
+	@Override
+	public DataWrapper<JCBGTable> getJCBGTableByProjectId(Long projectId) {
+		DataWrapper<JCBGTable> ret = new DataWrapper<JCBGTable>();
+		
+		ret.setData(jcbgTableDao.getJCBGTableByProjectId(projectId));
+		
+		return ret;
 	}
 }

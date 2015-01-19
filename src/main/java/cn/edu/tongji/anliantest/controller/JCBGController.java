@@ -29,6 +29,22 @@ public class JCBGController {
 		this.jcbgService = jcbgService;
 	}
 	
+	@RequestMapping(value="jcbg/project", method=RequestMethod.GET)
+	@ResponseBody
+	public DataWrapper<JCBGTable> getJCBGByProject(
+		@RequestParam("projectId") Long projectId) {
+		return jcbgService.getJCBGTableByProjectId(projectId);
+	}
+	
+	@RequestMapping(value="jcbg", method=RequestMethod.POST)
+	@ResponseBody
+	public DataWrapper<JCBGTable> addJCBGTable(
+			@RequestParam("taskId") Long taskId,
+			@RequestParam("employeeId") Long employeeId,
+			@RequestBody JCBGTableInput jcbgTable) {
+		return jcbgService.addJCBGTable(taskId, employeeId, jcbgTable);
+	}
+	
 	@RequestMapping(value="jcbg/upload", method=RequestMethod.POST)
 	@ResponseBody
 	public DataWrapper<JCBGTable> uploadJCBGFile(

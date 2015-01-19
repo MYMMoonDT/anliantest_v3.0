@@ -19,8 +19,9 @@ public class JCTZDItem implements Serializable{
 	
 	private Long id;
 	
-	private ZYBWHYSItem zybwhysItem;    //检测项目
-	private Integer sampleCount;    	//样品数量
+	private ZYBWHYSItem zybwhysItem;       	//检测项目
+	private String zybwhysItemDetailName; 
+	private Integer sampleCount;    		//样品数量
 
 	@Id
 	@GeneratedValue
@@ -42,6 +43,14 @@ public class JCTZDItem implements Serializable{
 		this.zybwhysItem = zybwhysItem;
 	}
 
+	public String getZybwhysItemDetailName() {
+		return zybwhysItemDetailName;
+	}
+
+	public void setZybwhysItemDetailName(String zybwhysItemDetailName) {
+		this.zybwhysItemDetailName = zybwhysItemDetailName;
+	}
+	
 	public Integer getSampleCount() {
 		return sampleCount;
 	}

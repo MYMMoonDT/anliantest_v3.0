@@ -1,9 +1,12 @@
 <div class="row">
-  <div class="col-md-6">
+  <div class="col-md-4">
     <button type="button" class="btn btn-default pull-left" ng-click="cancel()">&nbsp;取消&nbsp;</button>
   </div>
-  <div class="col-md-6">
-    <button type="button" class="btn btn-success pull-right" ng-click="save()">&nbsp;确定&nbsp;</button>
+  <div class="col-md-4">
+    <h4 style="text-align:center;">检测通知单</h4>
+  </div>
+  <div class="col-md-4">
+    <button type="button" class="btn btn-success pull-right" ng-click="save()">&nbsp;创建&nbsp;</button>
   </div>
 </div>
 
@@ -103,8 +106,9 @@
         <thead>
           <tr>
             <th style="width: 40%;"><label>车间/岗位</label></th>
-            <th style="width: 50%;"><label>检测项目</label></th>
+            <th style="width: 40%;"><label>检测项目</label></th>
             <th style="width: 10%;"><label>样品数</label></th>
+            <th style="width: 10%;"><label>操作</label></th>
           </tr>
         </thead>
         <tbody>
@@ -113,21 +117,46 @@
               <input ng-model="item.workshopPosition" type="text" class="form-control">
               <br/>
               <button class="btn btn-primary" ng-click="addZYBWHYSItem(item)">添加检测项目</button>
+              <a class="btn btn-danger btn-sm" href="javascript:void(0);" ng-click="deleteWorkshopPosition(item)"><i class="fa fa-trash-o fa-lg"></i></a>
             </td>
             <td>
               <table class="table table-bordered" style="margin-bottom: 0;">
                 <tr ng-repeat="subItem in item.items">
                   <td>
+                    <!--
                     <select ng-model="subItem.zybwhysItem" ng-options="zybwhysItem.chineseName for zybwhysItem in zybwhysList" class="form-control"></select>
+                    -->
+                    <ui-select ng-model="subItem.selected"
+                                 theme="bootstrap"
+                                 style="width: 300px;">
+                      <ui-select-match placeholder="输入检测项目">{{$select.selected.chineseName}}</ui-select-match>
+                      <ui-select-choices repeat="zybwhysItem in zybwhysList | filter: $select.search">
+                        <div>{{zybwhysItem.chineseName}}</div>
+                      </ui-select-choices>
+                    </ui-select>
+
+                    <div style="height:10px;"></div>
+                    <span>(&nbsp;</span>
+                    <input type="text" class="form-control" ng-model="subItem.zybwhysItemDetailName" style="display:inline-block;width: 100px;">
+                    <span>&nbsp;)</span>
                   </td>
                 </tr>
               </table>
             </td>
             <td>
               <table class="table table-bordered" style="margin-bottom: 0;">
-                <tr ng-repeat="subItem in item.items">
+                <tr ng-repeat="subItem in item.items" style="height:96px;">
                   <td>
                     <input ng-model="subItem.sampleCount" type="text" class="form-control">
+                  </td>
+                </tr>
+              </table>
+            </td>
+            <td>
+              <table class="table table-bordered" style="margin-bottom: 0;">
+                <tr ng-repeat="subItem in item.items" style="height:96px;">
+                  <td>
+                    <a class="btn btn-danger btn-sm" href="javascript:void(0);" ng-click="deleteZYBWHYSItem(item, subItem)"><i class="fa fa-trash-o fa-lg"></i></a>
                   </td>
                 </tr>
               </table>

@@ -13,6 +13,10 @@ angular.module('anliantestApp')
       input: {
         method: 'POST',
         url: 'api/jcbg/input'
-      }
+      },
+      project: {
+        method: 'GET',
+        url: 'api/jcbg/project'
+      },
     });
   });

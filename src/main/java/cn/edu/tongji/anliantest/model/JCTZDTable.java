@@ -19,6 +19,8 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 @Entity
 @Table(name="jctzd_table")
@@ -134,6 +136,7 @@ public class JCTZDTable implements Serializable{
 	@OneToMany(fetch = FetchType.EAGER, orphanRemoval = true)
 	@Cascade({CascadeType.SAVE_UPDATE, CascadeType.MERGE, CascadeType.DELETE})
 	@JoinColumn(name="tableId")
+	@Fetch(FetchMode.SUBSELECT)
 	public List<JCTZDGroup> getItems() {
 		return items;
 	}

@@ -8,12 +8,15 @@
  * Controller of the anliantestApp
  */
 angular.module('anliantestApp')
-  .controller('JctzdDialogCtrl', function ($scope, $modalInstance, data, dialogs, ZYBWHYS) {
+  .controller('JctzdDialogCtrl', function ($scope, $modalInstance, $rootScope, data, dialogs, ZYBWHYS, JCTZD) {
     $scope.data = data;
 
     loadAllZYBWHYSItem();
 
     $scope.data.item = {
+      project: {
+        id: $scope.data.project.id
+      },
       tableNum: 'ALJC/JL32-06',
       revisionStatus: '1/0',
       testStartDate: new Date(),
@@ -37,12 +40,23 @@ angular.module('anliantestApp')
       $scope.data.item.items.push(workshopPosition);
     };
 
+    $scope.deleteWorkshopPosition = function(workshopPosition) {
+      var index = $scope.data.item.items.indexOf(workshopPosition);
+      $scope.data.item.items.splice(index, 1);
+    };
+
     $scope.addZYBWHYSItem = function(item) {
       var zybwhysItem = {
         zybwhysItem: null,
+        zybwhysItemDetailName: '',
         sampleCount: 0
       };
       item.items.push(zybwhysItem);
+    };
+
+    $scope.deleteZYBWHYSItem = function(workshopPosition, zybwhysItem) {
+      var index = workshopPosition.items.indexOf(zybwhysItem);
+      workshopPosition.items.splice(index, 1);
     };
 
     $scope.selectEmployee = function(type){
@@ -75,7 +89,63 @@ angular.module('anliantestApp')
       $modalInstance.dismiss('Canceled');
     };
     $scope.save = function() {
-      $modalInstance.close($scope.data);
+      var canSubmit = true;
+      for(var i = 0; i < $scope.data.item.items.length; i++) {
+        if($scope.data.item.items[i].workshopPosition == '') {
+          canSubmit = false;
+          break;
+        }
+        for(var j = 0; j < $scope.data.item.items[i].items.length; j++) {
+          if($scope.data.item.items[i].items[j].selected == undefined ||
+             $scope.data.item.items[i].items[j].selected == null) {
+            canSubmit = false;
+            break;
+          }
+        }
+        if(!canSubmit)
+          break;
+      }
+
+      if(!canSubmit) {
+        dialogs.create('template/at-alert-dialog.html', 'AlertCtrl', 
+        {
+          text: '数据输入不完整'
+        }, 
+        {
+          size: 'sm',
+          keyboard: true,
+          backdrop: 'static',
+          windowClass: 'model-overlay'
+        });
+        return;
+      }
+
+      for(var i = 0; i < $scope.data.item.items.length; i++) {
+        for(var j = 0; j < $scope.data.item.items[i].items.length; j++) {
+          $scope.data.item.items[i].items[j].zybwhysItem = $scope.data.item.items[i].items[j].selected;
+          delete $scope.data.item.items[i].items[j].selected;
+        }
+      }
+
+      var jctzd = new JCTZD();
+      angular.extend(jctzd, $scope.data.item);
+
+      jctzd.$save({taskId: $scope.data.task.id, employeeId: $rootScope.employee.id}, function(data) {
+        if(data.callStatus == 'FAILED') {
+          dialogs.create('template/at-alert-dialog.html', 'AlertCtrl', 
+        {
+          text: data.errorMsg
+        }, 
+        {
+          size: 'sm',
+          keyboard: true,
+          backdrop: 'static',
+          windowClass: 'model-overlay'
+        });
+        }else if(data.callStatus == 'SUCCEED') {
+          $modalInstance.close();
+        }
+      });
     };
 
     function loadAllZYBWHYSItem() {

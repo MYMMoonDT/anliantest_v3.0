@@ -556,8 +556,12 @@ public class JCBGDocument {
 		    		
 		    }
 		    
+		    File file = new File(filePath);
+			if(file.exists()){
+				file.delete();
+			}
 		    
-		    FileOutputStream fileOut = new FileOutputStream(filePath);
+		    FileOutputStream fileOut = new FileOutputStream(file);
 		    wb.write(fileOut);
 		    fileOut.close();
 //			System.out.println("Created File: "+filePath);

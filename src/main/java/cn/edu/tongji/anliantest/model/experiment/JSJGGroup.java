@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -18,6 +19,8 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 @Entity
 @Table(name = "jsjg_group")
@@ -176,9 +179,10 @@ public class JSJGGroup implements java.io.Serializable{
 	}
 
 	@OrderBy
-	@OneToMany
+	@OneToMany(fetch = FetchType.EAGER, orphanRemoval = true)
 	@Cascade({CascadeType.SAVE_UPDATE, CascadeType.MERGE, CascadeType.DELETE})
 	@JoinColumn(name="groupId")
+	@Fetch(FetchMode.SUBSELECT)
 	public List<JSJGItem> getItems() {
 		return items;
 	}
