@@ -1,0 +1,328 @@
+<div class="row">
+  <div class="col-md-4">
+    <button type="button" class="btn btn-default pull-left" ng-click="cancel()">&nbsp;取消&nbsp;</button>
+  </div>
+  <div class="col-md-4">
+    <h4 style="text-align:center;">送样、收样记录表</h4>
+  </div>
+  <div class="col-md-4">
+    <button ng-if="data.type == 'CREATE'"type="button" class="btn btn-success pull-right" ng-click="save()">&nbsp;创建&nbsp;</button>
+    <button ng-if="data.type == 'CONFIRM'"type="button" class="btn btn-success pull-right" ng-click="save()">&nbsp;确认&nbsp;</button>
+  </div>
+</div>
+
+<div class="content">
+  <div class="row">
+    <div class="cell" style="width: 140px;">
+      <label>表码:</label>
+    </div>
+    <div class="cell">
+      <div ng-if="data.type == 'CONFIRM'">{{data.item.tableNum}}</div>
+      <div ng-if="data.type == 'CREATE'"><input type="text" class="form-control" ng-model="data.item.tableNum" style="width: 150px;"></div>
+    </div>
+    <div class="cell" style="width: 140px;">
+      <label>修订状态:</label>
+    </div>
+    <div class="cell">
+      <div ng-if="data.type == 'CONFIRM'">{{data.item.revisionStatus}}</div>
+      <div ng-if="data.type == 'CREATE'"><input type="text" class="form-control" ng-model="data.item.revisionStatus" style="width: 150px;"></div>
+    </div>
+  </div>
+</div>
+
+<div class="content" style="padding:5px;">
+  <div class="row">
+    <div class="cell" style="width: 140px;">
+      <label>项目名称:</label>
+    </div>
+    <div class="cell">
+      {{data.project.name}}
+    </div>
+  </div>
+  <div class="row">
+    <div class="cell" style="width: 140px;">
+      <label>项目编号:</label>
+    </div>
+    <div class="cell">
+      {{data.project.number}}
+    </div>
+  </div>
+  <div class="row">
+    <div class="cell" style="width: 140px;">
+      <label>受检单位名称:</label>
+    </div>
+    <div class="cell">
+      <div ng-if="data.type == 'CONFIRM'">{{data.item.sampleCompanyName | date: 'yyyy-MM-dd'}}</div>
+      <div ng-if="data.type == 'CREATE'"><input type="text" class="form-control" ng-model="data.item.sampleCompanyName"></div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="cell" style="width: 140px;">
+      <label>受检单位地址:</label>
+    </div>
+    <div class="cell">
+      <div ng-if="data.type == 'CONFIRM'">{{data.item.sampleCompanyAddress | date: 'yyyy-MM-dd'}}</div>
+      <div ng-if="data.type == 'CREATE'"><input type="text" class="form-control" ng-model="data.item.sampleCompanyAddress"></div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="cell" style="width: 140px;">
+      <label>样品名称:</label>
+    </div>
+    <div class="cell">
+      <div ng-if="data.type == 'CONFIRM'">{{data.item.sampleName | date: 'yyyy-MM-dd'}}</div>
+      <div ng-if="data.type == 'CREATE'"><input type="text" class="form-control" ng-model="data.item.sampleName"></div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="cell" style="width: 140px;">
+      <label>送样人:</label>
+    </div>
+    <div class="cell">
+      {{data.item.sendSampleEmployee.name}}&nbsp;
+      <div ng-if="data.type == 'CREATE'" style="display: inline-block;">
+        <button type="button" class="btn btn-primary" ng-click="selectEmployee('send')">&nbsp;选择&nbsp;</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="cell" style="width: 140px;">
+      <label>实验室总收样人:</label>
+    </div>
+    <div class="cell">
+      {{data.item.receiveSampleEmployee.name}}&nbsp;
+      <div ng-if="data.type == 'CREATE'" style="display: inline-block;">
+        <button type="button" class="btn btn-primary" ng-click="selectEmployee('receive')">&nbsp;选择&nbsp;</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="content" style="padding:5px;">
+  <div class="row">
+    <div class="cell" style="width: 80px;">
+      <label>采样日期:</label>
+    </div>
+    <div class="cell">
+      <span style="display: inline-block">{{data.item.sampleStartDate | date: 'yyyy-MM-dd'}}</span>
+      &nbsp;&nbsp;至&nbsp;&nbsp;
+      <span style="display: inline-block">{{data.item.sampleEndDate | date: 'yyyy-MM-dd'}}</span>
+    </div>
+    <div class="cell" style="width: 80px;">
+      <label>送样日期:</label>
+    </div>
+    <div class="cell">
+      <div ng-if="data.type == 'CONFIRM'">{{data.item.sendSampleDate | date: 'yyyy-MM-dd'}}</div>
+      <div ng-if="data.type == 'CREATE'"><input at-datepicker date="data.item.sendSampleDate" type="text" class="form-control date"></div>
+    </div>
+    <div class="cell" style="width: 80px;">
+      <label>收样日期:</label>
+    </div>
+    <div class="cell">
+      <div ng-if="data.type == 'CONFIRM'">{{data.item.receiveSampleDate | date: 'yyyy-MM-dd'}}</div>
+      <div ng-if="data.type == 'CREATE'"><input at-datepicker date="data.item.receiveSampleDate" type="text" class="form-control date"></div>
+    </div>
+  </div>
+</div>
+
+<div ng-repeat="item in data.item.items">
+  <div class="content" style="padding: 5px;">
+    <div class="row">
+      <div class="cell" style="width: 80px;">
+        <label>采样日期:</label>
+      </div>
+      <div class="cell" style="line-height: 34px;padding-right: 500px;">
+        {{item.sampleDate | date: 'yyyy-MM-dd'}}
+      </div>
+    </div>
+  </div>
+  <div class="content" style="padding: 5px;">
+    <div class="row">
+      <div class="cell">
+        <table class="table table-bordered sysyjl-table-container" style="margin-bottom: 0;">
+          <thead>
+            <tr>
+              <th style="width:120px;"><label>车间/岗位</label></th>
+              <th><label>检测项目</label></th>
+              <th><label>收集器</label></th>
+              <th><label>状态</label></th>
+              <th style="width:140px;"><label>样品编号</label></th>
+              <th><label>样品数</label></th>
+              <th style="width:160px;"><label>大气压(kpa)、温度(℃)</label></th>
+              <th><label>采样体积(L)</label></th>
+              <th><label>保存方式及期限</label></th>
+              <th><label>接收人</label></th>
+              <th><label>接受日期</label></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="workshopPosition in item.items">
+              <td>
+                {{workshopPosition.workshopPosition}}
+              </td>
+              <td>
+                <table class="table table-bordered" style="margin-bottom: 0;">
+                  <tr ng-repeat="zybwhysItem in workshopPosition.items" style="height:{{zybwhysItem.height}}px;">
+                    <td>
+                      <span>{{zybwhysItem.zybwhysItem.chineseName}}</span>
+                      <span ng-if="zybwhysItem.zybwhysItemDetailName">(</span>
+                      <span ng-if="zybwhysItem.zybwhysItemDetailName">{{zybwhysItem.zybwhysItemDetailName}}</span>
+                      <span ng-if="zybwhysItem.zybwhysItemDetailName">)</span>
+                      <br/>
+                      <span>(总样品数:{{zybwhysItem.sampleCount}})</span>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td>
+                <table class="table table-bordered" style="margin-bottom: 0;">
+                  <tr ng-repeat="zybwhysItem in workshopPosition.items" style="height:{{zybwhysItem.height}}px;">
+                    <td style="padding:0;">
+                      <table class="table" style="margin-bottom: 0;">
+                        <tr ng-repeat="cyjcffItem in zybwhysItem.items" style="height:{{cyjcffItem.height}}px;">
+                          <td>
+                            {{cyjcffItem.cyjcffItem.sampleCollector}}
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td>
+                <table class="table table-bordered" style="margin-bottom: 0;">
+                  <tr ng-repeat="zybwhysItem in workshopPosition.items" style="height:{{zybwhysItem.height}}px;">
+                    <td style="padding:0;">
+                      <table class="table" style="margin-bottom: 0;">
+                        <tr ng-repeat="cyjcffItem in zybwhysItem.items" style="height:{{cyjcffItem.height}}px;">
+                          <td>
+                            {{cyjcffItem.cyjcffItem.sampleStatus}}
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td>
+                <table class="table table-bordered" style="margin-bottom: 0;">
+                  <tr ng-repeat="zybwhysItem in workshopPosition.items" style="height:{{zybwhysItem.height}}px;">
+                    <td style="padding:0;">
+                      <table class="table" style="margin-bottom: 0;">
+                        <tr ng-repeat="cyjcffItem in zybwhysItem.items" style="height:{{cyjcffItem.height}}px;">
+                          <td>
+                            <span style="line-height:20px;">{{cyjcffItem.sampleNumBase}}</span>
+                            <br/>
+                            <input type="text" class="form-control" ng-model="cyjcffItem.sampleNumStart" style="width: 40px;display: inline-block;">
+                            <span>&nbsp;-&nbsp;</span>
+                            <input type="text" class="form-control" ng-model="cyjcffItem.sampleNumEnd" style="width: 40px;display: inline-block;">
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td>
+                <table class="table table-bordered" style="margin-bottom: 0;">
+                  <tr ng-repeat="zybwhysItem in workshopPosition.items" style="height:{{zybwhysItem.height}}px;">
+                    <td style="padding:0;">
+                      <table class="table" style="margin-bottom: 0;">
+                        <tr ng-repeat="cyjcffItem in zybwhysItem.items" style="height:{{cyjcffItem.height}}px;">
+                          <td>
+                            <input type="text" class="form-control" ng-model="cyjcffItem.sampleCount" style="width: 40px;display: inline-block;">
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td>
+                <table class="table table-bordered" style="margin-bottom: 0;">
+                  <tr ng-repeat="zybwhysItem in workshopPosition.items" style="height:{{zybwhysItem.height}}px;">
+                    <td style="padding:0;">
+                      <table class="table" style="margin-bottom: 0;">
+                        <tr ng-repeat="cyjcffItem in zybwhysItem.items" style="height:{{cyjcffItem.height}}px;">
+                          <td style="line-height: 34px;">
+                            大气压:&nbsp;&nbsp;<input type="text" class="form-control" ng-model="cyjcffItem.sampleAtmos" style="width: 40px;display: inline-block;">&nbsp;&nbsp;kpa
+                            <br/>
+                            温度:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" class="form-control" ng-model="cyjcffItem.sampleAtmos" style="width: 40px;display: inline-block;">&nbsp;&nbsp;℃
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td>
+                <table class="table table-bordered" style="margin-bottom: 0;">
+                  <tr ng-repeat="zybwhysItem in workshopPosition.items" style="height:{{zybwhysItem.height}}px;">
+                    <td style="padding:0;">
+                      <table class="table" style="margin-bottom: 0;">
+                        <tr ng-repeat="cyjcffItem in zybwhysItem.items" style="height:{{cyjcffItem.height}}px;">
+                          <td>
+                            <input type="text" class="form-control" ng-model="cyjcffItem.sampleVolume" style="width: 50px;display: inline-block;">
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td>
+                <table class="table table-bordered" style="margin-bottom: 0;">
+                  <tr ng-repeat="zybwhysItem in workshopPosition.items" style="height:{{zybwhysItem.height}}px;">
+                    <td style="padding:0;">
+                      <table class="table" style="margin-bottom: 0;">
+                        <tr ng-repeat="cyjcffItem in zybwhysItem.items" style="height:{{cyjcffItem.height}}px;">
+                          <td>
+                            {{cyjcffItem.cyjcffItem.sampleMethodAndPeriod}}
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td>
+                <table class="table table-bordered" style="margin-bottom: 0;">
+                  <tr ng-repeat="zybwhysItem in workshopPosition.items" style="height:{{zybwhysItem.height}}px;">
+                    <td style="padding:0;">
+                      <table class="table" style="margin-bottom: 0;">
+                        <tr ng-repeat="cyjcffItem in zybwhysItem.items" style="height:{{cyjcffItem.height}}px;">
+                          <td>
+                            {{cyjcffItem.receiveEmployee.name}}
+                            <br/>
+                            <button type="button" class="btn btn-primary btn-sm" ng-click="selectReceiveEmployee(cyjcffItem)">&nbsp;选择&nbsp;</button>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td>
+                <table class="table table-bordered" style="margin-bottom: 0;">
+                  <tr ng-repeat="zybwhysItem in workshopPosition.items" style="height:{{zybwhysItem.height}}px;">
+                    <td style="padding:0;">
+                      <table class="table" style="margin-bottom: 0;">
+                        <tr ng-repeat="cyjcffItem in zybwhysItem.items" style="height:{{cyjcffItem.height}}px;">
+                          <td>
+                            <input at-datepicker date="cyjcffItem.receiveDate" type="text" class="form-control date" style="width:90px;">
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
