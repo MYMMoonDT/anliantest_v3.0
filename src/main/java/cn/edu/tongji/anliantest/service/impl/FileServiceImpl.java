@@ -1,5 +1,6 @@
 package cn.edu.tongji.anliantest.service.impl;
 
+import java.io.File;
 import java.util.Date;
 import java.util.List;
 
@@ -46,17 +47,17 @@ public class FileServiceImpl implements FileService{
 		
 		fileGroup.setUploadDate(new Date());
 		
+		fileGroupDao.addFileGroup(fileGroup);
+		
 		for(int i = 0; i < files.size(); i++) {
-			String filePath = "upload/" + project.getNumber() + "/" + fileGroup.getGroupName();
+			String filePath = context.getRealPath("upload") + File.separator + project.getNumber() + File.separator + fileGroup.getId();
 			String fileName =  items[i].getFileName();
 			
-		    FileUtil.saveFile(context.getRealPath(filePath), files.get(i), fileName);
+		    FileUtil.saveFile(filePath, files.get(i), fileName);
 			
-			items[i].setFilePath(filePath);
+			items[i].setFilePath(project.getNumber() + File.separator + fileGroup.getId());
 			fileGroup.getItems().add(items[i]);
 		}
-		
-		fileGroupDao.addFileGroup(fileGroup);
 		
 		ret.setData(fileGroupDao.getFileGroupById(fileGroup.getId()));
 		
@@ -76,11 +77,17 @@ public class FileServiceImpl implements FileService{
 		
 		ServletContext context = ApplicationContextUtil.getContext().getServletContext();
 		
-		for(FileItem item : fileGroupDao.getFileGroupById(fileGroupId).getItems()) {
-			String filePath = item.getFilePath();
+		FileGroup fileGroup = fileGroupDao.getFileGroupById(fileGroupId);
+		
+		for(FileItem item : fileGroup.getItems()) {
+			String filePath = context.getRealPath("upload") + File.separator + item.getFilePath();
 			String fileName = item.getFileName();
-			FileUtil.deleteFile(context.getRealPath(filePath), fileName);
+			FileUtil.deleteFile(filePath, fileName);
 		}
+		
+		Project project = fileGroup.getProject();
+		String filePath = context.getRealPath("upload") + File.separator + project.getNumber() + File.separator + fileGroup.getId();
+		FileUtil.deleteDirectory(filePath);
 		
 		fileGroupDao.deleteFileGroup(fileGroupId);
 		

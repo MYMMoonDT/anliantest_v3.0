@@ -53,4 +53,11 @@ angular.module('anliantestApp')
         }
       });
     }
+  })
+
+  .controller('XmfzrDialogSubCtrl', function ($scope){
+    $scope.pageChanged = function() {
+      $scope.$parent.$parent.currPageNum = $scope.currPageNum;
+      $scope.$parent.$parent.pageChanged();
+    };
   });

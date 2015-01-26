@@ -40,6 +40,13 @@ public class FileUtil {
 		}
 	}
 	
+	public static void deleteDirectory(String path) {
+		File targetDirect = new File(path);
+		if(targetDirect.exists()) {
+			targetDirect.delete();
+		}
+	}
+	
 	public static void downloadFile(File file, HttpServletResponse response) throws Exception{
 		String fileName = URLEncoder.encode(file.getName(), "UTF-8");
 		

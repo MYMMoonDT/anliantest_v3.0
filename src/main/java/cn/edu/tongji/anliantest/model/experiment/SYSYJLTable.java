@@ -51,6 +51,8 @@ public class SYSYJLTable implements Serializable{
     
     private List<SYSYJLDay> items = new ArrayList<SYSYJLDay>(0);
     
+    private Boolean confirm; 
+    
     @Id
 	@GeneratedValue
 	public Long getId() {
@@ -158,5 +160,11 @@ public class SYSYJLTable implements Serializable{
 	}
 	public void setItems(List<SYSYJLDay> items) {
 		this.items = items;
+	}
+	public Boolean getConfirm() {
+		return confirm;
+	}
+	public void setConfirm(Boolean confirm) {
+		this.confirm = confirm;
 	}
 }

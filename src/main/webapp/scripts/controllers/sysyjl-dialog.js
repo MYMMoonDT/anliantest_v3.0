@@ -82,6 +82,25 @@ angular.module('anliantestApp')
       var canSubmit = true;
 
       if($scope.data.type == 'CREATE') {
+        if($scope.data.item.sampleName == null || $scope.data.item.sampleName == '') {
+          canSubmit = false;
+          errMsg = "没有输入样品名称";
+        }
+
+        if(!canSubmit) {
+          dialogs.create('template/at-alert-dialog.html', 'AlertCtrl', 
+          {
+            text: errMsg
+          }, 
+          {
+            size: 'sm',
+            keyboard: true,
+            backdrop: 'static',
+            windowClass: 'model-overlay'
+          });
+          return;
+        }
+
         if($scope.data.item.receiveSampleEmployee == null) {
           canSubmit = false;
           errMsg = "没有指定实验室总收样人";

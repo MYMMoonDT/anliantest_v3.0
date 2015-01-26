@@ -11,7 +11,7 @@ body {
   background-color: #e3e3e3;
 }
 .form-control.date {
-  width: 110px;
+  width: 100px;
 }
 .modal-dialog {
   margin: 10% auto;
@@ -36,9 +36,22 @@ body {
   height: 45px;
 }
 .modal-content .content .row .cell label {
-  font-size: 16px;
+  font-size: 14px;
   margin: 0;
-  font-weight: normal;
+  font-weight: bold;
+}
+.modal-content .content .row .cell input[type='text'] {
+  padding: 6px 6px;
+}
+.modal-content .content .row .cell table.table-sm {
+  font-size: 12px;
+}
+.modal-content .content .row .cell table.table-sm label {
+  font-size: 12px !important;
+}
+.modal-content .content .row .cell table.table-sm input[type='text'] {
+  height: 30px;
+  font-size: 12px;
 }
 .list-group .list-group-item .options {
   display: inline-block;
@@ -61,34 +74,6 @@ body {
  * JCBG CSS Style
  */
 .jcbg-table-container input[type='text'] {
-  height: 30px;
-  padding: 6px 6px;
-  font-size: 12px;
-}
-/*
- * CYFA CSS Style
- */
-.cyfa-table-container {
-  font-size: 12px;
-}
-.cyfa-table-container thead tr th label {
-  font-size: 12px !important;
-}
-.cyfa-table-container input[type='text'] {
-  height: 30px;
-  padding: 6px 6px;
-  font-size: 12px;
-}
-/*
- * SYSYJL CSS Style
- */
-.sysyjl-table-container {
-  font-size: 12px;
-}
-.sysyjl-table-container thead tr th label {
-  font-size: 12px !important;
-}
-.sysyjl-table-container input[type='text'] {
   height: 30px;
   padding: 6px 6px;
   font-size: 12px;

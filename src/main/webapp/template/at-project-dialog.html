@@ -52,7 +52,7 @@
       <label>项目客户:</label>
     </div>
     <div class="cell" style="line-height: 34px;">
-      {{data.item.customer.companyName}}<button type="button" class="btn btn-primary pull-right" ng-click="selectCustomer()">&nbsp;选择&nbsp;</button>
+      {{data.item.customer.companyName}}<button type="button" class="btn btn-primary pull-right btn-sm" ng-click="selectCustomer()">&nbsp;选择&nbsp;</button>
     </div>
   </div>
 
@@ -89,7 +89,7 @@
             <td><input ng-model="item.name" class="form-control"></td>
             <td><input ng-model="item.department" class="form-control"></td>
             <td><input ng-model="item.tel" class="form-control"></td>
-            <td><button type="button" class="btn btn-danger"  ng-click="deleteContactPerson(item)">&nbsp;删除&nbsp;</button></td>
+            <td><button type="button" class="btn btn-danger btn-sm"  ng-click="deleteContactPerson(item)">&nbsp;删除&nbsp;</button></td>
           </tr>
         </tbody>
       </table>
@@ -128,7 +128,7 @@
       <label>业务负责人:</label>
     </div>
     <div class="cell" style="line-height: 34px;">
-      {{data.item.businessEmployee.name}}<button type="button" class="btn btn-primary pull-right" ng-click="selectBusinessEmployee()">&nbsp;选择&nbsp;</button>
+      {{data.item.businessEmployee.name}}<button type="button" class="btn btn-primary pull-right btn-sm" ng-click="selectBusinessEmployee()">&nbsp;选择&nbsp;</button>
     </div>
   </div>
 

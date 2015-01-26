@@ -10,5 +10,9 @@
 angular.module('anliantestApp')
   .factory('JGPJ', function JGPJ($resource) {
     return $resource('api/jgpj/:jgpjTableId', {}, {
+      project: {
+        method: 'GET',
+        url: 'api/jgpj/project'
+      }
     });
   });

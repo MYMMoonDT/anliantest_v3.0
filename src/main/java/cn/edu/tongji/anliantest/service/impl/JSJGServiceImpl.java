@@ -26,7 +26,20 @@ public class JSJGServiceImpl implements JSJGService{
 	
 	@Override
 	public DataWrapper<JSJGTable> getJSJGTableById(Long jsjgTableId) {
-		return null;
+		DataWrapper<JSJGTable> ret = new DataWrapper<JSJGTable>();
+		
+		ret.setData(jsjgTableDao.getJSJGTableById(jsjgTableId));
+		
+		return ret;
+	}
+	
+	@Override
+	public DataWrapper<JSJGTable> getJSJGTableByProjectId(Long projectId) {
+		DataWrapper<JSJGTable> ret = new DataWrapper<JSJGTable>();
+		
+		ret.setData(jsjgTableDao.getJSJGTableByProjectId(projectId));
+		
+		return ret;
 	}
 
 	@Override
@@ -45,7 +58,7 @@ public class JSJGServiceImpl implements JSJGService{
 	}
 
 	@Override
-	public File getJSJGFile(Long projectId) {
+	public File getJSJGTmpFile(Long projectId) {
 		JSJGTable jsjgTable = jsjgTableDao.getJSJGTableByProjectId(projectId);
 		ServletContext context = ApplicationContextUtil.getContext().getServletContext();
 		Project project = jsjgTable.getProject();
@@ -58,5 +71,9 @@ public class JSJGServiceImpl implements JSJGService{
 		else
 		    return null;
 	}
-	
+
+	@Override
+	public File getJSJGFile(Long projectId) {
+		return null;
+	}
 }

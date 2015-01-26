@@ -8,7 +8,7 @@
  * Controller of the anliantestApp
  */
 angular.module('anliantestApp')
-  .controller('ProgressDialogCtrl', function ($scope, $modalInstance, ProgressService, data, HTPSJL, GZRWD, KHZLDJD, XCDCJL, PJFA, PJFASHJL, JCTZD, CYFA) {
+  .controller('ProgressDialogCtrl', function ($scope, $modalInstance, ProgressService, data, HTPSJL, GZRWD, KHZLDJD, XCDCJL, PJFA, PJFASHJL, JCTZD, CYFA, SYSYJL, JSJG, JGPJ) {
     $scope.data = data;
 
     $scope.stepMap = ProgressService.getStepMap();
@@ -190,6 +190,61 @@ angular.module('anliantestApp')
             table.status = '未确认';
           }
         }
+        $scope.tableList.push(table);
+      });
+    } else if($scope.data.stepId == 5) {    //5.项目实验环节
+      var sysyjl = new SYSYJL();
+      sysyjl.$project({projectId : $scope.data.item.id}, function(data){
+        
+        var table = {
+          data: null,
+          label: '送样收样记录'
+        };
+        table.data = data.data;
+
+        if(table.data == null) {
+          table.status = '未创建';
+        }else{
+          if(table.data.confirm) {
+            table.status = '完成';
+          }else{
+            table.status = '未确认';
+          }
+        }
+        $scope.tableList.push(table);
+      });
+    } else if($scope.data.stepId == 6) {    //6.项目数据处理
+      var jsjg = new JSJG();
+      jsjg.$project({projectId : $scope.data.item.id}, function(data){
+        var table = {
+          data: null,
+          label: '计算过程表'
+        };
+        table.data = data.data;
+
+        if(table.data == null) {
+          table.status = '未创建';
+        }else{
+          table.status = '完成';
+        }
+
+        $scope.tableList.push(table);
+      });
+        
+      var jgpj = new JGPJ();
+      jgpj.$project({projectId : $scope.data.item.id}, function(data){
+        var table = {
+          data: null,
+          label: '结果与判定表'
+        };
+        table.data = data.data;
+
+        if(table.data == null) {
+          table.status = '未创建';
+        }else{
+          table.status = '完成';
+        }
+
         $scope.tableList.push(table);
       });
     }

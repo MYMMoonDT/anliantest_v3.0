@@ -205,9 +205,9 @@ angular.module('anliantestApp')
               for(var p = 0; p < $scope.data.items[i].list[j].list[k].listTmp.length; p++) {
                 var sample = {
                   sampleNum: $scope.data.items[i].list[j].list[k].listTmp[p].sampleNum,
-                  result: '',
-                  touchTime: '',
-                  collectTime: '',
+                  result: $scope.data.items[i].list[j].list[k].listTmp[p].result,
+                  touchTime: $scope.data.items[i].list[j].list[k].listTmp[p].touchTime,
+                  collectTime: $scope.data.items[i].list[j].list[k].listTmp[p].collectTime,
                   height: DEFAULT_SAMPLE_TD_HEIGHT
                 }
                 $scope.data.items[i].list[j].list[k].list.push(sample);

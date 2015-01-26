@@ -22,10 +22,10 @@
                   <div class="list-group-item" ng-repeat="task in employeeTaskList" style="line-height:36px;">
                     <i class="fa fa-tasks fa-fw"></i> {{task.project.number}}&nbsp;{{task.projectStatus | projectStatus}}
                     <div class="options pull-right">
-                      <button class="btn btn-default" ng-click="showProjectDetailDialog(task.project)">详情</button>
+                      <button class="btn btn-default btn-sm" ng-click="showProjectDetailDialog(task.project)">详情</button>
                     </div>
                     <div class="options pull-right" style="margin-right:10px;">
-                      <button class="btn btn-success" ng-click="finishTask(task)">{{task.projectStatus | taskOption}}</button>
+                      <button class="btn btn-success btn-sm" ng-click="finishTask(task)">{{task.projectStatus | taskOption}}</button>
                     </div>
                     <div class="clearfix"></div>
                   </div>
@@ -47,10 +47,10 @@
                   <div class="list-group-item" ng-repeat="task in departmentTaskList" style="line-height:36px;">
                     <i class="fa fa-tasks fa-fw"></i> {{task.project.number}}&nbsp;{{task.projectStatus | projectStatus}}
                     <div class="options pull-right">
-                      <button class="btn btn-default" ng-click="showProjectDetailDialog(task.project)">详情</button>
+                      <button class="btn btn-default btn-sm" ng-click="showProjectDetailDialog(task.project)">详情</button>
                     </div>
                     <div class="options pull-right" style="margin-right:10px;">
-                      <button class="btn btn-success" ng-click="finishTask(task)">{{task.projectStatus | taskOption}}</button>
+                      <button class="btn btn-success btn-sm" ng-click="finishTask(task)">{{task.projectStatus | taskOption}}</button>
                     </div>
                   </div>
                 </div>

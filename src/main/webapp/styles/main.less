@@ -14,7 +14,7 @@ body {
 
 .form-control {
   &.date {
-    width: 110px;
+    width: 100px;
   }
 }
 
@@ -39,9 +39,24 @@ body {
         vertical-align: middle;
         height: 45px;
         label {
-          font-size: 16px;
+          font-size: 14px;
           margin: 0;
-          font-weight: normal;
+          font-weight: bold;
+        }
+        input[type='text'] {
+          padding: 6px 6px;
+        }
+        table {
+          &.table-sm {
+            font-size: 12px;
+            label {
+              font-size: 12px !important;
+            }
+            input[type='text'] {
+              height: 30px;
+              font-size: 12px;
+            }
+          }
         }
       }
     }
@@ -77,56 +92,6 @@ body {
  */
 
 .jcbg-table-container {
-  input[type='text'] {
-    height: 30px;
-    padding: 6px 6px;
-    font-size: 12px;
-  }
-}
-
-/*
- * CYFA CSS Style
- */
-
-.cyfa-table-container {
-  font-size: 12px;
-  thead {
-    tr {
-      th {
-        label {
-          font-size: 12px !important;
-        }
-      }
-    }
-  }
-  tbody {
-    tr {
-      td {
-      }
-    }
-  }
-  input[type='text'] {
-    height: 30px;
-    padding: 6px 6px;
-    font-size: 12px;
-  }
-}
-
-/*
- * SYSYJL CSS Style
- */
-
-.sysyjl-table-container {
-  font-size: 12px;
-  thead {
-    tr {
-      th {
-        label {
-          font-size: 12px !important;
-        }
-      }
-    }
-  }
   input[type='text'] {
     height: 30px;
     padding: 6px 6px;

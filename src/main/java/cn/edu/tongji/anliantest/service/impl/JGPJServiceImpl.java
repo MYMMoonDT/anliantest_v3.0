@@ -26,7 +26,20 @@ public class JGPJServiceImpl implements JGPJService{
 	
 	@Override
 	public DataWrapper<JGPJTable> getJGPJTableById(Long jgpjTableId) {
-		return null;
+		DataWrapper<JGPJTable> ret = new DataWrapper<JGPJTable>();
+		
+		ret.setData(jgpjTableDao.getJGPJTableById(jgpjTableId));
+		
+		return ret;
+	}
+	
+	@Override
+	public DataWrapper<JGPJTable> getJGPJTableByProjectId(Long projectId) {
+		DataWrapper<JGPJTable> ret = new DataWrapper<JGPJTable>();
+		
+		ret.setData(jgpjTableDao.getJGPJTableByProjectId(projectId));
+		
+		return ret;
 	}
 
 	@Override
@@ -43,13 +56,18 @@ public class JGPJServiceImpl implements JGPJService{
 	public DataWrapper<Void> deleteJGPJTable(Long jgpjTableId) {
 		return null;
 	}
-
+	
 	@Override
 	public File getJGPJFile(Long projectId) {
+		return null;
+	}
+
+	@Override
+	public File getJGPJTmpFile(Long projectId) {
 		JGPJTable jgpjTable = jgpjTableDao.getJGPJTableByProjectId(projectId);
 		ServletContext context = ApplicationContextUtil.getContext().getServletContext();
 		Project project = jgpjTable.getProject();
-		String filePath = context.getRealPath("tmp") + "\\" + project.getNumber() + "-" + project.getName() + "-" + "结果与判定表" + ".doc";
+		String filePath = context.getRealPath("tmp") + File.separator + project.getNumber() + "-" + project.getName() + "-" + "结果与判定表" + ".doc";
 		File file = new File(filePath);
 		if(file.exists()){
 			logger.info("下载" + project.getName() + "结果与判定表");

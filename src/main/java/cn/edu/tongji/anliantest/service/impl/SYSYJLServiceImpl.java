@@ -174,6 +174,7 @@ public class SYSYJLServiceImpl implements SYSYJLService{
 		}
 		Collections.sort(jcbgTable.getItems());
 		
+		sysyjlTable.setConfirm(true);
 		sysyjlTableDao.updateSYSYJLTable(sysyjlTable);
 		
 		JCBGTable oldJCBGTable = jcbgTableDao.getJCBGTableByProjectId(project.getId());

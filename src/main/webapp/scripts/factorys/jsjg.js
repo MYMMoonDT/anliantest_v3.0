@@ -10,6 +10,9 @@
 angular.module('anliantestApp')
   .factory('JSJG', function JSJG($resource) {
     return $resource('api/jsjg/:jsjgTableId', {}, {
-      
+      project: {
+        method: 'GET',
+        url: 'api/jsjg/project'
+      }
     });
   });

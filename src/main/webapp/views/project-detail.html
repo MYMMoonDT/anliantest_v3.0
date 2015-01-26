@@ -130,7 +130,7 @@
               <div class="panel-body">
                 <div class="row">
                   <div class="col-md-12">
-                    <button type="button" class="btn btn-primary pull-right" ng-click="showAddFilesDialog()">添加</button>
+                    <button type="button" class="btn btn-primary pull-right btn-sm" ng-click="showAddFilesDialog()">添加</button>
                   </div>
                 </div>
                 <table class="table table-striped">
@@ -150,7 +150,9 @@
                       <td>{{fileGroup.items.length}}</td>
                       <td>{{fileGroup.comment}}</td>
                       <td>
+                        <!--
                         <button class="btn btn-success btn-sm" ng-click="editFiles(fileGroup)">编辑</button>
+                        -->
                         <button class="btn btn-danger btn-sm" ng-click="deleteFiles(fileGroup)">删除</button>
                       </td>
                     </tr>
@@ -177,8 +179,8 @@
                     <i class="fa fa-bug fa-fw"></i> 数据计算模块(上传或输入检测报告，生成检测报告生成计算过程表和结果与判定表)
                   </div>
                   <div class="panel-body">
-                    <button type="button" class="btn btn-primary" ng-click="showUploadJCBGDialog()"><i class="fa fa-cloud-upload fa-fw"></i> 上传检测报告</button>
-                    <button type="button" class="btn btn-primary" ng-click="showInputJCBGDialog()"><i class="fa fa-pencil fa-fw"></i> 输入检测报告</button>
+                    <button type="button" class="btn btn-primary btn-sm" ng-click="showUploadJCBGDialog()"><i class="fa fa-cloud-upload fa-fw"></i> 上传检测报告</button>
+                    <button type="button" class="btn btn-primary btn-sm" ng-click="showInputJCBGDialog()"><i class="fa fa-pencil fa-fw"></i> 输入检测报告</button>
                   </div>
                 </div>
               </div>

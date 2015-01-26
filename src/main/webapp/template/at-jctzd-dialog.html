@@ -94,7 +94,7 @@
       <input at-datepicker date="data.item.testEndDate" type="text" class="form-control date" style="display: inline-block">
     </div>
     <div class="cell">
-      <button class="btn btn-primary pull-right" ng-click="addWorkshopPosition()">添加车间/岗位</button>
+      <button class="btn btn-primary pull-right btn-sm" ng-click="addWorkshopPosition()">添加车间/岗位</button>
     </div>
   </div>
 </div>
@@ -116,7 +116,7 @@
             <td>
               <input ng-model="item.workshopPosition" type="text" class="form-control">
               <br/>
-              <button class="btn btn-primary" ng-click="addZYBWHYSItem(item)">添加检测项目</button>
+              <button class="btn btn-primary btn-sm" ng-click="addZYBWHYSItem(item)">添加检测项目</button>
               <a class="btn btn-danger btn-sm" href="javascript:void(0);" ng-click="deleteWorkshopPosition(item)"><i class="fa fa-trash-o fa-lg"></i></a>
             </td>
             <td>
@@ -175,7 +175,7 @@
     </div>
 
     <div class="cell" style="line-height: 34px;padding-right: 40px;">
-      {{data.item.notifyEmployee.name}}&nbsp;<button type="button" class="btn btn-primary" ng-click="selectEmployee('notify')">&nbsp;选择&nbsp;</button>
+      {{data.item.notifyEmployee.name}}&nbsp;<button type="button" class="btn btn-primary btn-sm" ng-click="selectEmployee('notify')">&nbsp;选择&nbsp;</button>
     </div>
 
     <div class="cell" style="width: 60px;">
@@ -183,7 +183,7 @@
     </div>
 
     <div class="cell" style="line-height: 34px;padding-right: 40px;">
-      {{data.item.reviewEmployee.name}}&nbsp;<button type="button" class="btn btn-primary" ng-click="selectEmployee('review')">&nbsp;选择&nbsp;</button>
+      {{data.item.reviewEmployee.name}}&nbsp;<button type="button" class="btn btn-primary btn-sm" ng-click="selectEmployee('review')">&nbsp;选择&nbsp;</button>
     </div>
 
     <div class="cell" style="width: 60px;">
@@ -191,7 +191,7 @@
     </div>
 
     <div class="cell" style="line-height: 34px;padding-right: 40px;">
-      {{data.item.receiveEmployee.name}}&nbsp;<button type="button" class="btn btn-primary" ng-click="selectEmployee('receive')">&nbsp;选择&nbsp;</button>
+      {{data.item.receiveEmployee.name}}&nbsp;<button type="button" class="btn btn-primary btn-sm" ng-click="selectEmployee('receive')">&nbsp;选择&nbsp;</button>
     </div>
   </div>
 </div>
