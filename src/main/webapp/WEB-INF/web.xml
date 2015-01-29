@@ -33,6 +33,15 @@
     <load-on-startup>1</load-on-startup>
     <async-supported>true</async-supported>
   </servlet>
+  <servlet>  
+    <servlet-name>ReportServer</servlet-name>  
+    <servlet-class>com.fr.web.ReportServlet</servlet-class>  
+    <load-on-startup>0</load-on-startup>  
+  </servlet>  
+  <servlet-mapping>  
+	<servlet-name>ReportServer</servlet-name>  
+	<url-pattern>/ReportServer</url-pattern>  
+  </servlet-mapping> 
   <servlet-mapping>
     <servlet-name>dispatcherServlet</servlet-name>
     <url-pattern>/</url-pattern>

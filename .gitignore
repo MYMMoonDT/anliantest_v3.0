@@ -9,8 +9,8 @@ build/
 .idea/
 *.iml
 META-INF/
-
-
+bower_components/
+report/
 
 src/main/node_modules
 
