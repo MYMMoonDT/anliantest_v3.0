@@ -1,23 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WorkBook xmlVersion="20140501" releaseVersion="7.1.1">
 <TableDataMap>
-<TableData name="cyfa_table" class="com.fr.data.impl.DBTableData">
-<Parameters>
-<Parameter>
-<Attributes name="cyfa_table_id"/>
-<O>
-<![CDATA[1]]></O>
-</Parameter>
-</Parameters>
-<Attributes maxMemRowCount="-1"/>
-<Connection class="com.fr.data.impl.NameDatabaseConnection">
-<DatabaseName>
-<![CDATA[JDBC2]]></DatabaseName>
-</Connection>
-<Query>
-<![CDATA[select * from cyfa_table where id=${cyfa_table_id};
-]]></Query>
-</TableData>
 <TableData name="main_table" class="com.fr.data.impl.DBTableData">
 <Parameters>
 <Parameter>
@@ -47,32 +30,6 @@ where t.id=${cyfa_table_id} and t.id=g.tableId and g.id=i.groupId
 		and i.zybwhysItemId=zi.id and zi.id=fi.zybwhysId and fi.id=cj.cyjcffId and ji.id=cj.cyjcyjId
         and si.itemId=i.id
 group by i.id;]]></Query>
-</TableData>
-<TableData name="project" class="com.fr.data.impl.DBTableData">
-<Parameters>
-<Parameter>
-<Attributes name="project_id"/>
-<O>
-<![CDATA[]]></O>
-</Parameter>
-</Parameters>
-<Attributes maxMemRowCount="-1"/>
-<Connection class="com.fr.data.impl.NameDatabaseConnection">
-<DatabaseName>
-<![CDATA[JDBC2]]></DatabaseName>
-</Connection>
-<Query>
-<![CDATA[select * from project where id=${project_id};]]></Query>
-</TableData>
-<TableData name="project0" class="com.fr.data.impl.DBTableData">
-<Parameters/>
-<Attributes maxMemRowCount="-1"/>
-<Connection class="com.fr.data.impl.NameDatabaseConnection">
-<DatabaseName>
-<![CDATA[JDBC2]]></DatabaseName>
-</Connection>
-<Query>
-<![CDATA[select * from project p, cyfa_table t where p.id=t.projectId;]]></Query>
 </TableData>
 <TableData name="table_info" class="com.fr.data.impl.DBTableData">
 <Parameters>
@@ -119,15 +76,15 @@ where t.id=${cyfa_table_id};]]></Query>
 <RowHeight defaultValue="723900">
 <![CDATA[914400,800100,723900,1143000,723900,723900,1714500,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,723900,724929,723900]]></RowHeight>
 <ColumnWidth defaultValue="2743200">
-<![CDATA[955589,3771900,4053016,4547286,3295135,3695700,2743200,1482810,4349578,2273643,3361037,2743200]]></ColumnWidth>
+<![CDATA[955589,3771900,4053016,5181600,3295135,3695700,2743200,1482810,4349578,2273643,3361037,2743200]]></ColumnWidth>
 <CellElementList>
-<C c="0" r="0" cs="12" s="0">
+<C c="0" r="0" cs="11" s="0">
 <O>
 <![CDATA[杭州安联卫生检测技术服务有限公司]]></O>
 <PrivilegeControl/>
 <Expand/>
 </C>
-<C c="0" r="1" cs="12" s="0">
+<C c="0" r="1" cs="11" s="0">
 <O>
 <![CDATA[工作场所职业病危害因素采样方案（有毒物质、粉尘）]]></O>
 <PrivilegeControl/>
@@ -162,12 +119,8 @@ where t.id=${cyfa_table_id};]]></Query>
 <C c="9" r="2" cs="2">
 <O t="Formula" class="Formula">
 <Attributes>
-<![CDATA[="第 "+$$page_number+" 页  共 "+$$totalPage_number+" 页"]]></Attributes>
+<![CDATA[="第 " + $$page_number + " 页  共 " + $$totalPage_number + " 页"]]></Attributes>
 </O>
-<PrivilegeControl/>
-<Expand/>
-</C>
-<C c="11" r="2">
 <PrivilegeControl/>
 <Expand/>
 </C>
@@ -219,10 +172,6 @@ where t.id=${cyfa_table_id};]]></Query>
 <PrivilegeControl/>
 <Expand dir="0"/>
 </C>
-<C c="11" r="4">
-<PrivilegeControl/>
-<Expand/>
-</C>
 <C c="0" r="5" cs="3" s="1">
 <O t="DSColumn">
 <Attributes dsName="table_info" columnName="contactPersonName"/>
@@ -246,10 +195,6 @@ where t.id=${cyfa_table_id};]]></Query>
 </O>
 <PrivilegeControl/>
 <Expand dir="0"/>
-</C>
-<C c="11" r="5">
-<PrivilegeControl/>
-<Expand/>
 </C>
 <C c="0" r="6" s="2">
 <O>
@@ -459,7 +404,7 @@ where t.id=${cyfa_table_id};]]></Query>
 <PrivilegeControl/>
 <Present class="com.fr.base.present.FormulaPresent">
 <Content>
-<![CDATA[=YEAR($$$)+"年"+MONTH($$$)+"月"+DAY($$$)+"日"]]></Content>
+<![CDATA[YEAR($$$) + "年" + MONTH($$$) + "月" + DAY($$$) + "日"]]></Content>
 </Present>
 <Expand dir="0"/>
 </C>
@@ -485,7 +430,7 @@ where t.id=${cyfa_table_id};]]></Query>
 <PrivilegeControl/>
 <Present class="com.fr.base.present.FormulaPresent">
 <Content>
-<![CDATA[=YEAR($$$)+"年"+MONTH($$$)+"月"+DAY($$$)+"日"]]></Content>
+<![CDATA[YEAR($$$) + "年" + MONTH($$$) + "月" + DAY($$$) + "日"]]></Content>
 </Present>
 <Expand dir="0"/>
 </C>
@@ -494,58 +439,6 @@ where t.id=${cyfa_table_id};]]></Query>
 <Expand/>
 </C>
 <C c="10" r="18">
-<PrivilegeControl/>
-<Expand/>
-</C>
-<C c="11" r="18">
-<PrivilegeControl/>
-<Expand/>
-</C>
-<C c="0" r="19">
-<PrivilegeControl/>
-<Expand/>
-</C>
-<C c="1" r="19">
-<PrivilegeControl/>
-<Expand/>
-</C>
-<C c="2" r="19">
-<PrivilegeControl/>
-<Expand/>
-</C>
-<C c="3" r="19">
-<PrivilegeControl/>
-<Expand/>
-</C>
-<C c="4" r="19">
-<PrivilegeControl/>
-<Expand/>
-</C>
-<C c="5" r="19">
-<PrivilegeControl/>
-<Expand/>
-</C>
-<C c="6" r="19">
-<PrivilegeControl/>
-<Expand/>
-</C>
-<C c="7" r="19">
-<PrivilegeControl/>
-<Expand/>
-</C>
-<C c="8" r="19">
-<PrivilegeControl/>
-<Expand/>
-</C>
-<C c="9" r="19">
-<PrivilegeControl/>
-<Expand/>
-</C>
-<C c="10" r="19">
-<PrivilegeControl/>
-<Expand/>
-</C>
-<C c="11" r="19">
 <PrivilegeControl/>
 <Expand/>
 </C>

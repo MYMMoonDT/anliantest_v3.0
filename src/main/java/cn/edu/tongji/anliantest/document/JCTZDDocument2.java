@@ -1,12 +1,15 @@
 package cn.edu.tongji.anliantest.document;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.OutputStream;
 
+import org.apache.poi.hwpf.HWPFDocument;
 import org.springframework.web.context.WebApplicationContext;
 
-import cn.edu.tongji.anliantest.dao.CYFATableDao;
-import cn.edu.tongji.anliantest.model.experiment.CYFATable;
+import cn.edu.tongji.anliantest.dao.JCTZDTableDao;
+import cn.edu.tongji.anliantest.model.JCTZDTable;
 import cn.edu.tongji.anliantest.util.ApplicationContextUtil;
 
 import com.fr.base.FRContext;
@@ -20,31 +23,32 @@ import com.fr.main.workbook.ResultWorkBook;
 import com.fr.report.module.EngineModule;
 import com.fr.stable.WriteActor;
 
-public class CYFADocument {  
-    public static String generate(Long cyfaTableId) {
+public class JCTZDDocument2 {  
+    public static String generate(Long JCTZDTableId) {
     	WebApplicationContext context = ApplicationContextUtil.getContext();
-    	CYFATableDao cyfaDao = context.getBean("CYFATableDaoImpl", CYFATableDao.class);
-    	CYFATable table = cyfaDao.getCYFATableById(cyfaTableId);
+    	JCTZDTableDao cyfaDao = context.getBean("JCTZDTableDaoImpl", JCTZDTableDao.class);
+    	JCTZDTable table = cyfaDao.getJCTZDTableById(JCTZDTableId);
     	String rootPath = context.getServletContext().getRealPath("/");
     	String filePath = "report/" + table.getProject().getNumber();
-    	String fileName = table.getProject().getNumber() + '-' + table.getProject().getName() + '-' + "采样方案（有毒物质、粉尘）";
-    	return generate(rootPath, filePath, fileName, cyfaTableId);
+    	String fileName = table.getProject().getNumber() + '-' + table.getProject().getName() + '-' + "检测通知单";
+    	return generate(rootPath, filePath, fileName, JCTZDTableId, table.getTableNum());
     }
     
-    private static String generate(String rootPath, String filePath, String fileName, Long cyfaTableId) {
+    private static String generate(String rootPath, String filePath, String fileName, Long JCTZDTableId, String tableNum) {
     	try {    
             // 首先需要定义执行所在的环境，这样才能正确读取数据库信息    
             String envPath = rootPath+"/WEB-INF";    
             FRContext.setCurrentEnv(new LocalEnv(envPath));    
             ModuleContext.startModule(EngineModule.class.getName());    
             // 读取模板    
-            TemplateWorkBook workbook = TemplateWorkBookIO.readTemplateWorkBook(FRContext.getCurrentEnv(),"cyfa.cpt");    
+            TemplateWorkBook workbook = TemplateWorkBookIO.readTemplateWorkBook(FRContext.getCurrentEnv(),"jctzd.cpt");    
             /*  
              * 生成参数map，注入参数与对应的值，用于执行报表  
              * 获得的参数put进map中，paraMap.put(paraname,paravalue)  
              */    
             java.util.Map<String, Object> paraMap = new java.util.HashMap<String, Object>();    
-            paraMap.put("cyfa_table_id", cyfaTableId);    
+            paraMap.put("p1", "ALJC/JL32-06");
+            paraMap.put("table_id", JCTZDTableId);    
             // 使用paraMap执行生成结果    
             ResultWorkBook result = workbook.execute(paraMap,new WriteActor());    
             // 使用结果如导出至doc 
@@ -63,6 +67,12 @@ public class CYFADocument {
             System.out.println("[Report]Create: "+realPath+".pdf");
             outputStream.close();    
             ModuleContext.stopModules(); 
+            
+//            HWPFDocument doc = new HWPFDocument(new FileInputStream(realPath)); 
+//            doc.getHeaderStoryRange().replaceText("水电费上的房价开始玩的好衣服斯柯达将发挥", false);
+//            OutputStream os = new FileOutputStream("realPath");
+//            doc.write(os);
+//            os.close();
             return realPath;
         } catch (Exception e) {    
             e.printStackTrace();  

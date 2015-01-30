@@ -7,6 +7,9 @@ import cn.edu.tongji.anliantest.dao.CYJCFFItemDao;
 import cn.edu.tongji.anliantest.dao.CYJCYJItemDao;
 import cn.edu.tongji.anliantest.dao.ZYBWHYSItemDao;
 import cn.edu.tongji.anliantest.document.CYFADocument;
+import cn.edu.tongji.anliantest.document.JCBGDocument2;
+import cn.edu.tongji.anliantest.document.JCTZDDocument2;
+import cn.edu.tongji.anliantest.document.SYSYJLDocument;
 import cn.edu.tongji.anliantest.service.TestService;
 
 @Service("testService")
@@ -26,6 +29,9 @@ public class TestServiceImpl implements TestService{
 //		JCTZDDocument jctzdDocument = new JCTZDDocument();
 //		jctzdDocument.getZYBWHYSDataFromFile(file, zybwhysItemDao, cyjcffItemDao, cyjcyjItemDao);
 		CYFADocument.generate((long) 1);
+		SYSYJLDocument.generate((long) 1);
+		JCTZDDocument2.generate((long) 1);
+		JCBGDocument2.generate((long) 8);
 	}
 
 }
