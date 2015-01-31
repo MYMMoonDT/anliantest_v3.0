@@ -7,7 +7,7 @@ import cn.edu.tongji.anliantest.model.Department;
 import cn.edu.tongji.anliantest.util.DataWrapper;
 
 public interface AuthorityGroupDao {
-public AuthorityGroup getAuthorityGroupById(Long authorityGroupId);
+	public AuthorityGroup getAuthorityGroupById(Long authorityGroupId);
 	
 	public AuthorityGroup getAuthorityGroupByDepartment(Department department);
 	

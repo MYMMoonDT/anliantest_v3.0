@@ -4,13 +4,11 @@ import java.util.List;
 
 import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 import cn.edu.tongji.anliantest.dao.AbstractHibernateDao;
 import cn.edu.tongji.anliantest.dao.AuthorityItemDao;
 import cn.edu.tongji.anliantest.model.AuthorityItem;
-import cn.edu.tongji.anliantest.model.Department;
 import cn.edu.tongji.anliantest.util.DataWrapper;
 
 @Repository
@@ -23,19 +21,6 @@ public class AuthorityItemDaoImpl extends AbstractHibernateDao<AuthorityItem, Lo
 	@Override
 	public AuthorityItem getAuthorityItemById(Long authorityItemId) {
 		return findById(authorityItemId);
-	}
-	
-	@Override
-	public AuthorityItem getAuthorityItemByDepartment(Department department) {
-		List<?> list =  getCurrentSession().createCriteria(AuthorityItem.class)
-				.add(Restrictions.eq("department", department))
-				.list();
-		
-		if(list != null && !list.isEmpty()) {
-			return (AuthorityItem) list.get(0);
-		} else {
-			return null;
-		}
 	}
 
 	@Override

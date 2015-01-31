@@ -1,0 +1,22 @@
+<div class="row" style="margin-bottom: 10px;">
+  <div class="col-md-4">
+    <button type="button" class="btn btn-default pull-left" ng-click="cancel()">&nbsp;取消&nbsp;</button>
+  </div>
+  <div class="col-md-4">
+    <h5 style="text-align:center;">添加权限组</h5>
+  </div>
+  <div class="col-md-4">
+    <button type="button" class="btn btn-success pull-right" ng-click="save()">&nbsp;保存&nbsp;</button>
+  </div>
+</div>
+
+<div class="content" style="padding:5px;">
+  <div class="row">
+    <div class="cell" style="width: 80px;">
+      <label>权限组名称:</label>
+    </div>
+    <div class="cell">
+      <input ng-model="data.item.groupName" type="text" class="form-control">
+    </div>
+  </div>
+</div>

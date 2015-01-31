@@ -12,9 +12,9 @@ public interface AuthorityService {
 
 	public DataWrapper<List<AuthorityItem>> getAllAuthorityItems();
 
-	public DataWrapper<AuthorityGroup> updateAuthorityGroup(AuthorityGroup group);
+	public DataWrapper<AuthorityGroup> updateAuthorityGroup(AuthorityGroup authorityGroup);
 
-	public DataWrapper<AuthorityGroup> addAuthorityGroupByName(String groupName);
+	public DataWrapper<AuthorityGroup> addAuthorityGroupByName(String authorityGroupName);
 
-	public DataWrapper<AuthorityGroup> deleteAuthorityGroup(Long id);
+	public DataWrapper<Void> deleteAuthorityGroup(Long authorityGroupId);
 }

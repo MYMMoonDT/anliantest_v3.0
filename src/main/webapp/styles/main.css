@@ -71,10 +71,19 @@ body {
   font-size: 36px;
 }
 /*
- * JCBG CSS Style
+ * Authority CSS Style
  */
-.jcbg-table-container input[type='text'] {
-  height: 30px;
-  padding: 6px 6px;
-  font-size: 12px;
+.employee-auth-item {
+  padding: 10px 10px 10px 15px;
+  margin: 5px 0;
+  border-radius: 8px;
+  border: 1px solid #357ebd;
+}
+.employee-auth-item .name {
+  line-height: 30px;
+  font-size: 16px;
+  float: left;
+}
+.employee-auth-item .option {
+  float: right;
 }

@@ -18,7 +18,7 @@ public class JCTZDDocument {
 				
 				jacob.switchToMainDoc();
 				
-				jacob.getTable(1);
+				jacob.getTable(2);
 				int rowsCount = jacob.getRowsCount();
 				for(int cellRowIdx = 2; cellRowIdx <= rowsCount; cellRowIdx++) {
 					String chineseName = jacob.getCellString(cellRowIdx, 3);

@@ -4,55 +4,35 @@
   <div id="page-wrapper">
     <div class="row">
       <div class="col-lg-12">
-        <h1 class="page-header">权限管理</h1>
+          <h1 class="page-header">权限管理<button type="button" class="btn btn-primary btn-sm pull-right" ng-click="showDefaultAuthorityDialog()">&nbsp;编辑默认权限组&nbsp;</button></h1>
       </div>
     </div>
+
     <div class="row">
-      <div class="col-lg-3">
-        <div id="tree"></div>
+      <div class="col-lg-4">
+        <div id="employee-tree"></div>
       </div>
-      <div id="authContent" class="col-lg-9" x-ng-show="hasAuth">
-        <div class="row">
-          <div class="col-lg-8">
-            <select class="form-control" id="authGrpSelect"
-              x-ng-change="changeAuthrityGroup()"
-              x-ng-model="selectedAuthGrp"
-              x-ng-options="authGrp.name for authGrp in authorityGroups">
-            </select>
-          </div>
-          <div class="col-lg-2">
-            <button id="configBtn" class="btn btn-primary" type="button" 
-              x-ng-click="showEmployeeAuthGrpDialog(curAuthEmployee, selectedAuthGrp)">配置权限组</button>
-          </div>
-          <div class="col-lg-2">
-            <a href="#/authGrpConfig" class="btn btn-primary">配置权限组模板</a>
-          </div>
-        </div>
-        <div class="row">
-          <hr>
-        </div>
-        <div class="row">
-          <div class="col-lg-12">
-            <ul id="authList" class="list-group">
-              <li class="list-group-item"
-                x-ng-repeat="auth in authorityItems">
-                <div class="row">
-                  <div class="col-lg-10">{{auth.authorityItem.name}}</div>
-                  <div class="col-lg-2">
-                    <toggle ng-model="auth.isActive" action="toggleClicked()"></toggle>
-                  </div>
+      <div class="col-lg-8">
+        <div ng-if="currentEmployee">
+          <h4 class="page-header" style="margin: 10px 0;line-height: 30px;">
+            {{currentEmployee.name}}-当前权限组: {{currentEmployee.employeeAuthorityGroup.authorityGroup.name}}<button type="button" class="btn btn-primary btn-sm pull-right" ng-click="editEmployeeAuthorityGroup()">&nbsp;变更权限组&nbsp;</button>
+          </h4>
+          <div class="row" ng-repeat="employeeAuthItem in currentEmployee.employeeAuthorityGroup.items">
+            <div class="col-lg-12">
+              <div class="employee-auth-item">
+                <div class="name">
+                  {{employeeAuthItem.authorityItem.name}}
                 </div>
-              </li>
-            </ul>
+                <div class="option">
+                  <at-toggle ng-model="employeeAuthItem.isActive" action="editEmployeeAuthorityItem(employeeAuthItem);"></at-toggle>
+                </div>
+                <div class="clearfix"></div>
+              </div>
+            </div>
           </div>
         </div>
-<!--         <div class="row">
-          <div class="col-lg-12">
-            <button id="updateBtn" type="button" class="btn btn-primary"
-              x-ng-click="updateAuthority();">保存更改</button>
-          </div>
-        </div> -->
       </div>
     </div>
   </div>
 </div>
+

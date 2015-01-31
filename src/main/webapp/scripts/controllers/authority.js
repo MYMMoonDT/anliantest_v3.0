@@ -8,7 +8,121 @@
  * Controller of the anliantestApp
  */
 angular.module('anliantestApp')
-  .controller('AuthorityCtrl', function ($scope, dialogs, EmployeeService, AuthorityService) {
+  .controller('AuthorityCtrl', function ($scope, dialogs, Employee) {
+    $scope.currentEmployee = null;
+
+    loadAllEmployee();
+
+    $scope.showDefaultAuthorityDialog = function() {
+      var dialog = dialogs.create('template/at-default-authority-dialog.html', 'DefaultAuthorityDialogCtrl', {}, 
+      {
+        size: 'md',
+        keyboard: true,
+        backdrop: true,
+        windowClass: 'model-overlay'
+      });
+      dialog.result.then(function (data) {
+      }, function () {
+
+      });
+    };
+
+    $scope.editEmployeeAuthorityGroup = function() {
+      var dialog = dialogs.create('template/at-edit-employee-authority-dialog.html', 'editEmployeeAuthorityDialogCtrl', {}, 
+      {
+        size: 'md',
+        keyboard: true,
+        backdrop: true,
+        windowClass: 'model-overlay'
+      });
+      dialog.result.then(function (data) {
+        var employee = new Employee();
+        employee.$updateAuthorityGroup({employeeId: $scope.currentEmployee.id, authorityGroupId: data.id}, function(data){
+          loadCurrentEmployee(data.data.id);
+        });
+      }, function () {
+
+      });
+    };
+
+    $scope.editEmployeeAuthorityItem = function(employeeAuthItem) {
+      var employee = new Employee();
+
+      angular.extend(employee, employeeAuthItem);
+
+      employee.$updateAuthorityItem(function(){
+        loadCurrentEmployee($scope.currentEmployee.id);
+      });
+    };
+
+    function loadAllEmployee() {
+      var employee = new Employee();
+      employee.$all(function(data){
+        var treeData = [];
+        var preDepartment = "";
+        for(var i = 0; i < data.data.length; i++) {
+          var department = data.data[i].department.name;
+          if(department != preDepartment) {
+            treeData.push({text: department, icon: "fa fa-users", selectable: false, nodes: []});
+            preDepartment = department;
+          }
+          treeData[treeData.length - 1].nodes.push({
+            text: data.data[i].name, 
+            icon: "fa fa-user", 
+            employeeId: data.data[i].id
+          }); 
+        }
+        var options = {
+          collapseIcon: "fa fa-chevron-down",
+          expandIcon: "fa fa-chevron-right",
+          onNodeSelected: function(event, node) {
+            loadCurrentEmployee(node.employeeId);
+          }
+        };
+        $('#employee-tree').treeview({data: treeData});
+        $('#employee-tree').treeview(options);
+      });
+    }
+
+    function loadCurrentEmployee(employeeId){
+      if(employeeId != undefined) {
+        var employee = new Employee();
+        employee.$get({employeeId: employeeId}, function(data){
+          $scope.currentEmployee = data.data;
+        });
+      }
+    }
+  })
+
+  .controller('editEmployeeAuthorityDialogCtrl', function($scope, $modalInstance, data, dialogs, Authority){
+    $scope.data = data;
+
+    loadAllAuthorityGroup();
+
+    $scope.selectAuthorityGroup = function(group) {
+      var dialog = dialogs.create('template/at-confirm-dialog.html', 'ConfirmCtrl', {
+        text: '是否确认将用户变更为该权限组?',
+        type: 'SIGN'
+      }, {
+        size: 'sm',
+        keyboard: true,
+        backdrop: 'static',
+        windowClass: 'model-overlay'
+      });
+      dialog.result.then(function() {
+        $modalInstance.close(group);
+      });
+    };
+
+    function loadAllAuthorityGroup() {
+      var authority = new Authority();
+      authority.$groupAll(function(data) {
+        $scope.authorityGroups = data.data;
+      });
+    }
+  });
+
+  /*
     $scope.employee = EmployeeService.getCurrEmployee();
   	$scope.hasAuth = false;
   
@@ -32,7 +146,6 @@ angular.module('anliantestApp')
       var options = {
           collapseIcon: "fa fa-chevron-down",
           expandIcon: "fa fa-chevron-right",
-//            levels: 1,
           onNodeSelected: function(event, node) {
             $scope.$apply(function() {
             	$scope.hasAuth = locate(node.employeeId);
@@ -45,10 +158,6 @@ angular.module('anliantestApp')
     }, function (){
       
     });
-    
-//    $scope.updateAuthority = function() {
-//    	updateEmployee($scope.curAuthEmployee);
-//    };
     
     function reset(employee) {
     	locate(employee.id, employee);
@@ -105,7 +214,6 @@ angular.module('anliantestApp')
               employee: employee,
               curAuthGrp: selectedAuthGrp,
               groupList: data.data,
-//                ret: null,
             }, 
             {
               size: 'md',
@@ -119,7 +227,6 @@ angular.module('anliantestApp')
           promise.then(function(ret) {
           	if (ret.errorCode == "No_Error") {
           		reset(ret.data);
-//          		selectedAuthGrp = employye
           	} else {
           		alert(ret.errorCode);
           	}
@@ -153,3 +260,5 @@ angular.module('anliantestApp')
 		  $modalInstance.close($scope.list);
 		};
   });
+*/
+  

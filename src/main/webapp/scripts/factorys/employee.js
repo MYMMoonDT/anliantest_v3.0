@@ -28,6 +28,18 @@ angular.module('anliantestApp')
             return null;
           }
         }
+      },
+      all: {
+        method: 'GET',
+        url: 'api/employee/all'
+      },
+      updateAuthorityGroup: {
+        method: 'POST',
+        url: 'api/employee/authorityGroup/update'
+      },
+      updateAuthorityItem: {
+        method: 'POST',
+        url: 'api/employee/authorityItem/update'
       }
     });
   });

@@ -158,14 +158,14 @@ public class JCTZDServiceImpl implements JCTZDService{
 		Log createLog = new Log(employeeDao.getEmployeeById(employeeId), createTask);
 		logDao.addLog(createLog);
 		
-		//为检测部创建确认采样方案的Task,同时更新项目状态
+		//为评价部创建确认采样方案的Task,同时更新项目状态
 		project.setStep(ProjectStepEnum.STEP4);
 		project.setStatus(ProjectStatusEnum.CONFIRM_CYFA);
 		projectDao.updateProject(project);
 		
 		taskDao.addTask(new Task(project, ProjectStepEnum.STEP4, 
 				ProjectStatusEnum.CONFIRM_CYFA, 
-				departmentDao.getDepartmentByType(DepartmentTypeEnum.DETECTION)));
+				departmentDao.getDepartmentByType(DepartmentTypeEnum.EVALUATION)));
 		
 		ret.setData(jctzdTableDao.getJCTZDTableById(jctzdTable.getId()));
 		

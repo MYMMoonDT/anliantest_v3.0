@@ -10,21 +10,16 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
-
-
 @Entity
-@Table(name="employee_authority_group_item")
-public class EmployeeAuthorityGroupItem implements Serializable{
-	
-	private static final long serialVersionUID = 3943943775225283897L;
-	
+@Table(name = "employee_authority_item")
+public class EmployeeAuthorityItem implements Serializable {
+	private static final long serialVersionUID = -7985100895602094246L;
+
 	private Long id;
 	private Boolean isActive = false;
-	
+
 	private AuthorityItem authorityItem;
-	
+
 	@Id
 	@GeneratedValue
 	public Long getId() {
@@ -45,7 +40,6 @@ public class EmployeeAuthorityGroupItem implements Serializable{
 	}
 
 	@ManyToOne
-	@Cascade(value = {CascadeType.REFRESH})
 	@JoinColumn(name = "authorityItemId")
 	public AuthorityItem getAuthorityItem() {
 		return authorityItem;
@@ -54,4 +48,5 @@ public class EmployeeAuthorityGroupItem implements Serializable{
 	public void setAuthorityItem(AuthorityItem authorityItem) {
 		this.authorityItem = authorityItem;
 	}
+
 }

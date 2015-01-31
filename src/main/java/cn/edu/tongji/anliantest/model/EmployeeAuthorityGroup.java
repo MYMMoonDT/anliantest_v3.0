@@ -4,39 +4,29 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 @Entity
 @Table(name = "employee_authority_group")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property="id")
-public class EmployeeAuthorityGroup implements Serializable {
-
-	private static final long serialVersionUID = -2366248862481602675L;
+public class EmployeeAuthorityGroup implements Serializable{
+	private static final long serialVersionUID = 5133855493118256373L;
 
 	private Long id;
-	private String name;
-	private Boolean isActive = false;
-
-	private Employee employee;
 	
-	private List<EmployeeAuthorityGroupItem> employeeAuthorityGroupItems = new ArrayList<EmployeeAuthorityGroupItem>(0);
 	private AuthorityGroup authorityGroup;
 	
+	private List<EmployeeAuthorityItem> items = new ArrayList<EmployeeAuthorityItem>(0);
+
 	@Id
 	@GeneratedValue
 	public Long getId() {
@@ -46,70 +36,8 @@ public class EmployeeAuthorityGroup implements Serializable {
 	public void setId(Long id) {
 		this.id = id;
 	}
-
-	@Column(nullable = false)
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	@Column(nullable = false)
-	public Boolean getIsActive() {
-		return isActive;
-	}
-
-	public void setIsActive(Boolean isActive) {
-		this.isActive = isActive;
-	}
-
-	@ManyToOne
-	@Cascade(value = {CascadeType.REFRESH})
-	@JoinColumn(name = "employeeId")
-	public Employee getEmployee() {
-		return employee;
-	}
-
-	public void setEmployee(Employee employee) {
-			this.employee = employee;
-	}
-
 	
-	@OneToMany(orphanRemoval = true)
-	@LazyCollection(LazyCollectionOption.FALSE)
-	@Cascade({CascadeType.SAVE_UPDATE, CascadeType.MERGE, CascadeType.DELETE})
-	@JoinColumn(name = "employeeAuthorityGroupId")
-	@OrderBy("authorityItem.id")
-	public List<EmployeeAuthorityGroupItem> getEmployeeAuthorityGroupItems() {
-		return employeeAuthorityGroupItems;
-	}
-
-	public void setEmployeeAuthorityGroupItems(
-			List<EmployeeAuthorityGroupItem> employeeAuthorityGroupItems) {
-		this.employeeAuthorityGroupItems = employeeAuthorityGroupItems;
-	}
-	
-	public void initEmployeeAuthorityGroup(Employee e, AuthorityGroup group) {
-		this.employee = e;
-		if (e.getEmployeeAuthorityGroups().isEmpty()) {
-			this.isActive = true;
-		}
-		this.authorityGroup = group;
-		this.name = group.getName();
-		if (group.getAuthorityItems() == null)
-			return;
-		for (AuthorityItem authItem : group.getAuthorityItems()) {
-			EmployeeAuthorityGroupItem empAuthItem = new EmployeeAuthorityGroupItem();
-			empAuthItem.setIsActive(false);
-			empAuthItem.setAuthorityItem(authItem);
-			this.employeeAuthorityGroupItems.add(empAuthItem);
-		}
-	}
-
 	@ManyToOne
-	@Cascade(value = {CascadeType.REFRESH})
 	@JoinColumn(name = "authorityGroupId")
 	public AuthorityGroup getAuthorityGroup() {
 		return authorityGroup;
@@ -118,4 +46,16 @@ public class EmployeeAuthorityGroup implements Serializable {
 	public void setAuthorityGroup(AuthorityGroup authorityGroup) {
 		this.authorityGroup = authorityGroup;
 	}
+
+	@OneToMany(fetch = FetchType.EAGER, orphanRemoval = true)
+	@Cascade({CascadeType.SAVE_UPDATE, CascadeType.MERGE, CascadeType.DELETE})
+	@JoinColumn(name = "groupId")
+	public List<EmployeeAuthorityItem> getItems() {
+		return items;
+	}
+
+	public void setItems(List<EmployeeAuthorityItem> items) {
+		this.items = items;
+	}
+	
 }

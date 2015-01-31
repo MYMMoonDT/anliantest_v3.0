@@ -1,25 +1,17 @@
 package cn.edu.tongji.anliantest.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OrderBy;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 
 @Entity
 @Table(name = "employee")
-//需要Employee的其他信息
 public class Employee implements Serializable {
 
 	private static final long serialVersionUID = -7265330153237797718L;
@@ -31,7 +23,7 @@ public class Employee implements Serializable {
 	private String title;
 
 	private Department department;
-	private List<EmployeeAuthorityGroup> employeeAuthorityGroups = new ArrayList<EmployeeAuthorityGroup>(0);
+	private EmployeeAuthorityGroup employeeAuthorityGroup;
 
 	@Id
 	@GeneratedValue
@@ -75,8 +67,7 @@ public class Employee implements Serializable {
 		this.title = title;
 	}
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	@Cascade(value = {CascadeType.REFRESH})
+	@ManyToOne
 	@JoinColumn(name = "departmentId")
 	public Department getDepartment() {
 		return department;
@@ -86,16 +77,13 @@ public class Employee implements Serializable {
 		this.department = department;
 	}
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "employee", orphanRemoval = true)	
-	@Cascade({CascadeType.SAVE_UPDATE, CascadeType.MERGE, CascadeType.DELETE})
-	@OrderBy("authorityGroup.id")
-	public List<EmployeeAuthorityGroup> getEmployeeAuthorityGroups() {
-		return employeeAuthorityGroups;
+	@OneToOne
+	@JoinColumn(name = "employeeAuthorityGroupId")
+	public EmployeeAuthorityGroup getEmployeeAuthorityGroup() {
+		return employeeAuthorityGroup;
 	}
 
-	public void setEmployeeAuthorityGroups(
-			List<EmployeeAuthorityGroup> employeeAuthorityGroups) {
-		this.employeeAuthorityGroups = employeeAuthorityGroups;
+	public void setEmployeeAuthorityGroup(EmployeeAuthorityGroup employeeAuthorityGroup) {
+		this.employeeAuthorityGroup = employeeAuthorityGroup;
 	}
-
 }

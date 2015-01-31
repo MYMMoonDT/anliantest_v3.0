@@ -1,0 +1,16 @@
+<div class="row" style="margin-bottom: 10px;">
+  <div class="col-md-4">
+    <button type="button" class="btn btn-default pull-left" ng-click="cancel()">&nbsp;取消&nbsp;</button>
+  </div>
+  <div class="col-md-4">
+    <h4 style="text-align:center;">编辑权限组</h4>
+  </div>
+  <div class="col-md-4">
+    <button type="button" class="btn btn-success pull-right" ng-click="save()">&nbsp;保存&nbsp;</button>
+  </div>
+</div>
+
+<at-multiple-listbox x-ng-model="data.configList"
+    x-selected-title="已有权限" x-unselected-title="可配置权限"></at-multiple-listbox>
+
+

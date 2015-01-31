@@ -21,7 +21,6 @@ angular
     'angularFileUpload',
     'ui.bootstrap',
     'datatables',
-    'angularToggleDirectives',
     'ui.select'
   ])
   .config(function ($routeProvider, $locationProvider) {
@@ -61,10 +60,6 @@ angular
       .when('/test', {
         templateUrl: 'views/test.html',
         controller: 'TestCtrl'
-      })
-      .when('/authGrpConfig', {
-        templateUrl: 'views/authgrpconfig.html',
-        controller: 'AuthGrpConfigCtrl'
       })
       .when('/department', {
         templateUrl: 'views/department.html',
