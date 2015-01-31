@@ -9,14 +9,23 @@ build/
 .idea/
 *.iml
 META-INF/
-
-
+bower_components/
 
 src/main/node_modules
-
 
 src/main/webapp/tmp
 
 src/main/webapp/upload
 
 src/main/webapp/report
+
+src/main/webapp/WEB-INF/classes
+
+src/main/webapp/WEB-INF/finedb
+
+src/main/webapp/WEB-INF/reportlets/demo
+
+src/main/webapp/WEB-INF/reportlets/doc
+
+src/main/webapp/WEB-INF/reportlets/GettingStarted.cpt
+

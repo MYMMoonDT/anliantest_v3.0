@@ -1,0 +1,521 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WorkBook xmlVersion="20140501" releaseVersion="7.1.1">
+<TableDataMap>
+<TableData name="table_info" class="com.fr.data.impl.DBTableData">
+<Parameters>
+<Parameter>
+<Attributes name="table_id"/>
+<O>
+<![CDATA[1]]></O>
+</Parameter>
+<Parameter>
+<Attributes name="day_id"/>
+<O>
+<![CDATA[1]]></O>
+</Parameter>
+</Parameters>
+<Attributes maxMemRowCount="-1"/>
+<Connection class="com.fr.data.impl.NameDatabaseConnection">
+<DatabaseName>
+<![CDATA[JDBC2]]></DatabaseName>
+</Connection>
+<Query>
+<![CDATA[select t.tableNum, p.number as projectNumber, t.sampleCompanyName, t.sampleCompanyAddress,
+	se.name as sendSampleEmployeeName, t.sampleName, re.name as receiveSampleEmployeeName,
+    d.sampleDate, t.sendSampleDate, t.receiveSampleDate
+from sysyjl_table t
+inner join project p on p.id=t.projectId
+inner join employee se on t.sendSampleEmployeeId=se.id
+inner join employee re on t.receiveSampleEmployeeId=re.id
+inner join sysyjl_day d on t.id=d.tableId
+where t.id=${table_id} and d.id=${day_id};]]></Query>
+</TableData>
+<TableData name="table_data" class="com.fr.data.impl.DBTableData">
+<Parameters>
+<Parameter>
+<Attributes name="table_id"/>
+<O>
+<![CDATA[1]]></O>
+</Parameter>
+<Parameter>
+<Attributes name="day_id"/>
+<O>
+<![CDATA[1]]></O>
+</Parameter>
+</Parameters>
+<Attributes maxMemRowCount="-1"/>
+<Connection class="com.fr.data.impl.NameDatabaseConnection">
+<DatabaseName>
+<![CDATA[JDBC2]]></DatabaseName>
+</Connection>
+<Query>
+<![CDATA[select g.workshopPosition, zi.chineseName, ci.sampleCollector, ci.sampleStatus, 
+	concat(si.sampleNumBase, '-', si.sampleNumStart, '~', si.sampleNumEnd) as sampleNum,
+    si.sampleCount, concat(si.sampleAtmos, '\n', si.sampleTemperature) as sampleAtomsTemperature, si.sampleVolume,
+    ci.sampleMethodAndPeriod, re.name as receiveEmploteeName, si.receiveDate
+from sysyjl_table t
+inner join sysyjl_day d on t.id=d.tableId
+inner join sysyjl_group g on d.id=g.dayId 
+inner join sysyjl_item i on g.id=i.groupId
+inner join zybwhys_item zi on i.zybwhysItemId=zi.id
+inner join sysyjl_sub_item si on i.id=si.itemId
+inner join cyjcff_item ci on si.cyjcffItemId=ci.id
+left join employee re on si.receiveEmployeeId=re.id
+where t.id=${table_id} and d.id=${day_id};]]></Query>
+</TableData>
+</TableDataMap>
+<Report class="com.fr.report.worksheet.WorkSheet" name="sheet1">
+<ReportPageAttr>
+<HR F="0" T="6"/>
+<FR/>
+<HC/>
+<FC/>
+</ReportPageAttr>
+<ColumnPrivilegeControl/>
+<RowPrivilegeControl/>
+<RowHeight defaultValue="723900">
+<![CDATA[922637,723900,723900,723900,723900,723900,2669059,723900,723900]]></RowHeight>
+<ColumnWidth defaultValue="2743200">
+<![CDATA[5272216,3295135,2743200,2240691,4744994,1351005,2743200,2372497,2932670,2743200,4343400,2743200]]></ColumnWidth>
+<CellElementList>
+<C c="0" r="0" cs="11" s="0">
+<O>
+<![CDATA[送样、收样记录表]]></O>
+<PrivilegeControl/>
+<CellPageAttr/>
+<Expand/>
+</C>
+<C c="0" r="1" cs="4">
+<O t="DSColumn">
+<Attributes dsName="table_info" columnName="tableNum"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Present class="com.fr.base.present.FormulaPresent">
+<Content>
+<![CDATA['表码：'+$$$]]></Content>
+</Present>
+<Expand dir="0"/>
+</C>
+<C c="4" r="1" cs="5">
+<O>
+<![CDATA[修订状态1/4 ]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="9" r="1" cs="2">
+<O t="Formula" class="Formula">
+<Attributes>
+<![CDATA[="第 " + $$page_number + " 页  共 " + $$totalPage_number + " 页"]]></Attributes>
+</O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="2" cs="3" s="1">
+<O t="DSColumn">
+<Attributes dsName="table_info" columnName="projectNumber"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Present class="com.fr.base.present.FormulaPresent">
+<Content>
+<![CDATA['项目编号：'+$$$]]></Content>
+</Present>
+<Expand dir="0"/>
+</C>
+<C c="3" r="2" cs="4" s="1">
+<O t="DSColumn">
+<Attributes dsName="table_info" columnName="sampleCompanyName"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Present class="com.fr.base.present.FormulaPresent">
+<Content>
+<![CDATA['受检单位名称：'+$$$]]></Content>
+</Present>
+<Expand dir="0"/>
+</C>
+<C c="7" r="2" cs="4" s="1">
+<O t="DSColumn">
+<Attributes dsName="table_info" columnName="sampleCompanyAddress"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Present class="com.fr.base.present.FormulaPresent">
+<Content>
+<![CDATA['受检单位地址：'+$$$]]></Content>
+</Present>
+<Expand dir="0"/>
+</C>
+<C c="0" r="3" cs="3" s="1">
+<O t="DSColumn">
+<Attributes dsName="table_info" columnName="sendSampleEmployeeName"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Present class="com.fr.base.present.FormulaPresent">
+<Content>
+<![CDATA['送样人：'+$$$]]></Content>
+</Present>
+<Expand dir="0"/>
+</C>
+<C c="3" r="3" cs="4" s="1">
+<O t="DSColumn">
+<Attributes dsName="table_info" columnName="sampleName"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Present class="com.fr.base.present.FormulaPresent">
+<Content>
+<![CDATA['样品名称：'+$$$]]></Content>
+</Present>
+<Expand dir="0"/>
+</C>
+<C c="7" r="3" cs="4" s="1">
+<O t="DSColumn">
+<Attributes dsName="table_info" columnName="receiveSampleEmployeeName"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Present class="com.fr.base.present.FormulaPresent">
+<Content>
+<![CDATA['实验室总收样人：'+$$$]]></Content>
+</Present>
+<Expand dir="0"/>
+</C>
+<C c="0" r="4" cs="3" s="2">
+<O t="DSColumn">
+<Attributes dsName="table_info" columnName="sampleDate"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Present class="com.fr.base.present.FormulaPresent">
+<Content>
+<![CDATA['采样日期：'+$$$]]></Content>
+</Present>
+<Expand dir="0"/>
+</C>
+<C c="3" r="4" cs="4" s="2">
+<O t="DSColumn">
+<Attributes dsName="table_info" columnName="sendSampleDate"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Present class="com.fr.base.present.FormulaPresent">
+<Content>
+<![CDATA['送样日期：'+$$$]]></Content>
+</Present>
+<Expand dir="0"/>
+</C>
+<C c="7" r="4" cs="4" s="2">
+<O t="DSColumn">
+<Attributes dsName="table_info" columnName="receiveSampleDate"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Present class="com.fr.base.present.FormulaPresent">
+<Content>
+<![CDATA['收样日期：'+$$$]]></Content>
+</Present>
+<Expand dir="0"/>
+</C>
+<C c="0" r="5">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="3" r="5">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="5">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="5" r="5">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="6" r="5">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="7" r="5">
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="6" s="3">
+<O>
+<![CDATA[车间/岗位]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="1" r="6" s="4">
+<O>
+<![CDATA[检测项目]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="2" r="6" s="4">
+<O>
+<![CDATA[收集器]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="3" r="6" s="4">
+<O>
+<![CDATA[状态]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="4" r="6" s="4">
+<O>
+<![CDATA[样品编号]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="5" r="6" s="4">
+<O>
+<![CDATA[样品数]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="6" r="6" s="4">
+<O>
+<![CDATA[大气压（kpa）、\\n温度(℃)]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="7" r="6" s="4">
+<O>
+<![CDATA[采样体积（L）]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="8" r="6" s="4">
+<O>
+<![CDATA[保存方式\\n及期限\r]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="9" r="6" s="4">
+<O>
+<![CDATA[接收人]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="10" r="6" s="5">
+<O>
+<![CDATA[接收日期]]></O>
+<PrivilegeControl/>
+<Expand/>
+</C>
+<C c="0" r="7" s="3">
+<O t="DSColumn">
+<Attributes dsName="table_data" columnName="workshopPosition"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="1" r="7" s="4">
+<O t="DSColumn">
+<Attributes dsName="table_data" columnName="chineseName"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="2" r="7" s="4">
+<O t="DSColumn">
+<Attributes dsName="table_data" columnName="sampleCollector"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="3" r="7" s="4">
+<O t="DSColumn">
+<Attributes dsName="table_data" columnName="sampleStatus"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="4" r="7" s="4">
+<O t="DSColumn">
+<Attributes dsName="table_data" columnName="sampleNum"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="5" r="7" s="4">
+<O t="DSColumn">
+<Attributes dsName="table_data" columnName="sampleCount"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="6" r="7" s="4">
+<O t="DSColumn">
+<Attributes dsName="table_data" columnName="sampleAtomsTemperature"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="7" r="7" s="4">
+<O t="DSColumn">
+<Attributes dsName="table_data" columnName="sampleVolume"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="8" r="7" s="4">
+<O t="DSColumn">
+<Attributes dsName="table_data" columnName="sampleMethodAndPeriod"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="9" r="7" s="4">
+<O t="DSColumn">
+<Attributes dsName="table_data" columnName="receiveEmploteeName"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+<C c="10" r="7" s="5">
+<O t="DSColumn">
+<Attributes dsName="table_data" columnName="receiveDate"/>
+<Complex/>
+<RG class="com.fr.report.cell.cellattr.core.group.FunctionGrouper"/>
+<Parameters/>
+</O>
+<PrivilegeControl/>
+<Expand dir="0"/>
+</C>
+</CellElementList>
+<ReportAttrSet>
+<ReportSettings headerHeight="0" footerHeight="0">
+<PaperSetting orientation="1">
+<Margin top="986400" left="2743200" bottom="986400" right="2743200"/>
+</PaperSetting>
+</ReportSettings>
+<Header reportPageType="0">
+<Background name="NullBackground"/>
+<LeftList/>
+<CenterList/>
+<RightList/>
+</Header>
+<Footer reportPageType="0">
+<Background name="NullBackground"/>
+<LeftList/>
+<CenterList/>
+<RightList/>
+</Footer>
+</ReportAttrSet>
+<PrivilegeControl/>
+</Report>
+<ReportParameterAttr>
+<Attributes showWindow="true" delayPlaying="true" windowPosition="1" align="0"/>
+<PWTitle>
+<![CDATA[参数]]></PWTitle>
+</ReportParameterAttr>
+<StyleList>
+<Style horizontal_alignment="0" imageLayout="1">
+<FRFont name="SimSun" style="1" size="128"/>
+<Background name="NullBackground"/>
+<Border/>
+</Style>
+<Style imageLayout="1">
+<FRFont name="SimSun" style="0" size="72"/>
+<Background name="NullBackground"/>
+<Border>
+<Top style="1"/>
+<Bottom style="1"/>
+</Border>
+</Style>
+<Style imageLayout="1">
+<FRFont name="SimSun" style="0" size="72"/>
+<Background name="NullBackground"/>
+<Border>
+<Bottom style="1"/>
+</Border>
+</Style>
+<Style horizontal_alignment="0" imageLayout="1">
+<FRFont name="SimSun" style="0" size="72"/>
+<Background name="NullBackground"/>
+<Border>
+<Top style="1"/>
+<Bottom style="1"/>
+<Right style="1"/>
+</Border>
+</Style>
+<Style horizontal_alignment="0" imageLayout="1">
+<FRFont name="SimSun" style="0" size="72"/>
+<Background name="NullBackground"/>
+<Border>
+<Top style="1"/>
+<Bottom style="1"/>
+<Left style="1"/>
+<Right style="1"/>
+</Border>
+</Style>
+<Style horizontal_alignment="0" imageLayout="1">
+<FRFont name="SimSun" style="0" size="72"/>
+<Background name="NullBackground"/>
+<Border>
+<Top style="1"/>
+<Bottom style="1"/>
+<Left style="1"/>
+</Border>
+</Style>
+</StyleList>
+<DesignerVersion DesignerVersion="HBB"/>
+<PreviewType PreviewType="0"/>
+</WorkBook>
