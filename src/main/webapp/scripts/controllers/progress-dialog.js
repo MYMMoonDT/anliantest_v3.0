@@ -8,7 +8,7 @@
  * Controller of the anliantestApp
  */
 angular.module('anliantestApp')
-  .controller('ProgressDialogCtrl', function ($scope, $modalInstance, ProgressService, data, HTPSJL, GZRWD, KHZLDJD, XCDCJL, PJFA, PJFASHJL, JCTZD, CYFA, SYSYJL, JSJG, JGPJ) {
+  .controller('ProgressDialogCtrl', function ($scope, $modalInstance, ProgressService, data, HTPSJL, GZRWD, KHZLDJD, XCDCJL, PJFA, PJFASHJL, JCTZD, CYFA, SYSYJL, JCBG, JSJG, JGPJ) {
     $scope.data = data;
 
     $scope.stepMap = ProgressService.getStepMap();
@@ -159,6 +159,7 @@ angular.module('anliantestApp')
         
         var table = {
           data: null,
+          type: 'jctzd',
           label: '检测通知单'
         };
         table.data = data.data;
@@ -177,6 +178,7 @@ angular.module('anliantestApp')
         
         var table = {
           data: null,
+          type: 'cyfa',
           label: '采样方案'
         };
         table.data = data.data;
@@ -198,7 +200,30 @@ angular.module('anliantestApp')
         
         var table = {
           data: null,
+          type: 'sysyjl',
           label: '送样收样记录'
+        };
+        table.data = data.data;
+
+        if(table.data == null) {
+          table.status = '未创建';
+        }else{
+          if(table.data.confirm) {
+            table.status = '完成';
+          }else{
+            table.status = '未确认';
+          }
+        }
+        $scope.tableList.push(table);
+      });
+
+      var jcbg = new JCBG();
+      jcbg.$project({projectId : $scope.data.item.id}, function(data){
+        
+        var table = {
+          data: null,
+          type: 'jcbg',
+          label: '检测报告'
         };
         table.data = data.data;
 
@@ -218,6 +243,7 @@ angular.module('anliantestApp')
       jsjg.$project({projectId : $scope.data.item.id}, function(data){
         var table = {
           data: null,
+          type: 'jsjg',
           label: '计算过程表'
         };
         table.data = data.data;
@@ -235,6 +261,7 @@ angular.module('anliantestApp')
       jgpj.$project({projectId : $scope.data.item.id}, function(data){
         var table = {
           data: null,
+          type: 'jgpj',
           label: '结果与判定表'
         };
         table.data = data.data;
@@ -249,4 +276,9 @@ angular.module('anliantestApp')
       });
     }
 
+    $scope.downloadTable = function(table) {
+      if(table.type) {
+        window.location.href = "api/" + table.type + "/download?projectId=" + table.data.project.id;
+      }
+    };
   });

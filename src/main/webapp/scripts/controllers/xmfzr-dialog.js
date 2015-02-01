@@ -17,7 +17,8 @@ angular.module('anliantestApp')
       refreshData();
     };
 
-    refreshData();
+    //refreshData();
+    loadAllData();
 
     $scope.appointEmployee = function (employee) {
       var dialog = dialogs.create('template/at-confirm-dialog.html', 'ConfirmCtrl', 
@@ -50,6 +51,15 @@ angular.module('anliantestApp')
           $scope.employeeList = data.data;
           $scope.currPageNum = data.currPageNum;
           $scope.totalItemNum = data.totalItemNum;
+        }
+      });
+    }
+
+    function loadAllData() {
+      var employee = new Employee();
+      employee.$all(function(data) {
+        if(data != null) {
+          $scope.employeeList = data.data;
         }
       });
     }

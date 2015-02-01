@@ -1,5 +1,9 @@
 package cn.edu.tongji.anliantest.service.impl;
 
+import java.io.File;
+
+import javax.servlet.ServletContext;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +15,7 @@ import cn.edu.tongji.anliantest.dao.EmployeeDao;
 import cn.edu.tongji.anliantest.dao.LogDao;
 import cn.edu.tongji.anliantest.dao.ProjectDao;
 import cn.edu.tongji.anliantest.dao.TaskDao;
+import cn.edu.tongji.anliantest.document.CYFADocument;
 import cn.edu.tongji.anliantest.model.Log;
 import cn.edu.tongji.anliantest.model.Project;
 import cn.edu.tongji.anliantest.model.ProjectStatusEnum;
@@ -18,6 +23,7 @@ import cn.edu.tongji.anliantest.model.ProjectStepEnum;
 import cn.edu.tongji.anliantest.model.Task;
 import cn.edu.tongji.anliantest.model.experiment.CYFATable;
 import cn.edu.tongji.anliantest.service.CYFAService;
+import cn.edu.tongji.anliantest.util.ApplicationContextUtil;
 import cn.edu.tongji.anliantest.util.DataWrapper;
 
 @Service("cyfaService")
@@ -118,6 +124,30 @@ public class CYFAServiceImpl implements CYFAService{
 		logger.info("确认采样方案信息:"+cyfaTable.getId());
 		
 		return ret;
+	}
+
+	@Override
+	public File getCYFAFile(Long projectId) {
+		CYFATable cyfaTable = cyfaTableDao.getCYFATableByProjectId(projectId);
+		
+		ServletContext context = ApplicationContextUtil.getContext().getServletContext();
+		Project project = cyfaTable.getProject();
+		String filePath = context.getRealPath("report") + File.separator + project.getNumber() + File.separator + project.getNumber() + "-" + project.getName() + "-" + "采样方案（有毒物质、粉尘）" + ".doc";
+		File file = new File(filePath);
+		if(file.exists()){
+			logger.info("下载" + project.getName() + "采样方案（有毒物质、粉尘）");
+			return file;
+		}
+		else {
+			CYFADocument.generate(cyfaTable.getId());
+			file = new File(filePath);
+			if(file.exists()) {
+				logger.info("下载" + project.getName() + "采样方案（有毒物质、粉尘）");
+				return file;
+			}else{
+				return null;
+			}
+		}
 	}
 
 }

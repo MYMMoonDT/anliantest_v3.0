@@ -26,10 +26,21 @@ public class JSJGController {
 		this.jsjgService = jsjgService;
 	}
 	
+	@RequestMapping(value="jsjg/tmp/download")
+	public void downloadJSJGTmpFile(HttpServletResponse response,
+			@RequestParam("projectId") Long projectId) {
+		File file = jsjgService.getJSJGTmpFile(projectId);
+		try {
+			FileUtil.downloadFile(file, response);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	@RequestMapping(value="jsjg/download")
 	public void downloadJSJGFile(HttpServletResponse response,
 			@RequestParam("projectId") Long projectId) {
-		File file = jsjgService.getJSJGTmpFile(projectId);
+		File file = jsjgService.getJSJGFile(projectId);
 		try {
 			FileUtil.downloadFile(file, response);
 		} catch (Exception e) {

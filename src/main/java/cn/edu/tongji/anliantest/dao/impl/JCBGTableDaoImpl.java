@@ -22,7 +22,7 @@ public class JCBGTableDaoImpl extends AbstractHibernateDao<JCBGTable, Long> impl
 	public JCBGTable getJCBGTableById(Long jcbgTableId) {
 		return findById(jcbgTableId);
 	}
-
+	
 	@Override
 	public Long addJCBGTable(JCBGTable jcbgTable) {
 		return add(jcbgTable);

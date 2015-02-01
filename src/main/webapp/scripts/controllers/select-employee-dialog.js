@@ -17,7 +17,8 @@ angular.module('anliantestApp')
       refreshData();
     };
 
-    refreshData();
+    //refreshData();
+    loadAllData();
 
     $scope.selectEmployee = function (employee) {
       $modalInstance.close(employee);
@@ -36,6 +37,15 @@ angular.module('anliantestApp')
           $scope.employeeList = data.data;
           $scope.currPageNum = data.currPageNum;
           $scope.totalItemNum = data.totalItemNum;
+        }
+      });
+    }
+
+    function loadAllData() {
+      var employee = new Employee();
+      employee.$all(function(data) {
+        if(data != null) {
+          $scope.employeeList = data.data;
         }
       });
     }

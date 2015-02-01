@@ -1,6 +1,9 @@
 package cn.edu.tongji.anliantest.service.impl;
 
+import java.io.File;
 import java.util.Iterator;
+
+import javax.servlet.ServletContext;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +17,7 @@ import cn.edu.tongji.anliantest.dao.JCTZDTableDao;
 import cn.edu.tongji.anliantest.dao.LogDao;
 import cn.edu.tongji.anliantest.dao.ProjectDao;
 import cn.edu.tongji.anliantest.dao.TaskDao;
+import cn.edu.tongji.anliantest.document.JCTZDDocument;
 import cn.edu.tongji.anliantest.model.DepartmentTypeEnum;
 import cn.edu.tongji.anliantest.model.JCTZDGroup;
 import cn.edu.tongji.anliantest.model.JCTZDItem;
@@ -30,6 +34,7 @@ import cn.edu.tongji.anliantest.model.experiment.CYFATable;
 import cn.edu.tongji.anliantest.model.experiment.CYJCFFItem;
 import cn.edu.tongji.anliantest.model.experiment.ZYBWHYSItem;
 import cn.edu.tongji.anliantest.service.JCTZDService;
+import cn.edu.tongji.anliantest.util.ApplicationContextUtil;
 import cn.edu.tongji.anliantest.util.CallStatusEnum;
 import cn.edu.tongji.anliantest.util.DataWrapper;
 import cn.edu.tongji.anliantest.util.ErrorCodeEnum;
@@ -171,7 +176,7 @@ public class JCTZDServiceImpl implements JCTZDService{
 		
 		logger.info("添加检测通知单信息:"+jctzdTable.getId());
 		logger.info("生成采样方案信息:"+cyfaTable.getId());
-		
+			
 		return ret;
 	}
 
@@ -183,6 +188,30 @@ public class JCTZDServiceImpl implements JCTZDService{
 	@Override
 	public DataWrapper<Void> deleteJCTZDTable(Long jctzdTableId) {
 		return null;
+	}
+
+	@Override
+	public File getJCTZDFile(Long projectId) {
+		JCTZDTable jctzdTable = jctzdTableDao.getJCTZDTableByProjectId(projectId);
+		
+		ServletContext context = ApplicationContextUtil.getContext().getServletContext();
+		Project project = jctzdTable.getProject();
+		String filePath = context.getRealPath("report") + File.separator + project.getNumber() + File.separator + project.getNumber() + "-" + project.getName() + "-" + "检测通知单" + ".doc";
+		File file = new File(filePath);
+		if(file.exists()){
+			logger.info("下载" + project.getName() + "检测通知单");
+			return file;
+		}
+		else {
+			JCTZDDocument.generate(jctzdTable.getId());
+			file = new File(filePath);
+			if(file.exists()) {
+				logger.info("下载" + project.getName() + "检测通知单");
+				return file;
+			}else{
+				return null;
+			}
+		}
 	}
 	
 }

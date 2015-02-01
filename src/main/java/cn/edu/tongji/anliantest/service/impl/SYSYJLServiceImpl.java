@@ -1,7 +1,10 @@
 package cn.edu.tongji.anliantest.service.impl;
 
+import java.io.File;
 import java.util.Collections;
 import java.util.Date;
+
+import javax.servlet.ServletContext;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +21,7 @@ import cn.edu.tongji.anliantest.dao.LogDao;
 import cn.edu.tongji.anliantest.dao.ProjectDao;
 import cn.edu.tongji.anliantest.dao.SYSYJLTableDao;
 import cn.edu.tongji.anliantest.dao.TaskDao;
+import cn.edu.tongji.anliantest.document.SYSYJLDocument;
 import cn.edu.tongji.anliantest.model.DepartmentTypeEnum;
 import cn.edu.tongji.anliantest.model.JCTZDTable;
 import cn.edu.tongji.anliantest.model.Log;
@@ -32,6 +36,7 @@ import cn.edu.tongji.anliantest.model.experiment.JSJGTable;
 import cn.edu.tongji.anliantest.model.experiment.SYSYJLTable;
 import cn.edu.tongji.anliantest.model.experiment.ZYBWHYSItem;
 import cn.edu.tongji.anliantest.service.SYSYJLService;
+import cn.edu.tongji.anliantest.util.ApplicationContextUtil;
 import cn.edu.tongji.anliantest.util.DataWrapper;
 
 @Service("sysyjlService")
@@ -219,6 +224,30 @@ public class SYSYJLServiceImpl implements SYSYJLService{
 	@Override
 	public DataWrapper<Void> deleteSYSYJLTable(Long sysyjlTableId) {
 		return null;
+	}
+
+	@Override
+	public File getSYSYJLFile(Long projectId) {
+		SYSYJLTable sysyjlTable = sysyjlTableDao.getSYSYJLTableByProjectId(projectId);
+		
+		ServletContext context = ApplicationContextUtil.getContext().getServletContext();
+		Project project = sysyjlTable.getProject();
+		String filePath = context.getRealPath("report") + File.separator + project.getNumber() + File.separator + project.getNumber() + "-" + project.getName() + "-" + "送样、收样记录表" + ".doc";
+		File file = new File(filePath);
+		if(file.exists()){
+			logger.info("下载" + project.getName() + "送样、收样记录表");
+			return file;
+		}
+		else {
+			SYSYJLDocument.generate(sysyjlTable.getId());
+			file = new File(filePath);
+			if(file.exists()) {
+				logger.info("下载" + project.getName() + "送样、收样记录表");
+				return file;
+			}else{
+				return null;
+			}
+		}
 	}
 
 }

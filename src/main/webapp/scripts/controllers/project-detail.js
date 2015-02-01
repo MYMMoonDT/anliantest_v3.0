@@ -191,11 +191,11 @@ angular.module('anliantestApp')
     };
 
     $scope.downloadJSGCB = function() {
-      window.location.href = "api/jsjg/download?projectId="+$scope.data.project.id;
+      window.location.href = "api/jsjg/tmp/download?projectId="+$scope.data.project.id;
     };
 
     $scope.downloadJGYPDB = function() {
-      window.location.href = "api/jgpj/download?projectId="+$scope.data.project.id;
+      window.location.href = "api/jgpj/tmp/download?projectId="+$scope.data.project.id;
     };
   })
 

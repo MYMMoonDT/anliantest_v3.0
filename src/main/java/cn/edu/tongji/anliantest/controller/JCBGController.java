@@ -1,6 +1,9 @@
 package cn.edu.tongji.anliantest.controller;
 
+import java.io.File;
 import java.io.IOException;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +18,7 @@ import cn.edu.tongji.anliantest.model.experiment.JCBGTable;
 import cn.edu.tongji.anliantest.model.experiment.JCBGTableInput;
 import cn.edu.tongji.anliantest.service.JCBGService;
 import cn.edu.tongji.anliantest.util.DataWrapper;
+import cn.edu.tongji.anliantest.util.FileUtil;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -59,5 +63,16 @@ public class JCBGController {
 			 @RequestBody JCBGTableInput jcbgTable,
 			 @RequestParam("projectId") Long projectId) throws JsonParseException, JsonMappingException, IOException {		
 		return jcbgService.inputJCBGTable(projectId, jcbgTable);
+	}
+	
+	@RequestMapping(value="jcbg/download")
+	public void downloadJCBGFile(HttpServletResponse response,
+			@RequestParam("projectId") Long projectId) {
+		File file = jcbgService.getJCBGFile(projectId);
+		try {
+			FileUtil.downloadFile(file, response);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

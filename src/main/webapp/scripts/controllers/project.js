@@ -220,7 +220,7 @@ angular.module('anliantestApp')
       {
         size: 'md',
         keyboard: true,
-        backdrop: 'static',
+        backdrop: true,
         windowClass: 'model-overlay'
       });
 
@@ -247,7 +247,7 @@ angular.module('anliantestApp')
       {
         size: 'md',
         keyboard: true,
-        backdrop: 'static',
+        backdrop: true,
         windowClass: 'model-overlay'
       });
 

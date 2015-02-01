@@ -12,7 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Cascade;
@@ -49,17 +49,6 @@ public class AuthorityGroup implements Serializable {
 		this.name = name;
 	}
 
-	@OneToOne
-	@Cascade({ CascadeType.REFRESH })
-	@JoinColumn(name = "departmentId")
-	public Department getDepartment() {
-		return department;
-	}
-
-	public void setDepartment(Department department) {
-		this.department = department;
-	}
-
 	@ManyToMany(fetch = FetchType.EAGER)
 	@Cascade({ CascadeType.REFRESH })
 	@JoinTable(name = "authority_group_item", joinColumns = { @JoinColumn(name = "authorityGroupId") }, inverseJoinColumns = { @JoinColumn(name = "authorityItemId") })
@@ -70,4 +59,15 @@ public class AuthorityGroup implements Serializable {
 	public void setAuthorityItems(List<AuthorityItem> authorityItems) {
 		this.authorityItems = authorityItems;
 	}
+
+	@ManyToOne
+	@JoinColumn(name = "departmentId")
+	public Department getDepartment() {
+		return department;
+	}
+
+	public void setDepartment(Department department) {
+		this.department = department;
+	}
+
 }

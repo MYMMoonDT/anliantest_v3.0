@@ -61,7 +61,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Override
 	public DataWrapper<Employee> getEmployeeById(Long employeeId) {
-		DataWrapper<Employee> ret = new DataWrapper<Employee>();
+		DataWrapper<Employee> ret = new DataWrapper<>();
 
 		Employee employee = employeeDao.getEmployeeById(employeeId);
 		ret.setData(employee);
@@ -71,7 +71,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Override
 	public DataWrapper<Employee> addEmployee(Employee employee) {
-		DataWrapper<Employee> ret = new DataWrapper<Employee>();
+		DataWrapper<Employee> ret = new DataWrapper<>();
 
 		employeeDao.addEmployee(employee);
 
@@ -85,7 +85,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Override
 	public DataWrapper<Employee> updateEmployee(Employee employee) {
-		DataWrapper<Employee> ret = new DataWrapper<Employee>();
+		DataWrapper<Employee> ret = new DataWrapper<>();
 
 		employeeDao.updateEmployee(employee);
 
@@ -99,7 +99,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Override
 	public DataWrapper<Void> deleteEmployee(Long employeeId) {
-		DataWrapper<Void> ret = new DataWrapper<Void>();
+		DataWrapper<Void> ret = new DataWrapper<>();
 
 		employeeDao.deleteEmployee(employeeId);
 
@@ -122,7 +122,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Override
 	public DataWrapper<Employee> updateEmployeeAuthorityGroup(Long employeeId,
 			Long authorityGroupId) {
-		DataWrapper<Employee> ret = new DataWrapper<Employee>();
+		DataWrapper<Employee> ret = new DataWrapper<>();
 		
 		Employee employee = employeeDao.getEmployeeById(employeeId);
 		AuthorityGroup authorityGroup = authorityGroupDao.getAuthorityGroupById(authorityGroupId);
@@ -150,7 +150,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Override
 	public DataWrapper<Void> updateEmployeeAuthorityItem(
 			EmployeeAuthorityItem employeeAuthorityItem) {
-		DataWrapper<Void> ret = new DataWrapper<Void>();
+		DataWrapper<Void> ret = new DataWrapper<>();
 		
 		employeeAuthorityItemDao.updateEmployeeAuthorityItem(employeeAuthorityItem);
 		

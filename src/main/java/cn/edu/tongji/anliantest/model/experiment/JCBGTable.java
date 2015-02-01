@@ -51,6 +51,8 @@ public class JCBGTable implements java.io.Serializable{
 	private Employee signEmployee;      //签发人
 	
 	private List<JCBGItem> items = new ArrayList<JCBGItem>(0);
+	
+	private Boolean confirm;
 
 	@Id
 	@GeneratedValue
@@ -183,6 +185,14 @@ public class JCBGTable implements java.io.Serializable{
 
 	public void setSampleEndDate(Date sampleEndDate) {
 		this.sampleEndDate = sampleEndDate;
+	}
+
+	public Boolean getConfirm() {
+		return confirm;
+	}
+
+	public void setConfirm(Boolean confirm) {
+		this.confirm = confirm;
 	}
 
 }

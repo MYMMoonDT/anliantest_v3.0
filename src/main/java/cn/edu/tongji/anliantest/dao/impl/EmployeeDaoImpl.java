@@ -63,7 +63,7 @@ public class EmployeeDaoImpl extends AbstractHibernateDao<Employee, Long> implem
 		ret.setCurrPageNum(pageResult.getCurrPageNum());
 		ret.setTotalItemNum(pageResult.getTotalItemNum());
 		ret.setTotalPageNum(pageResult.getTotalPageNum());
-		
+
 		return ret;
 	}
 

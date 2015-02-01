@@ -24,6 +24,7 @@ import cn.edu.tongji.anliantest.dao.ProjectDao;
 import cn.edu.tongji.anliantest.dao.TaskDao;
 import cn.edu.tongji.anliantest.dao.ZYBWHYSItemDao;
 import cn.edu.tongji.anliantest.document.JCBGDocument;
+import cn.edu.tongji.anliantest.document.JCBGDocumentTmp;
 import cn.edu.tongji.anliantest.model.Employee;
 import cn.edu.tongji.anliantest.model.Log;
 import cn.edu.tongji.anliantest.model.Project;
@@ -87,7 +88,7 @@ public class JCBGServiceImpl implements JCBGService{
 		Project project = inputTask.getProject();
 		Employee employee = employeeDao.getEmployeeById(employeeId);
 		
-		ServletContext context = ApplicationContextUtil.getContext().getServletContext();
+		//ServletContext context = ApplicationContextUtil.getContext().getServletContext();
 		
 		JCBGTable jcbgTable = new JCBGTable();
 		ArrayList<JCBGGroup> jcbgGroups = (ArrayList<JCBGGroup>)jcbgTableInput.getList();
@@ -121,6 +122,7 @@ public class JCBGServiceImpl implements JCBGService{
 			}
 			
 			jcbgTable.setProject(projectDao.getProjectById(project.getId()));
+			jcbgTable.setConfirm(true);
 			jsjgTable.setProject(projectDao.getProjectById(project.getId()));
 			jsjgTable.setTableNum(TableNumEnum.JSJG.getTableNum());
 			jgpjTable.setProject(projectDao.getProjectById(project.getId()));
@@ -128,12 +130,14 @@ public class JCBGServiceImpl implements JCBGService{
 			jsjgTableDao.addJSJGTable(jsjgTable);
 			jgpjTableDao.addJGPJTable(jgpjTable);
 			
+			/*
 			String filePath = context.getRealPath("report") + File.separator + project.getNumber() + File.separator + project.getNumber() + "-" + project.getName() + "-" + "计算过程表" + ".xls";
-			JCBGDocument.generateJSJGFilePOI(jsjgTable, filePath);
+			JCBGDocumentTmp.generateJSJGFilePOI(jsjgTable, filePath);
 			logger.info("生成" + project.getName() + "计算过程表");
 			filePath = context.getRealPath("report") + File.separator + project.getNumber() + File.separator + project.getNumber() + "-" + project.getName() + "-" + "结果与判定表" + ".doc";
-			JCBGDocument.generateJGPJFile(jgpjTable, filePath);
+			JCBGDocumentTmp.generateJGPJFile(jgpjTable, filePath);
 			logger.info("生成" + project.getName() + "结果与判定表");
+			*/
 		} catch (Exception e) {
 			e.printStackTrace();
 			
@@ -179,7 +183,7 @@ public class JCBGServiceImpl implements JCBGService{
 		ArrayList<JCBGGroup> jcbgGroups = new ArrayList<JCBGGroup>();
 		
 		try {
-			JCBGDocument.getJCBGTableFromFile(targetFile, jcbgTable, jcbgGroups);
+			JCBGDocumentTmp.getJCBGTableFromFile(targetFile, jcbgTable, jcbgGroups);
 			
 			logger.info("上传" + project.getName() + "项目检测报告");
 			
@@ -217,10 +221,10 @@ public class JCBGServiceImpl implements JCBGService{
 			jgpjTableDao.addJGPJTable(jgpjTable);
 			
 			String filePath = context.getRealPath("tmp") + File.separator + project.getNumber() + "-" + project.getName() + "-" + "计算过程表" + ".xls";
-			JCBGDocument.generateJSJGFilePOI(jsjgTable, filePath);
+			JCBGDocumentTmp.generateJSJGFilePOI(jsjgTable, filePath);
 			logger.info("生成" + project.getName() + "计算过程表");
 			filePath = context.getRealPath("tmp") + File.separator + project.getNumber() + "-" + project.getName() + "-" + "结果与判定表" + ".doc";;
-			JCBGDocument.generateJGPJFile(jgpjTable, filePath);
+			JCBGDocumentTmp.generateJGPJFile(jgpjTable, filePath);
 			logger.info("生成" + project.getName() + "结果与判定表");
 			
 		} catch (Exception e) {
@@ -288,10 +292,10 @@ public class JCBGServiceImpl implements JCBGService{
 			jgpjTableDao.addJGPJTable(jgpjTable);
 			
 			String filePath = context.getRealPath("tmp") + File.separator + project.getNumber() + "-" + project.getName() + "-" + "计算过程表" + ".xls";
-			JCBGDocument.generateJSJGFilePOI(jsjgTable, filePath);
+			JCBGDocumentTmp.generateJSJGFilePOI(jsjgTable, filePath);
 			logger.info("生成" + project.getName() + "计算过程表");
 			filePath = context.getRealPath("tmp") + File.separator + project.getNumber() + "-" + project.getName() + "-" + "结果与判定表" + ".doc";;
-			JCBGDocument.generateJGPJFile(jgpjTable, filePath);
+			JCBGDocumentTmp.generateJGPJFile(jgpjTable, filePath);
 			logger.info("生成" + project.getName() + "结果与判定表");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -692,5 +696,29 @@ public class JCBGServiceImpl implements JCBGService{
 		ret.setData(jcbgTableDao.getJCBGTableByProjectId(projectId));
 		
 		return ret;
+	}
+
+	@Override
+	public File getJCBGFile(Long projectId) {
+		JCBGTable jcbgTable = jcbgTableDao.getJCBGTableByProjectId(projectId);
+		
+		ServletContext context = ApplicationContextUtil.getContext().getServletContext();
+		Project project = jcbgTable.getProject();
+		String filePath = context.getRealPath("report") + File.separator + project.getNumber() + File.separator + project.getNumber() + "-" + project.getName() + "-" + "检测报告" + ".doc";
+		File file = new File(filePath);
+		if(file.exists()){
+			logger.info("下载" + project.getName() + "检测报告");
+			return file;
+		}
+		else {
+			JCBGDocument.generate(jcbgTable.getId());
+			file = new File(filePath);
+			if(file.exists()) {
+				logger.info("下载" + project.getName() + "检测报告");
+				return file;
+			}else{
+				return null;
+			}
+		}
 	}
 }

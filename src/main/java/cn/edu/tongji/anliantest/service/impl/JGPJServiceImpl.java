@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import cn.edu.tongji.anliantest.dao.JGPJTableDao;
+import cn.edu.tongji.anliantest.document.JCBGDocumentTmp;
 import cn.edu.tongji.anliantest.model.Project;
 import cn.edu.tongji.anliantest.model.experiment.JGPJTable;
 import cn.edu.tongji.anliantest.service.JGPJService;
@@ -59,7 +60,26 @@ public class JGPJServiceImpl implements JGPJService{
 	
 	@Override
 	public File getJGPJFile(Long projectId) {
-		return null;
+		JGPJTable jgpjTable = jgpjTableDao.getJGPJTableByProjectId(projectId);
+		
+		ServletContext context = ApplicationContextUtil.getContext().getServletContext();
+		Project project = jgpjTable.getProject();
+		String filePath = context.getRealPath("report") + File.separator + project.getNumber() + File.separator + project.getNumber() + "-" + project.getName() + "-" + "结果与判定表" + ".doc";
+		File file = new File(filePath);
+		if(file.exists()){
+			logger.info("下载" + project.getName() + "结果与判定表");
+			return file;
+		}
+		else {
+			JCBGDocumentTmp.generateJGPJFile(jgpjTable, filePath);
+			file = new File(filePath);
+			if(file.exists()) {
+				logger.info("下载" + project.getName() + "结果与判定表");
+				return file;
+			}else{
+				return null;
+			}
+		}
 	}
 
 	@Override

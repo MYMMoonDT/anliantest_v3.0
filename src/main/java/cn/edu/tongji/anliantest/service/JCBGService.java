@@ -1,5 +1,7 @@
 package cn.edu.tongji.anliantest.service;
 
+import java.io.File;
+
 import org.springframework.web.multipart.MultipartFile;
 
 import cn.edu.tongji.anliantest.model.experiment.JCBGTable;
@@ -10,6 +12,8 @@ public interface JCBGService {
 	public DataWrapper<JCBGTable> getJCBGTableById(Long jcbgTableId);
 	
 	public DataWrapper<JCBGTable> getJCBGTableByProjectId(Long projectId);
+	
+	public File getJCBGFile(Long projectId);
 	
 	public DataWrapper<JCBGTable> addJCBGTable(Long taskId, Long employeeId, JCBGTableInput jcbgTable);
 	

@@ -26,10 +26,21 @@ public class JGPJController {
 		this.jgpjService = jgpjService;
 	}
 	
+	@RequestMapping(value="jgpj/tmp/download")
+	public void downloadJGPJTmpFile(HttpServletResponse response,
+			@RequestParam("projectId") Long projectId) {
+		File file = jgpjService.getJGPJTmpFile(projectId);
+		try {
+			FileUtil.downloadFile(file, response);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	@RequestMapping(value="jgpj/download")
 	public void downloadJGPJFile(HttpServletResponse response,
 			@RequestParam("projectId") Long projectId) {
-		File file = jgpjService.getJGPJTmpFile(projectId);
+		File file = jgpjService.getJGPJFile(projectId);
 		try {
 			FileUtil.downloadFile(file, response);
 		} catch (Exception e) {

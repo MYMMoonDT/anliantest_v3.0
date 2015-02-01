@@ -1,5 +1,9 @@
 package cn.edu.tongji.anliantest.controller;
 
+import java.io.File;
+
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -11,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import cn.edu.tongji.anliantest.model.experiment.SYSYJLTable;
 import cn.edu.tongji.anliantest.service.SYSYJLService;
 import cn.edu.tongji.anliantest.util.DataWrapper;
+import cn.edu.tongji.anliantest.util.FileUtil;
 
 @Controller
 @RequestMapping("api")
@@ -45,5 +50,16 @@ public class SYSYJLController {
 	public DataWrapper<SYSYJLTable> getSYSYJLByProject(
 		@RequestParam("projectId") Long projectId) {
 		return sysyjlService.getSYSYJLTableByProjectId(projectId);
+	}
+	
+	@RequestMapping(value="sysyjl/download")
+	public void downloadSYSYJLFile(HttpServletResponse response,
+			@RequestParam("projectId") Long projectId) {
+		File file = sysyjlService.getSYSYJLFile(projectId);
+		try {
+			FileUtil.downloadFile(file, response);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }
