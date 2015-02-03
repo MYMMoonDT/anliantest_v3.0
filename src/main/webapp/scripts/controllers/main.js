@@ -8,7 +8,7 @@
  * Controller of the anliantestApp
  */
 angular.module('anliantestApp')
-  .controller('MainCtrl', function ($scope, $rootScope, $location, dialogs, EmployeeService, Task, Project, HTPSJL, GZRWD, KHZLDJD, XCDCJL, PJFA, PJFASHJL, JCTZD, CYFA, SYSYJL) {
+  .controller('MainCtrl', function ($scope, $rootScope, $location, dialogs, EmployeeService, AuthorityService, Task, Project, HTPSJL, GZRWD, KHZLDJD, XCDCJL, PJFA, PJFASHJL, JCTZD, CYFA, SYSYJL) {
     $scope.employee = EmployeeService.getCurrEmployee();
 
     refreshData();
@@ -413,11 +413,36 @@ angular.module('anliantestApp')
         Task.query({id : $rootScope.employee.id, type : 'employee'}, function(data) {
           if(data != null) {
             $scope.employeeTaskList = data.data;
+            for(var i = 0; i < $scope.employeeTaskList.length; i++) {
+              var authorityItem = AuthorityService.getAuthorityMap()[$scope.employeeTaskList[i].projectStatus];
+
+              if($rootScope.employee.authorityItems[authorityItem.authorityType] != undefined) {
+                if($rootScope.employee.authorityItems[authorityItem.authorityType]) {
+                  $scope.employeeTaskList[i].disabled = false;
+                }else{
+                  $scope.employeeTaskList[i].disabled = true;
+                }
+              }else{
+                $scope.employeeTaskList[i].disabled = true;
+              }
+            }
           }
         });
         Task.query({id: $rootScope.employee.department.id,type:'department'}, function(data) {
           if(data != null) {
             $scope.departmentTaskList = data.data;
+            for(var i = 0; i < $scope.departmentTaskList.length; i++) {
+              var authorityItem = AuthorityService.getAuthorityMap()[$scope.departmentTaskList[i].projectStatus];
+              if($rootScope.employee.authorityItems[authorityItem.authorityType] != undefined) {
+                if($rootScope.employee.authorityItems[authorityItem.authorityType]) {
+                  $scope.departmentTaskList[i].disabled = false;
+                }else{
+                  $scope.departmentTaskList[i].disabled = true;
+                }
+              }else{
+                $scope.departmentTaskList[i].disabled = true;
+              }
+            }
           }
         });
       }

@@ -22,6 +22,11 @@ angular.module('anliantestApp')
     };
 
     this.saveCurrEmployee = function (employee) {
+      employee.authorityItems = {};
+      for(var i = 0; i < employee.employeeAuthorityGroup.items.length; i++) {
+        employee.authorityItems[employee.employeeAuthorityGroup.items[i].authorityItem.type] = employee.employeeAuthorityGroup.items[i].isActive;
+      }
+
       $rootScope.employee = employee;
       $sessionStorage.employee = employee;
     };

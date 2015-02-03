@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import cn.edu.tongji.anliantest.dao.CYJCFFItemDao;
 import cn.edu.tongji.anliantest.dao.CYJCYJItemDao;
 import cn.edu.tongji.anliantest.dao.ZYBWHYSItemDao;
+import cn.edu.tongji.anliantest.document.JCTZDDocument;
 import cn.edu.tongji.anliantest.service.TestService;
 
 @Service("testService")
@@ -20,5 +21,6 @@ public class TestServiceImpl implements TestService{
 	
 	@Override
 	public void test() {
+		JCTZDDocument.generate((long)1);
 	}
 }

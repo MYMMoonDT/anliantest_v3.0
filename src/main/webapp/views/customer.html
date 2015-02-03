@@ -4,7 +4,7 @@
   <div id="page-wrapper">
     <div class="row">
       <div class="col-lg-12">
-          <h1 class="page-header">客户管理<button type="button" class="btn btn-primary btn-sm pull-right" ng-click="showAddCustomerDialog()">&nbsp;添加&nbsp;</button></h1>
+          <h1 class="page-header">客户管理<button type="button" class="btn btn-primary btn-sm pull-right" ng-click="showAddCustomerDialog()" ng-disabled="!employee.authorityItems.mCustomer">&nbsp;添加&nbsp;</button></h1>
       </div>
     </div>
     <div class="row">
@@ -28,8 +28,8 @@
               <td>{{ customer.companyType }}</td>
               <td>{{ customer.companyIndustry }}</td>
               <td>
-                <button type="button" ng-click="editCustomer(customer)" class="btn btn-warning btn-sm">编辑</button>
-                <button type="button" ng-click="removeCustomer(customer)" class="btn btn-danger btn-sm">删除</button>
+                <button type="button" ng-click="editCustomer(customer)" class="btn btn-warning btn-sm" ng-disabled="!employee.authorityItems.mCustomer">编辑</button>
+                <button type="button" ng-click="removeCustomer(customer)" class="btn btn-danger btn-sm" ng-disabled="!employee.authorityItems.mCustomer">删除</button>
               </td>
             </tr>
           </tbody>

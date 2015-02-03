@@ -218,6 +218,8 @@ angular.module('anliantestApp')
           }
         }
 
+        $scope.data.item.sendSampleEmployee = {id: $rootScope.employee.id};
+
         $modalInstance.close($scope.data);
       }else if($scope.data.type == 'CONFIRM') {
 

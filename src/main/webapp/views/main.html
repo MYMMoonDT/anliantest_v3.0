@@ -25,7 +25,7 @@
                       <button class="btn btn-default btn-sm" ng-click="showProjectDetailDialog(task.project)">详情</button>
                     </div>
                     <div class="options pull-right" style="margin-right:10px;">
-                      <button class="btn btn-success btn-sm" ng-click="finishTask(task)">{{task.projectStatus | taskOption}}</button>
+                      <button class="btn btn-success btn-sm" ng-click="finishTask(task)" ng-disabled="task.disabled">{{task.projectStatus | taskOption}}</button>
                     </div>
                     <div class="clearfix"></div>
                   </div>
@@ -50,7 +50,7 @@
                       <button class="btn btn-default btn-sm" ng-click="showProjectDetailDialog(task.project)">详情</button>
                     </div>
                     <div class="options pull-right" style="margin-right:10px;">
-                      <button class="btn btn-success btn-sm" ng-click="finishTask(task)">{{task.projectStatus | taskOption}}</button>
+                      <button class="btn btn-success btn-sm" ng-click="finishTask(task)" ng-disabled="task.disabled">{{task.projectStatus | taskOption}}</button>
                     </div>
                   </div>
                 </div>

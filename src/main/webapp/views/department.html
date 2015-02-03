@@ -27,7 +27,7 @@
               <td>{{ department.description }}</td>
               <td>{{ department.type | departmentType}}</td>
               <td>
-                <button type="button" ng-click="editDepartment(department)" class="btn btn-warning btn-sm">编辑</button>
+                <button type="button" ng-click="editDepartment(department)" class="btn btn-warning btn-sm" ng-disabled="!employee.authorityItems.mDepartment">编辑</button>
               </td>
             </tr>
           </tbody>
