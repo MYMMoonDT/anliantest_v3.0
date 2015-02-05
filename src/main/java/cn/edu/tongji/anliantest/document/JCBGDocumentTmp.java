@@ -73,6 +73,7 @@ public class JCBGDocumentTmp {
 			dates = getDate(jacob.getCellString(jacob.getRowsCount(), 4));
 			jcbgTable.setReportDate(dates[0]);
 			
+			/*
 			jacob.getTable(4);
 			int tableRow = jacob.getRowsCount();
 			ArrayList<JCBGSiO2Item> sio2List = new ArrayList<JCBGSiO2Item>();
@@ -85,6 +86,7 @@ public class JCBGDocumentTmp {
 					sio2List.add(item);
 				}
 			}
+			*/
 			
 			jacob.getTable(3);
 			Date[] testTime = new Date[3];
@@ -92,7 +94,7 @@ public class JCBGDocumentTmp {
 			String[][] testResult = new String[3][20];
 			String[][] testTouchTime = new String[3][20];
 			Integer[][] testCollectTime = new Integer[3][20];
-			tableRow = jacob.getRowsCount();
+			int tableRow = jacob.getRowsCount();
 			int i = -1, j = 0, prevRowIdx = -1 ;
 			int prevTestTime = 1, prevSubstance = 1, prevWorkshopJob = 2;
 			int[] prevRows = {prevTestTime, prevSubstance, prevWorkshopJob};
@@ -134,6 +136,15 @@ public class JCBGDocumentTmp {
 								}
 								String sub = jacob.getCellString(cellRowIdx, 2);
 								String[] r = splitSubName(sub);
+								if(r[0].contains("其他粉尘")){
+									itemData.setZybwhysItem("其他粉尘（总尘）");
+									itemData.setZybwhysItemDetailName(r[1]);
+								}else{
+									itemData.setZybwhysItem(r[0]);
+									itemData.setZybwhysItemDetailName(r[1]);
+								}
+								
+								/*
 								if (r[0].equals("矽尘（总尘）")) {
 									double percent = sio2List.get(sio2List.indexOf(new JCBGSiO2Item(itemData.getWorkshopPosition()))).getResult();
 									if (percent > 10 && percent <= 50) {
@@ -162,6 +173,7 @@ public class JCBGDocumentTmp {
 									itemData.setZybwhysItem(r[0]);
 									itemData.setZybwhysItemDetailName(r[1]);
 								}
+								*/
 								
 								itemDataList.add(itemData);
 								prevRows[1] = cellRowIdx;
