@@ -1,11 +1,8 @@
 package cn.edu.tongji.anliantest.document;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.OutputStream;
 
-import org.apache.poi.hwpf.HWPFDocument;
 import org.springframework.web.context.WebApplicationContext;
 
 import cn.edu.tongji.anliantest.dao.JCTZDTableDao;
