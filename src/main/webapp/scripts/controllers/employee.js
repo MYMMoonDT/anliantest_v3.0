@@ -36,7 +36,7 @@ angular.module('anliantestApp')
         angular.extend(employee, data.item);
         
         employee.$save(function(){
-          refreshData();
+          loadAllData();
         });
       }, function () {
 
@@ -61,7 +61,7 @@ angular.module('anliantestApp')
         angular.extend(employee, data.item);
         
         employee.$update(function(){
-          refreshData();
+          loadAllData();
         });
       }, function () {
 
@@ -84,7 +84,7 @@ angular.module('anliantestApp')
         var _employee = new Employee();
 
         _employee.$delete({employeeId:employee.id}, function(){
-          refreshData();
+          loadAllData();
         });
 
       }, function () {

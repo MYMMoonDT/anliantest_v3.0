@@ -274,8 +274,9 @@ angular.module('anliantestApp')
 
   .controller('projectDialogSubCtrl', function ($scope) {
     $scope.changeType = function() {
-      $scope.$parent.$parent.type = $scope.type;
-      $scope.$parent.$parent.changeType();
+      console.log($scope);
+      $scope.$parent.type = $scope.type;
+      $scope.$parent.changeType();
     };
   })
 
